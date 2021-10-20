@@ -19,41 +19,42 @@
           <thead>
             <tr>
               <th>Instruments</th>
-              <th>Quantity</th>
               <th>Price</th>
             </tr>
           </thead>
           <tbody class="table-light">
             <tr>
               <th>BTC-USD</th>
-              <th>10</th>
               <th>USD63998.36</th>
             </tr>
             <tr>
               <th>BTC-EUR</th>
-              <th>15</th>
-              <th>EUR63998.36</th>
+              <th>EUR41233.36</th>
             </tr>
             <tr>
               <th>BTC-GBP</th>
-              <th>100</th>
-              <th>GBP63998.36</th>
+              <th>GBP23444.36</th>
             </tr>
             <tr>
               <th>ETH-USD</th>
-              <th>5</th>
-              <th>USD63998.36</th>
+              <th>USD53242.36</th>
             </tr>
             <tr>
-              <th>ETH-USD</th>
-              <th>1</th>
-              <th>USD65998.36</th>
+              <th>ETH-EUR</th>
+              <th>EUR32444.36</th>
             </tr>
           </tbody>
         </table>
       </div>
       <!-- Action -->
-      <div class="d-grid">
+      <div class="form-group row text-center">
+        <label for="inputQty" style="text-align:right" class="col-sm-2 col-form-label">Quantity</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputQty" placeholder="0">
+        </div>
+      </div>
+
+      <div class="d-grid py-3">
         <button class="btn btn-outline-success btn-lg btn-spacing">Place Order</button>
         <a class="btn btn-outline-secondary btn-lg btn-spacing" href="trades">View Trade</a>
       </div>
