@@ -60,16 +60,24 @@ public class OrderService {
 		return orderRep.getByOrderID(ID);
 	}
 	
+	public List<Order> getAllOrdersByUserID(int userID){
+		return orderRep.findAllByUserID(userID);
+	}
+	
 	public List<Order> getAllOrders() {
 		return orderRep.findAll();
 	}
 	
+	public List<Order> getAllOrdersByType(String type){
+		return orderRep.findAllByType(type);
+	}
+	
 	public List<Order> getAllBuyOrders(){
-		return orderRep.findAllByType("Buy");
+		return orderRep.findAllByBuyOrSell("Buy");
 	}
 	
 	public List<Order> getAllSellOrders(){
-		return orderRep.findAllByType("Sell");
+		return orderRep.findAllByBuyOrSell("Sell");
 	}
 	
 	public List<String> getAllOrderStatus(){

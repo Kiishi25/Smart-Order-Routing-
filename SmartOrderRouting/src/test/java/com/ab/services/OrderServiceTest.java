@@ -21,13 +21,19 @@ class OrderServiceTest {
 //	}
 	
 	@Test
-	public void addOrderHistory() {
-		int orderID = 4;
-		int orderID2 = 2;
-//		Order order2 = new Order("Sell",100, 100);
-//		orderService.addOrder(order2);
-		assertEquals("",orderService.addOrderHistory(orderService.getOrder(orderID).getOrderID(), orderService.getOrder(orderID2).getOrderID(), 100, 100).toString());
+	public void addMarketOrder() {
+		Order order = new Order("Buy", 100);
+		assertEquals(true,order.toString());
 	}
+	
+//	@Test
+//	public void addOrderHistory() {
+//		int orderID = 4;
+//		int orderID2 = 2;
+////		Order order2 = new Order("Sell",100, 100);
+////		orderService.addOrder(order2);
+//		assertEquals("",orderService.addOrderHistory(orderService.getOrder(orderID).getOrderID(), orderService.getOrder(orderID2).getOrderID(), 100, 100).toString());
+//	}
 	
 //	@Test
 //	public void cancelOrder() {

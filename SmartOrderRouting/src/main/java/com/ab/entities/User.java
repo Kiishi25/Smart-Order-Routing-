@@ -17,12 +17,9 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int userID;
-	
 	private String username;
-	private String firstname;
-	private String lastname;
+	private String name;
+	private String email;
 	private String password;
 	
 	@OneToMany( fetch =FetchType.EAGER,
@@ -30,15 +27,18 @@ public class User {
 			cascade = CascadeType.ALL)
 	private List<Order> orders = new ArrayList<>();
 	
-	public User(String username, String firstname, String lastname, String password) {
+	public User(String username, String name, String email, String password) {
 		this.username = username;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.name = name;
+		this.email = email;
 		this.password = password;
 	}
 	
 	public User() {}
 	
+	public String getPassword() {
+		return password;
+	}
 	
 	
 	

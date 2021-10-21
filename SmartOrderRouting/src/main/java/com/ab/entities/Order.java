@@ -28,10 +28,13 @@ public class Order {
     @JoinColumn(name = "orderBookID")
 	private OrderBook orderBook;
 	
-	private String type;//buy/sell
+	private String buyOrSell;//buy/sell
+	private String type;//market/limit/
 	private String status;//partially filled or fully filled
+	private String auctionTime;//Opening/closing auction or null
 	private double priceLimit;//max/min value a share will be bought or sold for
 	private int shareQuantity;//the amount of shares to be bought or sold
+	private boolean isHidden;//if true wont display limit or quantity
 	
 	@OneToMany( fetch =FetchType.EAGER,
 	mappedBy = "order",
@@ -45,11 +48,30 @@ public class Order {
 	private User user;
 	
 	public Order() {}
-	
+	//Limit Order
 	public Order(String type, double limit, int shareQuantity) {
 		this.type = type;
 		this.priceLimit = limit;
 		this.shareQuantity = shareQuantity;
+	}
+	//Market Order
+	public Order(String type, int shareQuantity) {
+		this.type = type;
+		this.shareQuantity = shareQuantity;
+	}
+	//Hidden Order
+	public Order(String type, double limit, int shareQuantity, boolean isHidden) {
+		this.type = type;
+		this.priceLimit = limit;
+		this.shareQuantity = shareQuantity;
+		this.isHidden = isHidden;
+	}
+	//Open/Close Order
+	public Order(String type, double limit, int shareQuantity, String auctionTime) {
+		this.type = type;
+		this.priceLimit = limit;
+		this.shareQuantity = shareQuantity;
+		this.auctionTime = auctionTime;
 	}
 	
 	public int getOrderID() {
