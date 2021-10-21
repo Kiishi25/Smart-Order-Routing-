@@ -8,9 +8,9 @@
       <div style="text-align: right">
         <div class="btn-group btn-group-sm">
           <input type="radio" class="btn-check me-md-2" name="btnradio" id="btnbuy" checked>
-          <label class="btn btn-outline-success" for="btnbuy">BUY</label>
+          <label class="btn btn-success" for="btnbuy">BUY</label>
           <input type="radio" class="btn-check" name="btnradio" id="btnsell">
-          <label class="btn btn-outline-danger" for="btnsell">SELL</label>
+          <label class="btn btn-danger" for="btnsell">SELL</label>
         </div>
       </div>
       <!-- Table -->
@@ -18,49 +18,29 @@
         <table class="table table-hover table-bordered table-sm">
           <thead>
             <tr>
-              <th>Orders</th>
-              <th>Quantity</th>
-              <th>Price</th>
-              <th>Timestamp</th>
+              <th scope="col" sortable="order" (sort)="onSort($event)">Orders</th>
+              <th scope="col" sortable="qty" (sort)="onSort($event)">Quantity</th>
+              <th scope="col" sortable="price" (sort)="onSort($event)">Price</th>
+              <th scope="col" sortable="ts" (sort)="onSort($event)">Timestamp</th>
             </tr>
           </thead>
           <tbody class="table-light">
-            <tr>
-              <th>BTC-USD</th>
-              <th>10</th>
-              <th>USD63998.36</th>
-              <th>2020-11-05 11:05:10</th>
-            </tr>
-            <tr>
-              <th>BTC-EUR</th>
-              <th>15</th>
-              <th>EUR63998.36</th>
-              <th>2020-11-05 11:05:10</th>
-            </tr>
-            <tr>
-              <th>BTC-GBP</th>
-              <th>100</th>
-              <th>GBP63998.36</th>
-              <th>2020-11-05 11:05:10</th>
-            </tr>
-            <tr>
-              <th>ETH-USD</th>
-              <th>55</th>
-              <th>USD63998.36</th>
-              <th>2020-11-05 11:05:10</th>
-            </tr>
-            <tr>
-              <th>ETH-USD</th>
-              <th>33</th>
-              <th>USD65998.36</th>
-              <th>2020-11-05 11:05:10</th>
+            <tr *ngFor="let tradeHistory of tradeHistories">
+              <td>{{ tradeHistory.order }}</td>
+              <td>{{ tradeHistory.qty | number }}</td>
+              <td>{{ tradeHistory.price | number }}</td>
+              <td>{{ tradeHistory.ts }}</td>
             </tr>
           </tbody>
         </table>
       </div>
+      <!-- Pagination -->
+      <div class="d-flex justify-content-end">
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshTradeHistories()"></ngb-pagination>
+      </div>
       <!-- Action -->
-      <div class="d-grid">
-        <a class="btn btn-outline-secondary btn-lg btn-spacing" href="trades">View Trade</a>
+      <div class="d-grid py-5">
+        <a class="btn btn-dark btn-lg btn-spacing" href="trades">View Trade</a>
       </div>
     </div>
   </div>
