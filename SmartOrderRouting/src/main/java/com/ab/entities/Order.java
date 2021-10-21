@@ -40,6 +40,10 @@ public class Order {
 	private List<OrderHistory> history = new ArrayList<OrderHistory>();
 	//list showing how many shares this order has taken/given to another order
 	
+	@ManyToOne
+    @JoinColumn(name = "userID")
+	private User user;
+	
 	public Order() {}
 	
 	public Order(String type, double limit, int shareQuantity) {
