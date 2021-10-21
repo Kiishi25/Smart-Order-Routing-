@@ -29,12 +29,12 @@ public class Order {
 	private OrderBook orderBook;
 	
 	private String buyOrSell;//buy/sell
-	private String type;//market/limit/
+	private String type;//market/priceLimit/
 	private String status;//partially filled or fully filled
 	private String auctionTime;//Opening/closing auction or null
 	private double priceLimit;//max/min value a share will be bought or sold for
 	private int shareQuantity;//the amount of shares to be bought or sold
-	private boolean isHidden;//if true wont display limit or quantity
+	private boolean isHidden;//if true wont display priceLimit or quantity
 	
 	@OneToMany( fetch =FetchType.EAGER,
 	mappedBy = "order",
@@ -48,28 +48,32 @@ public class Order {
 	private User user;
 	
 	public Order() {}
-	//Limit Order
-	public Order(String type, double limit, int shareQuantity) {
+	//priceLimit Order
+	public Order(String buyOrSell, String type, double priceLimit, int shareQuantity) {
+		this.buyOrSell = buyOrSell;
 		this.type = type;
-		this.priceLimit = limit;
+		this.priceLimit = priceLimit;
 		this.shareQuantity = shareQuantity;
 	}
 	//Market Order
-	public Order(String type, int shareQuantity) {
+	public Order(String buyOrSell, String type, int shareQuantity) {
+		this.buyOrSell = buyOrSell;
 		this.type = type;
 		this.shareQuantity = shareQuantity;
 	}
 	//Hidden Order
-	public Order(String type, double limit, int shareQuantity, boolean isHidden) {
+	public Order(String buyOrSell, String type, double priceLimit, int shareQuantity, boolean isHidden) {
+		this.buyOrSell = buyOrSell;
 		this.type = type;
-		this.priceLimit = limit;
+		this.priceLimit = priceLimit;
 		this.shareQuantity = shareQuantity;
 		this.isHidden = isHidden;
 	}
 	//Open/Close Order
-	public Order(String type, double limit, int shareQuantity, String auctionTime) {
+	public Order(String buyOrSell, String type, double priceLimit, int shareQuantity, String auctionTime) {
+		this.buyOrSell = buyOrSell;
 		this.type = type;
-		this.priceLimit = limit;
+		this.priceLimit = priceLimit;
 		this.shareQuantity = shareQuantity;
 		this.auctionTime = auctionTime;
 	}
@@ -78,7 +82,7 @@ public class Order {
 		return orderID;
 	}
 	
-	public double getPriceLimit() {
+	public double getpriceLimit() {
 		return priceLimit;
 	}
 	

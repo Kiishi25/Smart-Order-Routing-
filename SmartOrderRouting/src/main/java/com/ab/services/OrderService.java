@@ -22,7 +22,27 @@ public class OrderService {
 	private HistoryRepository historyRep;
 	
 	
-	public boolean addOrder(Order order) {
+	public boolean addMarketOrder(String buyOrSell, int shareQuantity) {
+		Order order = new Order(buyOrSell, "Market", shareQuantity);
+		return addOrder(order);
+	}
+	
+	public boolean addLimitOrder(String buyOrSell,double priceLimit, int shareQuantity) {
+		Order order = new Order(buyOrSell, "Market", priceLimit, shareQuantity);
+		return addOrder(order);
+	}
+	
+	public boolean addHiddenOrder(String buyOrSell, double priceLimit, int shareQuantity) {
+		Order order = new Order(buyOrSell, "Market", priceLimit, shareQuantity, true);
+		return addOrder(order);
+	}
+	
+	public boolean addTimedOrder(String buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+		Order order = new Order(buyOrSell, "Market", priceLimit, shareQuantity, auctionTime);
+		return addOrder(order);
+	}
+	
+	private boolean  addOrder(Order order) {
 		try {
 			orderRep.save(order);
 			return true;

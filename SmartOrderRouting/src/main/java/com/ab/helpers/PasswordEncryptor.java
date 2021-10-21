@@ -30,8 +30,8 @@ public class PasswordEncryptor {
 	        SecretKeySpec sks = new SecretKeySpec(bytekey, PasswordEncryptor.AES);
 	        Cipher cipher = Cipher.getInstance(PasswordEncryptor.AES);
 	        cipher.init(Cipher.DECRYPT_MODE, sks);
-	        byte[] decrypted = cipher.doFinal(hexStringToByteArray(password));
-	        String OriginalPassword = new String(decrypted);
+	        byte[] decrypted = cipher.doFinal(hexStringToByteArray(encryptedPassword));
+	        password = new String(decrypted);
 		}catch(Exception e) {
 			//add later
 		}
