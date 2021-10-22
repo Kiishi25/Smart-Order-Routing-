@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SmartOrderRoutingApplication<SmartOrderRouting>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.ab.SmartOrderRoutingApplication",
+            "projectName": "SmartOrderRouting",
+            "args": ""
+        }
+    ]
+}

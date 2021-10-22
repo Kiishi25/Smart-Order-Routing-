@@ -21,8 +21,8 @@ public class User {
 	private int userID;
 	
 	private String username;
-	private String firstname;
-	private String lastname;
+	private String fullName;
+	private String email;
 	private String password;
 	
 	@OneToMany( fetch =FetchType.EAGER,
@@ -30,14 +30,76 @@ public class User {
 			cascade = CascadeType.ALL)
 	private List<Order> orders = new ArrayList<>();
 	
-	public User(String username, String firstname, String lastname, String password) {
+	public User(String username, String fullName, String email, String password) {
 		this.username = username;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.fullName = fullName;
+		this.email = email;
 		this.password = password;
 	}
 	
 	public User() {}
+
+
+	public int getUserID() {
+		return this.userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getFullName() {
+		return this.fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<Order> getOrders() {
+		return this.orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+	
+
+	@Override
+	public String toString() {
+		return "{" +
+			" userID='" + getUserID() + "'" +
+			", username='" + getUsername() + "'" +
+			", fullName='" + getFullName() + "'" +
+			", email='" + getEmail() + "'" +
+			", password='" + getPassword() + "'" +
+			", orders='" + getOrders() + "'" +
+			"}";
+	}
 	
 	
 	
