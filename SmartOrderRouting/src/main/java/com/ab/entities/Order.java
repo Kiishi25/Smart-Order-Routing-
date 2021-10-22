@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 
 @Entity
 @Table(name="Orders")
@@ -27,20 +29,27 @@ public class Order {
 	@ManyToOne
     @JoinColumn(name = "orderBookID")
 	private OrderBook orderBook;
-	
+	@Getter
 	private String buyOrSell;//buy/sell
+	@Getter
 	private String type;//market/priceLimit/
+	@Getter
 	private String status;//partially filled or fully filled
+	@Getter
 	private String auctionTime;//Opening/closing auction or null
+	@Getter
 	private double priceLimit;//max/min value a share will be bought or sold for
+	@Getter
 	private int shareQuantity;//the amount of shares to be bought or sold
+	@Getter
 	private boolean isHidden;//if true wont display priceLimit or quantity
 	
 	@OneToMany( fetch =FetchType.EAGER,
 	mappedBy = "order",
 	cascade = CascadeType.ALL)
 	//				orderID shareQuantity
-	private List<OrderHistory> history = new ArrayList<OrderHistory>();
+	@Getter
+	private List<TradeHistory> history = new ArrayList<TradeHistory>();
 	//list showing how many shares this order has taken/given to another order
 	
 	@ManyToOne
@@ -77,27 +86,44 @@ public class Order {
 		this.shareQuantity = shareQuantity;
 		this.auctionTime = auctionTime;
 	}
-	
-	public int getOrderID() {
-		return orderID;
-	}
-	
-	public double getpriceLimit() {
-		return priceLimit;
-	}
-	
-	public int getShareQuantity() {
-		return shareQuantity;
-	}
-	
-	public List<OrderHistory> getHistory(){
-		return history;
-	}
 
 	@Override
 	public String toString() {
 		return "Order [orderID=" + orderID + ", orderBook=" + orderBook + ", type=" + type + ", status=" + status
 				+ ", priceLimit=" + priceLimit + ", shareQuantity=" + shareQuantity + ", history=" + history + "]";
+	}
+	public int getOrderID() {
+		return orderID;
+	}
+	public OrderBook getOrderBook() {
+		return orderBook;
+	}
+	public String getBuyOrSell() {
+		return buyOrSell;
+	}
+	public String getType() {
+		return type;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public String getAuctionTime() {
+		return auctionTime;
+	}
+	public double getPriceLimit() {
+		return priceLimit;
+	}
+	public int getShareQuantity() {
+		return shareQuantity;
+	}
+	public boolean isHidden() {
+		return isHidden;
+	}
+	public List<TradeHistory> getHistory() {
+		return history;
+	}
+	public User getUser() {
+		return user;
 	}
 	
 }

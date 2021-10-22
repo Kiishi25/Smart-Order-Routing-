@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ab.entities.Order;
-import com.ab.entities.OrderHistory;
+import com.ab.entities.TradeHistory;
 import com.ab.repositories.HistoryRepository;
 import com.ab.repositories.OrderRepository;
 
@@ -22,27 +22,44 @@ public class OrderService {
 	private HistoryRepository historyRep;
 	
 	
-	public boolean addMarketOrder(String buyOrSell, int shareQuantity) {
-		Order order = new Order(buyOrSell, "Market", shareQuantity);
-		return addOrder(order);
+	private Order addMarketOrder(String buyOrSell, String type, int shareQuantity) {
+		Order order = new Order(buyOrSell, type, shareQuantity);
+		return order;
 	}
 	
-	public boolean addLimitOrder(String buyOrSell,double priceLimit, int shareQuantity) {
-		Order order = new Order(buyOrSell, "Market", priceLimit, shareQuantity);
-		return addOrder(order);
+	private Order addLimitOrder(String buyOrSell, String type,double priceLimit, int shareQuantity) {
+		Order order = new Order(buyOrSell, type, priceLimit, shareQuantity);
+		return order;
 	}
 	
-	public boolean addHiddenOrder(String buyOrSell, double priceLimit, int shareQuantity) {
-		Order order = new Order(buyOrSell, "Market", priceLimit, shareQuantity, true);
-		return addOrder(order);
+	private Order addHiddenOrder(String buyOrSell, String type, double priceLimit, int shareQuantity) {
+		Order order = new Order(buyOrSell, type, priceLimit, shareQuantity, true);
+		return order;
 	}
 	
-	public boolean addTimedOrder(String buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
-		Order order = new Order(buyOrSell, "Market", priceLimit, shareQuantity, auctionTime);
-		return addOrder(order);
+	private Order addTimedOrder(String buyOrSell, String type, double priceLimit, int shareQuantity, String auctionTime) {
+		Order order = new Order(buyOrSell, type, priceLimit, shareQuantity, auctionTime);
+		return order;
 	}
 	
-	private boolean  addOrder(Order order) {
+	public boolean  addOrder(String type, String buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+		Order order;
+		switch(type) {
+		case "Market":
+			order = addMarketOrder(buyOrSell, type , shareQuantity);
+			break;
+		case "Limit":
+			order = addLimitOrder(buyOrSell, type, priceLimit, shareQuantity);
+			break;
+		case "Hidden":
+			order = addHiddenOrder(buyOrSell, type, priceLimit, shareQuantity);
+			break;
+		case "Timed":
+			order = addTimedOrder(buyOrSell, type, priceLimit, shareQuantity, auctionTime);
+			break;
+		default:
+			order = null;
+		}
 		try {
 			orderRep.save(order);
 			return true;
@@ -53,11 +70,11 @@ public class OrderService {
 		}
 	}
 	
-	public Order addOrderHistory(int orderID1, int orderID2, int shareQuanitity, double value) {
+	public TradeHistory addTradeHistory(int orderID1, int orderID2, int shareQuanitity, double value) {
 		Order order = orderRep.getByOrderID(orderID1);
-		OrderHistory history = new OrderHistory(order,orderID2, shareQuanitity, value);
+		TradeHistory history = new TradeHistory(order,orderID2, shareQuanitity, value);
 		historyRep.save(history);
-		return orderRep.getByOrderID(orderID1);
+		return history;
 	}
 	
 	public Order cancelOrder(int orderID) {
@@ -66,14 +83,14 @@ public class OrderService {
 		return cancelledOrder;
 	}
 	
-	public Order updateOrder(int orderID, double limit) {
-		orderRep.changeOrderLimit(limit, orderID);
-		return orderRep.getByOrderID(orderID);
-	}
-	
-	public Order updateOrder(int orderID, int shareQuantity) {
-		orderRep.changeOrderShareQuantity(shareQuantity, orderID);
-		return orderRep.getByOrderID(orderID);
+	public Order updateOrder(int orderID, double limit, int shareQuantity) {
+		if(limit != 0) {
+			orderRep.changeOrderLimit(limit, orderID);
+			return orderRep.getByOrderID(orderID);
+		}else {
+			orderRep.changeOrderShareQuantity(shareQuantity, orderID);
+			return orderRep.getByOrderID(orderID);
+		}
 	}
 	
 	public Order getOrder(int ID) {

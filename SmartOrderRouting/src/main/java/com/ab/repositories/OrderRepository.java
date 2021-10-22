@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ab.entities.Order;
-import com.ab.entities.OrderHistory;
+import com.ab.entities.TradeHistory;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Integer>{
@@ -40,7 +40,7 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 	@Transactional
 	@Modifying
 	@Query("UPDATE Order o SET o.history =:history WHERE o.orderID =:orderID")
-	public void addHistoryByOrderID(@Param("orderID")int orderID1,@Param("history") List<OrderHistory> history);
+	public void addHistoryByOrderID(@Param("orderID")int orderID1,@Param("history") List<TradeHistory> history);
 
 	@Query("From Order o WHERE o.orderID =:orderID")
 	public Order getByOrderID(@Param("orderID")int orderID);

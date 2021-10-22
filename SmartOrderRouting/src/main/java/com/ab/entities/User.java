@@ -12,14 +12,20 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name="Users")
 public class User {
 
 	@Id
+	@Getter
 	private String username;
-	private String name;
+	@Getter
+	private String fullName;
+	@Getter
 	private String email;
+	@Getter
 	private String password;
 	
 	@OneToMany( fetch =FetchType.EAGER,
@@ -29,7 +35,7 @@ public class User {
 	
 	public User(String username, String name, String email, String password) {
 		this.username = username;
-		this.name = name;
+		this.fullName = name;
 		this.email = email;
 		this.password = password;
 	}
