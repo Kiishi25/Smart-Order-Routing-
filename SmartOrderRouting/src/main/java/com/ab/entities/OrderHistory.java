@@ -42,4 +42,45 @@ public class OrderHistory {
 				+ ", shareQuantity=" + shareQuantity + ", value=" + value + "]";
 	}
 
+	public int getHistoryID() {
+		return this.historyID;
+	}
+
+	public void setHistoryID(int historyID) {
+		this.historyID = historyID;
+	}
+
+	public Order getOrder() {
+		return this.order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public int getOrderID2() {
+		return this.orderID2;
+	}
+
+	public void setOrderID2(int orderID2) {
+		this.orderID2 = orderID2;
+	}
+
+	public int getShareQuantity() {
+		return this.shareQuantity;
+	}
+
+	public void setShareQuantity(int shareQuantity) {
+		this.shareQuantity = shareQuantity;
+	}
+
+	public double getValue() {
+		return this.value;
+	}
+
+	public void setValue(double value) {
+		this.value = value;
+	}
+
+
 }

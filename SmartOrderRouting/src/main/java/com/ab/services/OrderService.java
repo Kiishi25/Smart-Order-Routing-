@@ -33,11 +33,11 @@ public class OrderService {
 		}
 	}
 	
-	public Order addOrderHistory(int orderID1, int orderID2, int shareQuanitity, double value) {
+	public OrderHistory addOrderHistory(int orderID1, int orderID2, int shareQuanitity, double value) {
 		Order order = orderRep.getByOrderID(orderID1);
 		OrderHistory history = new OrderHistory(order,orderID2, shareQuanitity, value);
 		historyRep.save(history);
-		return orderRep.getByOrderID(orderID1);
+		return history;
 	}
 	
 	public Order cancelOrder(int orderID) {
@@ -46,12 +46,8 @@ public class OrderService {
 		return cancelledOrder;
 	}
 	
-	public Order updateOrder(int orderID, double limit) {
+	public Order updateOrder(int orderID, double limit, int shareQuantity) {
 		orderRep.changeOrderLimit(limit, orderID);
-		return orderRep.getByOrderID(orderID);
-	}
-	
-	public Order updateOrder(int orderID, int shareQuantity) {
 		orderRep.changeOrderShareQuantity(shareQuantity, orderID);
 		return orderRep.getByOrderID(orderID);
 	}

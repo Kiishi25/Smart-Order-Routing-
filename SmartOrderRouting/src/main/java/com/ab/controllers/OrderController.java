@@ -48,7 +48,7 @@ public class OrderController {
 	}
 	@PostMapping("/orderHistory")
 	public OrderHistory addOrderHistory(@RequestBody OrderHistory orderHistory) {
-		return orderService.addOrderHistory(orderHistory.getOrderID(), orderHistory.getShareQuantity(), orderHistory.getValue());
+		return orderService.addOrderHistory(orderHistory.getOrder().getOrderID(),orderHistory.getOrderID2(), orderHistory.getShareQuantity(), orderHistory.getValue());
 
 	}
 	@PutMapping("/cancelOrder/{orderID}")
@@ -58,7 +58,7 @@ public class OrderController {
 
 	@PutMapping("/updateOrder")
 	public Order updateOrder(@RequestBody Order order) {
-		return orderService.updateOrder(order.getOrderID(), order.getShareQuantity(), order.getPriceLimit());
+		return orderService.updateOrder(order.getOrderID(), order.getPriceLimit(), order.getShareQuantity());
 
 	}
 }
