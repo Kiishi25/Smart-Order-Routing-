@@ -42,3 +42,4 @@ angularclient/e2e/*.map
 # System Files
 angularclient/.DS_Store
 angularclient/Thumbs.db
+SmartOrderRouting/target/*
