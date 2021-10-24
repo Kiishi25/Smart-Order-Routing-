@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@Angular/common/http';
-import { Trade } from '../model/trade';
+import { Trade } from '../models/trade';
 import { Observable } from 'rxjs';
 
 @Injectable()

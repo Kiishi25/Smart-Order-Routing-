@@ -102,3 +102,22 @@ body {
     width: 100%;
   }
 }
+/* Button Orange */
+.btn {
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: rgb(243, 172, 41);
+  color: black;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.warning {
+  border-color: #ff9900da;
+  color: rgb(241, 188, 90);
+}
+
+.warning:hover {
+  background: #ff9800;
+  color: rgb(255, 255, 255);
+}

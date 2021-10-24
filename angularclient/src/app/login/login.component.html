@@ -16,9 +16,9 @@
                                     <div class="panel panel-body">
                                         <form style=" background-color: rgb(217, 217, 243);" class="intro-form" action="#" id="invite-2" method="POST">
                                            <h5><i class="fas fa-user-lock"></i>  Account Login <span>Welcome back, Please enter with username and password</span></h5>
-                                           <input name="username" id="username-2" class="username" placeholder="Username" type="text" required="required">
-                                           <input type="password" placeholder="Password" name="password" required="required">
-                                           <button style="background-color: #5196e6;" type="submit" class="btn btn-secondary btn-block">login </button>
+                                           <input name="username" id="username-2" class="username" placeholder="Username" type="text" required="required" [(ngModel)]="username">
+                                           <input type="password" placeholder="Password" name="password" required="required" [(ngModel)]="password">
+                                           <button style="background-color: #5196e6;" (click)="authenticateUser()" class="btn btn-secondary btn-block">login </button>
 
                                            <p>By Clicking Get Trial you agree to our terms of conditions of this product</p>
                                            <p>Forgot your password?</p>

@@ -12,8 +12,14 @@ import { ContactComponent } from './contact-us/contact.component';
 import { TradeHistorySortComponent, TradeHistoryComponent } from './tradeHistory/tradeHistory.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { TradeService } from '../service/trade.service';
+import { TradeService } from '../app/services/trade.service';
+import { UserService } from '../app/services/user.service';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { HttpClientModule } from '@angular/common/http';
+import { UserController } from '../app/controllers/user.controller';
+
 
 @NgModule({
   declarations: [
@@ -33,9 +39,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
-  providers: [TradeService],
+  providers: [TradeService, 
+    UserService, UserController
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
