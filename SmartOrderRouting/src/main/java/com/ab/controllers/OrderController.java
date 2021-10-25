@@ -3,7 +3,7 @@ package com.ab.controllers;
 import java.util.List;
 
 import com.ab.entities.Order;
-import com.ab.entities.OrderHistory;
+import com.ab.entities.TradeHistory;
 import com.ab.services.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +46,9 @@ public class OrderController {
 	 return orderService.getAllOrderStatus();
      
 	}
-	@PostMapping("/orderHistory")
-	public OrderHistory addOrderHistory(@RequestBody OrderHistory orderHistory) {
-		return orderService.addOrderHistory(orderHistory.getOrder().getOrderID(),orderHistory.getOrderID2(), orderHistory.getShareQuantity(), orderHistory.getValue());
+	@PostMapping("/tradeHistory")
+	public TradeHistory addtradeHistory(@RequestBody TradeHistory tradeHistory) {
+		return orderService.addTradeHistory(tradeHistory.getOrder().getOrderID(), tradeHistory.getOrderID2(), tradeHistory.getShareQuantity(), tradeHistory.getValue());
 
 	}
 	@PutMapping("/cancelOrder/{orderID}")

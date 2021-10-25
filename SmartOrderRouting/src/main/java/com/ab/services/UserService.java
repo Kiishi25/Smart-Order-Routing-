@@ -1,39 +1,32 @@
 package com.ab.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ab.entities.User;
+import com.ab.helpers.EmailValidator;
+import com.ab.helpers.PasswordEncryptor;
 import com.ab.repositories.UserRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+public class UserService {
 
-
-@Service
-@Component
-@Transactional
-public class UserService implements IUserService{
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Override
-    public List<User> findUsers() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public User authenticateUser(String username, String password) {
-        return userRepository.findUserByUsernameAndPassword(username, password);
-    }
-
-    @Override
-    public Optional<User> findUser(int userId) {
-        return userRepository.findById(userId);
-    }
-    
+	@Autowired
+	private UserRepository userRep;
+	
+	public void registerUser(String username, String name, String email, String password) {
+		password = PasswordEncryptor.encrypt(password);
+		if(EmailValidator.isValid(email)) {
+			User user = new User(username,name,email,password);
+			userRep.save(user);
+		}
+	}
+	
+	public User loginUser(String username, String password) {
+		User user = userRep.getUserByUsername(username);
+		String storedPassword = PasswordEncryptor.decrypt(user.getPassword());
+		if(password.equals(storedPassword)) {
+			return user;
+		}else {
+			return null;
+		}
+	}
 }

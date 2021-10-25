@@ -14,20 +14,26 @@ class OrderServiceTest {
 	@Autowired
 	private OrderService orderService;
 	
-//	@Test
-//	public void addOrder() {
-//		Order order = new Order("Buy",100, 100);
-//		assertEquals(true,orderService.addOrder(order));
-//	}
+	@Test
+	public void addMarketOrder() {
+		Order order = new Order("Buy", "Market",100);
+		assertEquals(true,order.toString());
+	}
 	
 	@Test
-	public void addOrderHistory() {
-		int orderID = 4;
-		int orderID2 = 2;
-//		Order order2 = new Order("Sell",100, 100);
-//		orderService.addOrder(order2);
-		assertEquals("",orderService.addOrderHistory(orderService.getOrder(orderID).getOrderID(), orderService.getOrder(orderID2).getOrderID(), 100, 100).toString());
+	public void addHiddenOrder() {
+		Order order = new Order("Buy","Hidden",50,100,true);
+		assertEquals(true,order.toString());
 	}
+	
+//	@Test
+//	public void addOrderHistory() {
+//		int orderID = 4;
+//		int orderID2 = 2;
+////		Order order2 = new Order("Sell",100, 100);
+////		orderService.addOrder(order2);
+//		assertEquals("",orderService.addOrderHistory(orderService.getOrder(orderID).getOrderID(), orderService.getOrder(orderID2).getOrderID(), 100, 100).toString());
+//	}
 	
 //	@Test
 //	public void cancelOrder() {
