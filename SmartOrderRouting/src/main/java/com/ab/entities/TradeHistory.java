@@ -8,12 +8,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
 import lombok.Getter;
 
 
 
 @Entity
 @Table(name="TradeHistory")
+@Data
 public class TradeHistory {
 	
 	@Id
@@ -44,26 +46,5 @@ public class TradeHistory {
 		return "TradeHistory [historyID=" + historyID + ", order=" + order + ", orderID2=" + orderID2
 				+ ", shareQuantity=" + shareQuantity + ", value=" + value + "]";
 	}
-
-	public int getHistoryID() {
-		return historyID;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public int getOrderID2() {
-		return orderID2;
-	}
-
-	public int getShareQuantity() {
-		return shareQuantity;
-	}
-
-	public double getValue() {
-		return value;
-	}
-
 	
 }

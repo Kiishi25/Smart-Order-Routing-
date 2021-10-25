@@ -12,20 +12,19 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Data;
 import lombok.Getter;
+
 
 @Entity
 @Table(name="Users")
+@Data
 public class User {
 
 	@Id
-	@Getter
 	private String username;
-	@Getter
 	private String fullName;
-	@Getter
 	private String email;
-	@Getter
 	private String password;
 	
 	@OneToMany( fetch =FetchType.EAGER,
