@@ -141,7 +141,7 @@ export class TradeComponent {
   collectionSize = TRADES.length;
 
   constructor() {
-    this.title = "Trades";
+    this.title = "Orders";
     this.trades = TRADES;
 
     this.refreshTrades();

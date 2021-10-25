@@ -141,7 +141,7 @@ export class TradeHistoryComponent {
   collectionSize = TRADE_HISTORY.length;
 
   constructor() {
-    this.title = "Trade History";
+    this.title = "History";
     this.tradeHistories = TRADE_HISTORY;
 
     this.refreshTradeHistories();

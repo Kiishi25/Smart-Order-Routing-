@@ -19,15 +19,15 @@
           <thead>
             <tr>
               <th scope="col"></th>
-              <th scope="col" sortable="instrument" (sort)="onSort($event)">Instruments</th>
-              <th scope="col" sortable="price" (sort)="onSort($event)">Price</th>
+              <th scope="col" sortable="instrumentName" (sort)="onSort($event)">Instruments</th>
+              <th scope="col" sortable="marketValue" (sort)="onSort($event)">Market Value</th>
             </tr>
           </thead>
           <tbody class="table-light">
             <tr *ngFor="let order of orders">
               <th scope="row"><input type="radio" name=order id={{order.id}} value={{order.id}}></th>
-              <td>{{ order.instrument }}</td>
-              <td>{{ order.price | number }}</td>
+              <td>{{ order.instrumentName }}</td>
+              <td>{{ order.marketValue | number }}</td>
             </tr>
           </tbody>
         </table>
@@ -41,6 +41,12 @@
         <label for="inputQty" style="text-align:right" class="col-sm-2 col-form-label">Quantity</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" id="inputQty" placeholder="0">
+        </div>
+      </div>
+      <div class="form-group row text-center">
+        <label for="priceLimit" style="text-align:right" class="col-sm-2 col-form-label">Price Limit</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="priceLimit" placeholder="0">
         </div>
       </div>
 

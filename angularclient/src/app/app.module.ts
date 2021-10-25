@@ -12,7 +12,7 @@ import { ContactComponent } from './contact-us/contact.component';
 import { TradeHistorySortComponent, TradeHistoryComponent } from './tradeHistory/tradeHistory.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { TradeService } from '../app/services/trade.service';
+import { OrderBookService } from './services/orderBook.service';
 import { UserService } from '../app/services/user.service';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -42,8 +42,10 @@ import { UserController } from '../app/controllers/user.controller';
     NgbModule,
     HttpClientModule
   ],
-  providers: [TradeService, 
-    UserService, UserController
+  providers: [
+    OrderBookService,
+    UserService,
+    UserController
   ],
   bootstrap: [AppComponent]
 })

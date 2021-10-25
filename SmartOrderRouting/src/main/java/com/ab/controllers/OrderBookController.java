@@ -15,7 +15,7 @@ public class OrderBookController {
 	@Autowired
 	private OrderBookService orderService;
 
-	@GetMapping("/orderBook/")
+	@GetMapping("/orderBook")
 	public List<OrderBook>getAllOrderBooks(){
 		return orderService.findOrderBooks();
 

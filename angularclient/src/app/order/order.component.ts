@@ -1,138 +1,134 @@
-import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren, Inject } from '@angular/core';
+import { OrderBookController } from '../controllers/orderBook.controller';
+import { OrderBook } from '../models/OrderBook';
 
-interface Order {
-  id: number;
-  instrument: string;
-  price: number;
-}
+// const BUY_ORDERS: OrderBook[] = [
+//   {
+//     orderBookID: 1,
+//     instrumentName: 'BTC-USD',
+//     marketValue: 30000,
+//   },
+//   {
+//     orderBookID: 2,
+//     instrumentName: 'BTC-EUR',
+//     marketValue: 29000,
+//   },
+//   {
+//     orderBookID: 3,
+//     instrumentName: 'BTC-GBP',
+//     marketValue: 22000,
+//   },
+//   {
+//     orderBookID: 4,
+//     instrumentName: 'ETH-USD',
+//     marketValue: 43141,
+//   },
+//   {
+//     orderBookID: 5,
+//     instrumentName: 'ETH-EUR',
+//     marketValue: 40132,
+//   },
+//   {
+//     orderBookID: 6,
+//     instrumentName: 'ETH-GBP',
+//     marketValue: 34039,
+//   },
+//   {
+//     orderBookID: 7,
+//     instrumentName: 'XHL-USD',
+//     marketValue: 29183,
+//   },
+//   {
+//     orderBookID: 8,
+//     instrumentName: 'XHL-EUR',
+//     marketValue: 27314,
+//   },
+//   {
+//     orderBookID: 9,
+//     instrumentName: 'XHL-GBP',
+//     marketValue: 22019,
+//   },
+//   {
+//     orderBookID: 10,
+//     instrumentName: 'NIO-USD',
+//     marketValue: 109888,
+//   },
+//   {
+//     orderBookID: 11,
+//     instrumentName: 'NIO-EUR',
+//     marketValue: 100232,
+//   },
+//   {
+//     orderBookID: 12,
+//     instrumentName: 'NIO-GBP',
+//     marketValue: 91002,
+//   }
+// ];
 
-const BUY_ORDERS: Order[] = [
-  {
-    id: 1,
-    instrument: 'BTC-USD',
-    price: 30000,
-  },
-  {
-    id: 2,
-    instrument: 'BTC-EUR',
-    price: 29000,
-  },
-  {
-    id: 3,
-    instrument: 'BTC-GBP',
-    price: 22000,
-  },
-  {
-    id: 4,
-    instrument: 'ETH-USD',
-    price: 43141,
-  },
-  {
-    id: 5,
-    instrument: 'ETH-EUR',
-    price: 40132,
-  },
-  {
-    id: 6,
-    instrument: 'ETH-GBP',
-    price: 34039,
-  },
-  {
-    id: 7,
-    instrument: 'XHL-USD',
-    price: 29183,
-  },
-  {
-    id: 8,
-    instrument: 'XHL-EUR',
-    price: 27314,
-  },
-  {
-    id: 9,
-    instrument: 'XHL-GBP',
-    price: 22019,
-  },
-  {
-    id: 10,
-    instrument: 'NIO-USD',
-    price: 109888,
-  },
-  {
-    id: 11,
-    instrument: 'NIO-EUR',
-    price: 100232,
-  },
-  {
-    id: 12,
-    instrument: 'NIO-GBP',
-    price: 91002,
-  }
-];
+// const SELL_ORDERS: OrderBook[] = [
+//   {
+//     orderBookID: 1,
+//     instrumentName: 'BTC-USD',
+//     marketValue: 35000,
+//   },
+//   {
+//     orderBookID: 2,
+//     instrumentName: 'BTC-EUR',
+//     marketValue: 31000,
+//   },
+//   {
+//     orderBookID: 3,
+//     instrumentName: 'BTC-GBP',
+//     marketValue: 24000,
+//   },
+//   {
+//     orderBookID: 4,
+//     instrumentName: 'ETH-USD',
+//     marketValue: 45222,
+//   },
+//   {
+//     orderBookID: 5,
+//     instrumentName: 'ETH-EUR',
+//     marketValue: 41345,
+//   },
+//   {
+//     orderBookID: 6,
+//     instrumentName: 'ETH-GBP',
+//     marketValue: 32972,
+//   },
+//   {
+//     orderBookID: 7,
+//     instrumentName: 'XHL-USD',
+//     marketValue: 31928,
+//   },
+//   {
+//     orderBookID: 8,
+//     instrumentName: 'XHL-EUR',
+//     marketValue: 29615,
+//   },
+//   {
+//     orderBookID: 9,
+//     instrumentName: 'XHL-GBP',
+//     marketValue: 25616,
+//   },
+//   {
+//     orderBookID: 10,
+//     instrumentName: 'NIO-USD',
+//     marketValue: 111223,
+//   },
+//   {
+//     orderBookID: 11,
+//     instrumentName: 'NIO-EUR',
+//     marketValue: 105626,
+//   },
+//   {
+//     orderBookID: 12,
+//     instrumentName: 'NIO-GBP',
+//     marketValue: 97828,
+//   }
+// ];
 
-const SELL_ORDERS: Order[] = [
-  {
-    id: 1,
-    instrument: 'BTC-USD',
-    price: 35000,
-  },
-  {
-    id: 2,
-    instrument: 'BTC-EUR',
-    price: 31000,
-  },
-  {
-    id: 3,
-    instrument: 'BTC-GBP',
-    price: 24000,
-  },
-  {
-    id: 4,
-    instrument: 'ETH-USD',
-    price: 45222,
-  },
-  {
-    id: 5,
-    instrument: 'ETH-EUR',
-    price: 41345,
-  },
-  {
-    id: 6,
-    instrument: 'ETH-GBP',
-    price: 32972,
-  },
-  {
-    id: 7,
-    instrument: 'XHL-USD',
-    price: 31928,
-  },
-  {
-    id: 8,
-    instrument: 'XHL-EUR',
-    price: 29615,
-  },
-  {
-    id: 9,
-    instrument: 'XHL-GBP',
-    price: 25616,
-  },
-  {
-    id: 10,
-    instrument: 'NIO-USD',
-    price: 111223,
-  },
-  {
-    id: 11,
-    instrument: 'NIO-EUR',
-    price: 105626,
-  },
-  {
-    id: 12,
-    instrument: 'NIO-GBP',
-    price: 97828,
-  }
-];
-
-export type SortColumn = keyof Order | '';
+export type SortColumn = keyof OrderBook | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
@@ -170,23 +166,26 @@ export class OrderSortComponent {
 })
 export class OrderComponent {
 
+  @ViewChildren(OrderSortComponent) headers: QueryList<OrderSortComponent>;
+
   title: String;
-  orders: Order[];
+  orders: OrderBook[];
+  collectionSize: Number;
 
   page = 1;
   pageSize = 10;
-  collectionSize = BUY_ORDERS.length;
+  // collectionSize = BUY_ORDERS.length;
 
-  constructor() {
-    this.title = "Orders";
-    this.orders = BUY_ORDERS;
+  constructor(@Inject(OrderBookController) private orderBookController: OrderBookController) {
+    this.title = "Instruments";
+    this.orderBookController = orderBookController;
+    this.orders = [];
+    this.collectionSize = this.orders.length;
 
     this.refreshOrders();
   }
 
-  @ViewChildren(OrderSortComponent) headers: QueryList<OrderSortComponent>;
-
-  onSort({column, direction}: SortEvent) {
+  async onSort({column, direction}: SortEvent) {
     // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {
@@ -196,17 +195,18 @@ export class OrderComponent {
 
     // sorting orders
     if (direction === '' || column === '') {
-      this.orders = BUY_ORDERS;
+      this.orders = (await this.orderBookController.getAll());
     } else {
-      this.orders = [...BUY_ORDERS].sort((a, b) => {
+      this.orders = [...(await this.orderBookController.getAll())].sort((a, b) => {
         const res = compare(a[column], b[column]);
         return direction === 'asc' ? res : -res;
       });
     }
   }
 
-  refreshOrders() {
-    this.orders = BUY_ORDERS
+  async refreshOrders() {
+    this.orders = (await this.orderBookController.getAll())
+    // this.orders = BUY_ORDERS
       .map((order, i) => ({id: i+1, ...order}))
       .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
