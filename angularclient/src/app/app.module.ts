@@ -7,7 +7,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { TradeSortComponent, TradeComponent } from './trade/trade.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { OrderSortComponent, OrderComponent } from './order/order.component';
+import { OrderBookSortComponent, OrderBookComponent } from './orderBook/orderBook.component';
 import { ContactComponent } from './contact-us/contact.component';
 import { TradeHistorySortComponent, TradeHistoryComponent } from './tradeHistory/tradeHistory.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,12 +26,12 @@ import { UserController } from '../app/controllers/user.controller';
     AppComponent,
     HomepageComponent,
     TradeComponent,
-    OrderComponent,
+    OrderBookComponent,
     TradeHistoryComponent,
     LoginComponent,
     RegisterComponent,
     ContactComponent,
-    OrderSortComponent,
+    OrderBookSortComponent,
     TradeSortComponent,
     TradeHistorySortComponent
   ],

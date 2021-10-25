@@ -24,17 +24,17 @@
             </tr>
           </thead>
           <tbody class="table-light">
-            <tr *ngFor="let order of orders">
-              <th scope="row"><input type="radio" name=order id={{order.id}} value={{order.id}}></th>
-              <td>{{ order.instrumentName }}</td>
-              <td>{{ order.marketValue | number }}</td>
+            <tr *ngFor="let orderBook of orderBooks">
+              <th scope="row"><input type="radio" name=orderBook id={{orderBook.id}} value={{orderBook.id}}></th>
+              <td>{{ orderBook.instrumentName }}</td>
+              <td>{{ orderBook.marketValue | number }}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <!-- Pagination -->
       <div class="d-flex justify-content-end">
-        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshOrders()"></ngb-pagination>
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshOrderBooks()"></ngb-pagination>
       </div>
       <!-- Action -->
       <div class="form-group row text-center">
