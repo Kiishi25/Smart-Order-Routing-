@@ -25,8 +25,8 @@ public class OrderBook {
 	private int orderBookID;
 	
 	private String instrumentName;
-	private Double instrumentPrice;
-	
+	private Double marketValue;
+		
 	@OneToMany( fetch = FetchType.EAGER,
 	mappedBy = "orderBook",
 	cascade = CascadeType.ALL)
