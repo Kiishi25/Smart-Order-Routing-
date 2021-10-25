@@ -1,5 +1,7 @@
 package com.ab.entities;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,13 +30,14 @@ public class TradeHistory {
     @JoinColumn(name = "orderID1")
 	private Order order;
 	
-	private int orderID2;
+	private int orderTradingWithID;
 	private int shareQuantity;
 	private double value;
+	private LocalDateTime timeStamp = LocalDateTime.now();
 	
-	public TradeHistory(Order order,int orderID2,int shareQuantity, double value) {
+	public TradeHistory(Order order,int orderTradingWithID,int shareQuantity, double value) {
 		this.order = order;
-		this.orderID2 = orderID2;
+		this.orderTradingWithID = orderTradingWithID;
 		this.shareQuantity = shareQuantity;
 		this.value = value;
 	}
@@ -43,7 +46,7 @@ public class TradeHistory {
 
 	@Override
 	public String toString() {
-		return "TradeHistory [historyID=" + historyID + ", order=" + order + ", orderID2=" + orderID2
+		return "TradeHistory [historyID=" + historyID + ", order=" + order + ", orderTradingWithID=" + orderTradingWithID
 				+ ", shareQuantity=" + shareQuantity + ", value=" + value + "]";
 	}
 	

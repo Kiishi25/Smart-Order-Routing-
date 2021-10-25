@@ -1,6 +1,7 @@
 package com.ab.entities;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +39,11 @@ public class Order {
 	private double priceLimit;//max/min value a share will be bought or sold for
 	private int shareQuantity;//the amount of shares to be bought or sold
 	private boolean isHidden;//if true wont display priceLimit or quantity
+	private LocalDateTime timeStamp = LocalDateTime.now();
 	
 	@OneToMany( fetch =FetchType.EAGER,
 	mappedBy = "order",
 	cascade = CascadeType.ALL)
-	//				orderID shareQuantity
-	@Getter
 	private List<TradeHistory> history = new ArrayList<TradeHistory>();
 	//list showing how many shares this order has taken/given to another order
 	

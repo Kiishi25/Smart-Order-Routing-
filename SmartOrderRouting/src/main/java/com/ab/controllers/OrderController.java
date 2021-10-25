@@ -48,7 +48,7 @@ public class OrderController {
 	}
 	@PostMapping("/tradeHistory")
 	public TradeHistory addtradeHistory(@RequestBody TradeHistory tradeHistory) {
-		return orderService.addTradeHistory(tradeHistory.getOrder().getOrderID(), tradeHistory.getOrderID2(), tradeHistory.getShareQuantity(), tradeHistory.getValue());
+		return orderService.addTradeHistory(tradeHistory.getOrder().getOrderID(), tradeHistory.getOrderTradingWithID(), tradeHistory.getShareQuantity(), tradeHistory.getValue());
 
 	}
 	@PutMapping("/cancelOrder/{orderID}")
