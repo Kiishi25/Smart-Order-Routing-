@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ab.models.OrderType;
+
 import lombok.Data;
 import lombok.Getter;
 
@@ -33,8 +35,8 @@ public class Order {
     @JoinColumn(name = "orderBookID")
 	private OrderBook orderBook;
 	private String buyOrSell;//buy/sell
-	private String type;//market/priceLimit/
-	private String status;//partially filled or fully filled
+	private OrderType type;//market/priceLimit/
+	private String status = "partial";//partially filled or fully filled
 	private String auctionTime;//Opening/closing auction or null
 	private double priceLimit;//max/min value a share will be bought or sold for
 	private int shareQuantity;//the amount of shares to be bought or sold
@@ -53,20 +55,20 @@ public class Order {
 	
 	public Order() {}
 	//priceLimit Order
-	public Order(String buyOrSell, String type, double priceLimit, int shareQuantity) {
+	public Order(String buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
 		this.buyOrSell = buyOrSell;
 		this.type = type;
 		this.priceLimit = priceLimit;
 		this.shareQuantity = shareQuantity;
 	}
 	//Market Order
-	public Order(String buyOrSell, String type, int shareQuantity) {
+	public Order(String buyOrSell, OrderType type, int shareQuantity) {
 		this.buyOrSell = buyOrSell;
 		this.type = type;
 		this.shareQuantity = shareQuantity;
 	}
 	//Hidden Order
-	public Order(String buyOrSell, String type, double priceLimit, int shareQuantity, boolean isHidden) {
+	public Order(String buyOrSell, OrderType type, double priceLimit, int shareQuantity, boolean isHidden) {
 		this.buyOrSell = buyOrSell;
 		this.type = type;
 		this.priceLimit = priceLimit;
@@ -74,7 +76,7 @@ public class Order {
 		this.isHidden = isHidden;
 	}
 	//Open/Close Order
-	public Order(String buyOrSell, String type, double priceLimit, int shareQuantity, String auctionTime) {
+	public Order(String buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
 		this.buyOrSell = buyOrSell;
 		this.type = type;
 		this.priceLimit = priceLimit;

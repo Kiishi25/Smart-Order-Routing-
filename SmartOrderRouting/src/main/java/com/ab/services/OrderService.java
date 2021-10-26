@@ -2,6 +2,7 @@ package com.ab.services;
 
 import java.util.List;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ab.entities.Order;
 import com.ab.entities.TradeHistory;
+import com.ab.models.OrderType;
 import com.ab.repositories.HistoryRepository;
 import com.ab.repositories.OrderRepository;
 
@@ -21,74 +23,109 @@ public class OrderService {
 	@Autowired
 	private HistoryRepository historyRep;
 	
+	public OrderService() {
+		BasicConfigurator.configure();
+	}
 	
-	private Order addMarketOrder(String buyOrSell, String type, int shareQuantity) {
+	
+	private Order addMarketOrder(String buyOrSell, OrderType type, int shareQuantity) {
 		Order order = new Order(buyOrSell, type, shareQuantity);
 		return order;
 	}
 	
-	private Order addLimitOrder(String buyOrSell, String type,double priceLimit, int shareQuantity) {
+	private Order addLimitOrder(String buyOrSell, OrderType type,double priceLimit, int shareQuantity) {
 		Order order = new Order(buyOrSell, type, priceLimit, shareQuantity);
 		return order;
 	}
 	
-	private Order addHiddenOrder(String buyOrSell, String type, double priceLimit, int shareQuantity) {
+	private Order addHiddenOrder(String buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
 		Order order = new Order(buyOrSell, type, priceLimit, shareQuantity, true);
 		return order;
 	}
 	
-	private Order addTimedOrder(String buyOrSell, String type, double priceLimit, int shareQuantity, String auctionTime) {
+	private Order addTimedOrder(String buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
 		Order order = new Order(buyOrSell, type, priceLimit, shareQuantity, auctionTime);
 		return order;
 	}
 	
-	public boolean  addOrder(String type, String buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+	public boolean  addOrder(OrderType type, String buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
 		Order order;
+		if(shareQuantity >= 1000) {
+			addMultipleOrder(type, buyOrSell, priceLimit, shareQuantity, auctionTime);
+		}
 		switch(type) {
-		case "Market":
+		case Market:
+			logger.info("Order Type Market being added");
 			order = addMarketOrder(buyOrSell, type , shareQuantity);
 			break;
-		case "Limit":
+		case Limit:
+			logger.info("Order Type Limit being added");
 			order = addLimitOrder(buyOrSell, type, priceLimit, shareQuantity);
 			break;
-		case "Hidden":
+		case Hidden:
+			logger.info("Order Type Hidden being added");
 			order = addHiddenOrder(buyOrSell, type, priceLimit, shareQuantity);
 			break;
-		case "Timed":
+		case Timed:
+			logger.info("Order Type Timed being added");
 			order = addTimedOrder(buyOrSell, type, priceLimit, shareQuantity, auctionTime);
 			break;
 		default:
-			order = null;
+			logger.warn("No type found. Aborting addOrder");
+			return false;
 		}
 		try {
 			orderRep.save(order);
 			return true;
 		}catch(Exception e) {
 			//add Log
-			logger.info("Add Order Failed");
+			logger.warn("Add Order Failed");
 			return false;
 		}
 	}
 	
-	public TradeHistory addTradeHistory(int orderID1, int orderID2, int shareQuanitity, double value) {
-		Order order = orderRep.getByOrderID(orderID1);
-		TradeHistory history = new TradeHistory(order,orderID2, shareQuanitity, value);
+	public void addMultipleOrder(OrderType type, String buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+		logger.info("Order splitting into multiple child orders");
+		int remainder = shareQuantity % 2;
+		int shareQuantity1 = Math.floorDiv(shareQuantity, 2) + remainder;
+		int shareQuantity2 = Math.floorDiv(shareQuantity, 2);
+		addOrder(type, buyOrSell, priceLimit, shareQuantity1, auctionTime);
+		addOrder(type, buyOrSell, priceLimit, shareQuantity2, auctionTime);
+	}
+	
+	public TradeHistory addTradeHistory(int thisOrderID, int tradedWithID, int shareQuanitity, double value) {
+		Order order = orderRep.getByOrderID(thisOrderID);
+		TradeHistory history = new TradeHistory(order, tradedWithID, shareQuanitity, value);
+		order.getHistory().add(history);
+		if(checkFull(order)) {
+			order.setStatus("Fully Filled");
+		}
 		historyRep.save(history);
+		logger.info(history.toString() + "added to order");
 		return history;
 	}
 	
+	private boolean checkFull(Order order) {
+		int sharesFilled = order.getHistory().stream().mapToInt(trade -> trade.getShareQuantity()).sum();
+		return order.getShareQuantity() == sharesFilled;
+	}
+
+
 	public Order cancelOrder(int orderID) {
 		Order cancelledOrder = orderRep.getByOrderID(orderID);
 		orderRep.deleteById(orderID);
+		logger.info(cancelledOrder.toString() + " removed");
 		return cancelledOrder;
 	}
 	
 	public Order updateOrder(int orderID, double limit, int shareQuantity) {
 		if(limit != 0) {
 			orderRep.changeOrderLimit(limit, orderID);
+			logger.info("Limit updated for order: " + orderID);
 			return orderRep.getByOrderID(orderID);
 		}else {
 			orderRep.changeOrderShareQuantity(shareQuantity, orderID);
+			logger.info("Order updated for order: " + orderID);
 			return orderRep.getByOrderID(orderID);
 		}
 	}
@@ -105,7 +142,7 @@ public class OrderService {
 		return orderRep.findAll();
 	}
 	
-	public List<Order> getAllOrdersByType(String type){
+	public List<Order> getAllOrdersByType(OrderType type){
 		return orderRep.findAllByType(type);
 	}
 	

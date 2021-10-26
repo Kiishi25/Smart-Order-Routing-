@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ab.entities.Order;
 import com.ab.entities.TradeHistory;
+import com.ab.models.OrderType;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Integer>{
@@ -35,7 +36,7 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 	public List<Order> findAllByBuyOrSell(@Param("buyOrSell")String buyOrSell);
 	
 	@Query("From Order o WHERE o.type =:type")
-	public List<Order> findAllByType(@Param("type")String type);
+	public List<Order> findAllByType(@Param("type")OrderType type);
 
 	@Transactional
 	@Modifying
