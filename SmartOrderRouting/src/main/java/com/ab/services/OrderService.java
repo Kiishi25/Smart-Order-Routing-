@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ab.entities.Order;
+import com.ab.entities.OrderBook;
 import com.ab.entities.TradeHistory;
+import com.ab.entities.User;
+import com.ab.models.Action;
 import com.ab.models.OrderType;
 import com.ab.repositories.HistoryRepository;
 import com.ab.repositories.OrderRepository;
@@ -28,47 +31,47 @@ public class OrderService {
 	}
 	
 	
-	private Order addMarketOrder(String buyOrSell, OrderType type, int shareQuantity) {
-		Order order = new Order(buyOrSell, type, shareQuantity);
+	private Order addMarketOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, type, shareQuantity);
 		return order;
 	}
 	
-	private Order addLimitOrder(String buyOrSell, OrderType type,double priceLimit, int shareQuantity) {
-		Order order = new Order(buyOrSell, type, priceLimit, shareQuantity);
+	private Order addLimitOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type,double priceLimit, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
 		return order;
 	}
 	
-	private Order addHiddenOrder(String buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
-		Order order = new Order(buyOrSell, type, priceLimit, shareQuantity, true);
+	private Order addHiddenOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, true);
 		return order;
 	}
 	
-	private Order addTimedOrder(String buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
-		Order order = new Order(buyOrSell, type, priceLimit, shareQuantity, auctionTime);
+	private Order addTimedOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
+		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, auctionTime);
 		return order;
 	}
 	
-	public boolean  addOrder(OrderType type, String buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+	public boolean  addOrder(OrderBook orderBook, User user, OrderType type, Action buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
 		Order order;
 		if(shareQuantity >= 1000) {
-			addMultipleOrder(type, buyOrSell, priceLimit, shareQuantity, auctionTime);
+			addMultipleOrder(orderBook, user, type, buyOrSell, priceLimit, shareQuantity, auctionTime);
 		}
 		switch(type) {
 		case Market:
 			logger.info("Order Type Market being added");
-			order = addMarketOrder(buyOrSell, type , shareQuantity);
+			order = addMarketOrder(orderBook, user, buyOrSell, type , shareQuantity);
 			break;
 		case Limit:
 			logger.info("Order Type Limit being added");
-			order = addLimitOrder(buyOrSell, type, priceLimit, shareQuantity);
+			order = addLimitOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
 			break;
 		case Hidden:
 			logger.info("Order Type Hidden being added");
-			order = addHiddenOrder(buyOrSell, type, priceLimit, shareQuantity);
+			order = addHiddenOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
 			break;
 		case Timed:
 			logger.info("Order Type Timed being added");
-			order = addTimedOrder(buyOrSell, type, priceLimit, shareQuantity, auctionTime);
+			order = addTimedOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, auctionTime);
 			break;
 		default:
 			logger.warn("No type found. Aborting addOrder");
@@ -84,13 +87,13 @@ public class OrderService {
 		}
 	}
 	
-	public void addMultipleOrder(OrderType type, String buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+	private void addMultipleOrder(OrderBook orderBook, User user, OrderType type, Action buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
 		logger.info("Order splitting into multiple child orders");
 		int remainder = shareQuantity % 2;
 		int shareQuantity1 = Math.floorDiv(shareQuantity, 2) + remainder;
 		int shareQuantity2 = Math.floorDiv(shareQuantity, 2);
-		addOrder(type, buyOrSell, priceLimit, shareQuantity1, auctionTime);
-		addOrder(type, buyOrSell, priceLimit, shareQuantity2, auctionTime);
+		addOrder(orderBook, user, type, buyOrSell, priceLimit, shareQuantity1, auctionTime);
+		addOrder(orderBook, user, type, buyOrSell, priceLimit, shareQuantity2, auctionTime);
 	}
 	
 	public TradeHistory addTradeHistory(int thisOrderID, int tradedWithID, int shareQuanitity, double value) {

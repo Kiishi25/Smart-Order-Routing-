@@ -17,4 +17,8 @@ public class OrderBookService {
     public List<OrderBook> findOrderBooks() {
         return repo.findAll();
     }
+    
+    public OrderBook findOrderBook(String instrumentName) {
+    	return repo.getByInstrumentName(instrumentName);
+    }
 }

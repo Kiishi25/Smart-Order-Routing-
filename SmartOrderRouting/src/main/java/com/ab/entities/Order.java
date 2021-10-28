@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ab.models.Action;
 import com.ab.models.OrderType;
 
 import lombok.Data;
@@ -34,7 +35,7 @@ public class Order {
 	@ManyToOne
     @JoinColumn(name = "orderBookID")
 	private OrderBook orderBook;
-	private String buyOrSell;//buy/sell
+	private Action buyOrSell;//buy/sell
 	private OrderType type;//market/priceLimit/
 	private String status = "partial";//partially filled or fully filled
 	private String auctionTime;//Opening/closing auction or null
@@ -55,20 +56,26 @@ public class Order {
 	
 	public Order() {}
 	//priceLimit Order
-	public Order(String buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
+	public Order(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
+		this.orderBook = orderBook;
+		this.user = user;
 		this.buyOrSell = buyOrSell;
 		this.type = type;
 		this.priceLimit = priceLimit;
 		this.shareQuantity = shareQuantity;
 	}
 	//Market Order
-	public Order(String buyOrSell, OrderType type, int shareQuantity) {
+	public Order(OrderBook orderBook, User user, Action buyOrSell, OrderType type, int shareQuantity) {
+		this.orderBook = orderBook;
+		this.user = user;
 		this.buyOrSell = buyOrSell;
 		this.type = type;
 		this.shareQuantity = shareQuantity;
 	}
 	//Hidden Order
-	public Order(String buyOrSell, OrderType type, double priceLimit, int shareQuantity, boolean isHidden) {
+	public Order(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity, boolean isHidden) {
+		this.orderBook = orderBook;
+		this.user = user;
 		this.buyOrSell = buyOrSell;
 		this.type = type;
 		this.priceLimit = priceLimit;
@@ -76,7 +83,9 @@ public class Order {
 		this.isHidden = isHidden;
 	}
 	//Open/Close Order
-	public Order(String buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
+	public Order(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
+		this.orderBook = orderBook;
+		this.user = user;
 		this.buyOrSell = buyOrSell;
 		this.type = type;
 		this.priceLimit = priceLimit;

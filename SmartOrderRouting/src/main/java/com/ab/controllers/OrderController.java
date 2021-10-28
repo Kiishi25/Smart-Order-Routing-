@@ -33,9 +33,8 @@ public class OrderController {
 	@GetMapping("/buyOrders/{orderId}")
 	public List<Order> getAllBuyOrders(@PathVariable int orderId){
 		return orderService.getAllBuyOrders();
-	
-
 	}
+	
 	@GetMapping("/sellOrders/{orderId}")
 	public List<Order> getAllSellOrders(@PathVariable int orderId){
 	 return orderService.getAllSellOrders();

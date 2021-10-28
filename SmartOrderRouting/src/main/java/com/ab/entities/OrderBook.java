@@ -33,5 +33,8 @@ public class OrderBook {
 	cascade = CascadeType.ALL)
 	private List<Order> orders = new ArrayList<Order>();
 	
+	public OrderBook(String instrumentName) {
+		this.instrumentName = instrumentName;
+	}
 	
 }

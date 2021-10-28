@@ -40,4 +40,8 @@ public class UserService {
 			return null;
 		}
 	}
+
+	public User getUser(String username) {
+		return userRep.getUserByUsername(username);
+	}
 }
