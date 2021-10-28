@@ -1,9 +1,13 @@
 <div class="container">
   <div class="row">
+    <p *ngIf="name">Welcome {{ name }}</p>
+  </div>
+  <div class="row">
     <div class="side">
       <h2>Buy & sell in minutes</h2>
       <p>Join the world's largest exchange</p>
-      <button  class=" fas fa-portrait btn warning" onclick="location.href='/register'" > Register now</button>
+
+      <button  class=" fas fa-portrait btn warning" onclick="location.href='/register'" *ngIf="!isUserAuthenticated"> Register now</button>
       <h2>Learn & trade </h2>
       <img src="/assets/images/trade3.jpg" alt="trade" style="height:250px;" />
       <p>Trade broadly refers to the exchange of goods and services, most often in return for money.</p>

@@ -8,6 +8,7 @@ import { OrderBookComponent } from './orderBook/orderBook.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ContactComponent } from './contact-us/contact.component';
+import { MarketComponent } from './market/market.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'orders', component: OrderBookComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'market', component: MarketComponent },
   { path: 'contact-us', component: ContactComponent }
 ]
 

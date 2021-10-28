@@ -61,20 +61,20 @@
         <div class="navbar-collapse collapse" id="data-scroll" style="display: contents!important;">
           <ul class="nav navbar-nav navbar-right" style="display: inline;">
             <li>
-              <a href="Market">Market</a>
+              <a href="market">Market</a>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                aria-expanded="false">Trade/Order<span class="caret"></span></a>
+                aria-expanded="false" >Trade/Order<span class="caret"></span></a>
               <ul class="dropdown-menu dropdown-menu-dark dropdown-left-0">
                 <li><a href="orders">View Order</a></li>
                 <li><a href="trades">View Trade</a></li>
                 <li><a href="trade/history">View Trade History</a></li>
               </ul>
             </li>
-            <li>
-              <a href="/login">
-                <i class="fas fa-user-circle">  Login</i>
+            <li *ngIf="!localStorage['user']">
+              <a href="/login" >
+                <i class="fas fa-user-circle" >  Login</i>
               </a>
             <li>
               <a href="/contact-us">
@@ -86,9 +86,10 @@
         </div>
         <!--/Menu -->
       </div> <!-- end container -->
+      <br/><br/><br/>
     </div>
   </div>
-
+  
   <app-root></app-root>
 
 

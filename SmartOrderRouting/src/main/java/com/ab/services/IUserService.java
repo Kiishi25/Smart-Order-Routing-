@@ -8,8 +8,10 @@ public interface IUserService {
 
     List<User> findUsers();
 
-    User authenticateUser(String username, String password);
+    User loginUser(String username, String password);
 
     Optional<User> findUser(int userId);
+
+    User registerUser(String fullName, String email, String username, String password);
 
 }

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { TradeSortComponent, TradeComponent } from './trade/trade.component';
+import { MarketComponent, MarketSortComponent } from './market/market.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { OrderBookSortComponent, OrderBookComponent } from './orderBook/orderBook.component';
@@ -33,7 +34,9 @@ import { UserController } from '../app/controllers/user.controller';
     ContactComponent,
     OrderBookSortComponent,
     TradeSortComponent,
-    TradeHistorySortComponent
+    TradeHistorySortComponent,
+    MarketComponent,
+    MarketSortComponent
   ],
   imports: [
     BrowserModule,

@@ -42,5 +42,6 @@ angularclient/e2e/*.map
 # System Files
 angularclient/.DS_Store
 angularclient/Thumbs.db
-SmartOrderRouting/target/*
+SmartOrderRouting/target/**/*
 angularclient/package-lock.json
+*.class

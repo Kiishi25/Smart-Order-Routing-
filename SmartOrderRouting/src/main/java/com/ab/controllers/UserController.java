@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ab.entities.User;
-import com.ab.services.IUserService;
+import com.ab.services.UserService;
 
 
 @CrossOrigin
@@ -22,19 +22,30 @@ import com.ab.services.IUserService;
 public class UserController {
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @PostMapping(path = "/login", consumes = { MediaType.APPLICATION_JSON_VALUE })
     User loginUser(@Validated(User.class) @RequestBody User user) {
         System.out.println("Username: " + user.getUsername());
         System.out.println("Password: " + user.getPassword());
-        User resUser = userService.authenticateUser(user.getUsername(), user.getPassword());
+        User resUser = userService.loginUser(user.getUsername(), user.getPassword());
 
         if (resUser != null) {
             System.out.println("User: " + resUser.getUsername() + " have " + resUser.getOrders().size() + " orders.");
         } else {
             System.out.println("User not found.");
         }
+
+        return resUser;
+    }
+
+    @PostMapping(path = "/register", consumes = { MediaType.APPLICATION_JSON_VALUE })
+    User registerUser(@Validated(User.class) @RequestBody User user) {
+        System.out.println("Name: " + user.getFullName());
+        System.out.println("Email: " + user.getEmail());
+        System.out.println("Username: " + user.getUsername());
+        System.out.println("Password: " + user.getPassword());
+        User resUser = userService.registerUser(user.getFullName(),user.getEmail(),user.getUsername(), user.getPassword());
 
         return resUser;
     }

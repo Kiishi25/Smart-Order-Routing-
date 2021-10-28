@@ -1,6 +1,5 @@
 package com.ab.repositories;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -46,7 +45,7 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 	@Query("From Order o WHERE o.orderID =:orderID")
 	public Order getByOrderID(@Param("orderID")int orderID);
 
-	public List<Order> findAllByUserID(int userID);
+	// public List<Order> findAllByUserID(int userID);
 
 	
 }

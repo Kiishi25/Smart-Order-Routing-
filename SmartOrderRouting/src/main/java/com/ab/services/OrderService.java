@@ -1,5 +1,6 @@
 package com.ab.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
@@ -19,7 +20,9 @@ import com.ab.repositories.OrderRepository;
 
 @Service
 public class OrderService {
+	
 	private static final Logger logger = LogManager.getLogger(OrderService.class);
+	
 	@Autowired
 	private OrderRepository orderRep;
 	
@@ -138,7 +141,8 @@ public class OrderService {
 	}
 	
 	public List<Order> getAllOrdersByUserID(int userID){
-		return orderRep.findAllByUserID(userID);
+		return new ArrayList<Order>();
+		// return orderRep.findAllByUserID(userID);
 	}
 	
 	public List<Order> getAllOrders() {

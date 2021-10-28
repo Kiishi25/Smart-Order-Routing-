@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
-import lombok.Getter;
+
 
 
 
@@ -22,7 +22,6 @@ public class TradeHistory {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Getter
 	private int historyID;
 	
 	
@@ -49,5 +48,6 @@ public class TradeHistory {
 		return "TradeHistory [historyID=" + historyID + ", order=" + order + ", orderTradingWithID=" + orderTradingWithID
 				+ ", shareQuantity=" + shareQuantity + ", value=" + value + "]";
 	}
+
 	
 }

@@ -20,7 +20,6 @@ import com.ab.models.Action;
 import com.ab.models.OrderType;
 
 import lombok.Data;
-import lombok.Getter;
 
 
 @Entity
@@ -51,7 +50,7 @@ public class Order {
 	//list showing how many shares this order has taken/given to another order
 	
 	@ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "userid")
 	private User user;
 	
 	public Order() {}
@@ -98,5 +97,7 @@ public class Order {
 		return "Order [orderID=" + orderID + ", orderBook=" + orderBook + ", type=" + type + ", status=" + status
 				+ ", priceLimit=" + priceLimit + ", shareQuantity=" + shareQuantity + ", history=" + history + "]";
 	}
+
+
 	
 }

@@ -20,32 +20,32 @@ class DataBasePopulator {
 	private OrderBookRepository orderBookRep;
 	@Test
 	void test() {
-		for(String name : instrumentNames) {
-			OrderBook orderBook = new OrderBook(name);
-			for(int i = 0; i < 10; i++) {
-				Order randomOrder;
-				String buyOrSell;
-				OrderType type;
-				int shareQuantity = (int) (Math.random() * (1000 -1 + 1) + 1);
-				if(Math.floor(Math.random() * (2+1) + 0) == 0) {
-					buyOrSell = "Buy";
-				}else {
-					buyOrSell = "Sell";
-				}
-				if(Math.floor(Math.random() * (3+1) + 0) == 0) {
-					//Market
-					type = OrderType.Market;
-					randomOrder = new Order(buyOrSell, type, shareQuantity);
-				}else {
-					//Limit
-					type = OrderType.Limit;
-					double limit = (Math.random() * (300 -1 + 1) + 1);
-					randomOrder = new Order(buyOrSell, type, limit, shareQuantity);
-				}
-				orderBook.getOrders().add(randomOrder);
-			}
-			orderBookRep.save(orderBook);
-		}
+		// for(String name : instrumentNames) {
+		// 	OrderBook orderBook = new OrderBook(name);
+		// 	for(int i = 0; i < 10; i++) {
+		// 		Order randomOrder;
+		// 		String buyOrSell;
+		// 		OrderType type;
+		// 		int shareQuantity = (int) (Math.random() * (1000 -1 + 1) + 1);
+		// 		if(Math.floor(Math.random() * (2+1) + 0) == 0) {
+		// 			buyOrSell = "Buy";
+		// 		}else {
+		// 			buyOrSell = "Sell";
+		// 		}
+		// 		if(Math.floor(Math.random() * (3+1) + 0) == 0) {
+		// 			//Market
+		// 			type = OrderType.Market;
+		// 			randomOrder = new Order(buyOrSell, type, shareQuantity);
+		// 		}else {
+		// 			//Limit
+		// 			type = OrderType.Limit;
+		// 			double limit = (Math.random() * (300 -1 + 1) + 1);
+		// 			randomOrder = new Order(buyOrSell, type, limit, shareQuantity);
+		// 		}
+		// 		orderBook.getOrders().add(randomOrder);
+		// 	}
+		// 	orderBookRep.save(orderBook);
+		// }
 	}
 
 }

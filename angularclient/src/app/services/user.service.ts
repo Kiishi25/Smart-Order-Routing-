@@ -36,12 +36,34 @@ export class UserService {
       user = response as User;
       isAuthenticated = true;
     }
-    // .subscribe(response => {
-    //   console.log("performed login request");
-    //   if(response['username'] === username){
-    //     isAuthenticated = true;
-    //   }
-    // });
+
+    return user;
+  }
+
+  public async registerUser(name: string, email: string, username: string, password: string){
+
+    let user: User = null;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    var url = 'http://localhost:8080/register';
+    var body = {
+      'fullName': name,
+      'email': email,
+      'username': username,
+      'password': password,
+   
+    };
+
+    let response = await this.httpClient.post(url, body, httpOptions).toPromise();
+    if (response && response['username'] === username) {
+      console.log("performed registration request");
+      user = response as User;
+    }
 
     return user;
   }

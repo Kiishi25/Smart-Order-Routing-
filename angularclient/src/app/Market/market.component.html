@@ -1,0 +1,50 @@
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 py-3">
+            <h1 class="text-center">
+                {{ title }}
+            </h1>
+            
+            <div class="table-responsive py-3">
+                <table class="table table-hover table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col" sortable="code" (sort)="onSort($event)">Code</th>
+                            <th scope="col" sortable="company" (sort)="onSort($event)">Company</th>
+                            <th scope="col" sortable="price" (sort)="onSort($event)">Price</th>
+                            <th scope="col" sortable="open" (sort)="onSort($event)">Open</th>
+                            <th scope="col" sortable="change" (sort)="onSort($event)">Change (24hs)</th>
+                            <th scope="col" sortable="high" (sort)="onSort($event)">High (24hs)</th>
+                            <th scope="col" sortable="low" (sort)="onSort($event)">Low (24hs)</th>
+                            <th scope="col" sortable="volume" (sort)="onSort($event)">Volume (24hs)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-light">
+                        <tr *ngFor="let market of markets">
+                            <td>{{ market.code }}</td>
+                            <td>{{ market.company }}</td>
+                            <td>{{ market.price}}</td>
+                            <td>{{ market.open  }}</td>
+                            <td>{{ market.change }}</td>
+                            <td>{{ market.high}}</td>
+                            <td>{{ market.low }}</td>
+                            <td>{{ market.volume | number }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="d-flex justify-content-end">
+                <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+                    (pageChange)="refreshMarkets()"></ngb-pagination>
+            </div>
+            
+            <div class="d-grid py-5">
+                <a class="btn btn-dark btn-lg btn-spacing" href="/">Back to Home page</a>
+            </div>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>
