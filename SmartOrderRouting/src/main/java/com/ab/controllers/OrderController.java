@@ -45,11 +45,17 @@ public class OrderController {
 	 return orderService.getAllOrderStatus();
      
 	}
+
+	@PostMapping("/order/")
+	public Boolean addOrder(@RequestBody Order order) {
+		return orderService.addOrder(order.getOrderBook(), order.getUser(), order.getType(), order.getBuyOrSell(), order.getPriceLimit(), order.getShareQuantity(), order.getAuctionTime());
+	}
+
 	@PostMapping("/tradeHistory")
 	public TradeHistory addtradeHistory(@RequestBody TradeHistory tradeHistory) {
 		return orderService.addTradeHistory(tradeHistory.getOrder().getOrderID(), tradeHistory.getOrderTradingWithID(), tradeHistory.getShareQuantity(), tradeHistory.getValue());
-
 	}
+
 	@PutMapping("/cancelOrder/{orderID}")
 	public Order cancelOrder(@PathVariable int orderID) {
 		return orderService.cancelOrder(orderID);

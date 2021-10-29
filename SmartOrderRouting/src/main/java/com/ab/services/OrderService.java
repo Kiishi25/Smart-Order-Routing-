@@ -30,24 +30,23 @@ public class OrderService {
 		BasicConfigurator.configure();
 	}
 	
-	
-	private Order addMarketOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, int shareQuantity) {
-		Order order = new Order(orderBook, user, buyOrSell, type, shareQuantity);
+	private Order addMarketOrder(OrderBook orderBook, User user, Action buyOrSell, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, OrderType.Market, shareQuantity);
 		return order;
 	}
 	
-	private Order addLimitOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type,double priceLimit, int shareQuantity) {
-		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
+	private Order addLimitOrder(OrderBook orderBook, User user, Action buyOrSell, double priceLimit, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, OrderType.Limit, priceLimit, shareQuantity);
 		return order;
 	}
 	
-	private Order addHiddenOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
-		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, true);
+	private Order addHiddenOrder(OrderBook orderBook, User user, Action buyOrSell, double priceLimit, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, OrderType.Hidden, priceLimit, shareQuantity, true);
 		return order;
 	}
 	
-	private Order addTimedOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
-		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, auctionTime);
+	private Order addTimedOrder(OrderBook orderBook, User user, Action buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+		Order order = new Order(orderBook, user, buyOrSell, OrderType.Timed, priceLimit, shareQuantity, auctionTime);
 		return order;
 	}
 	
@@ -59,19 +58,19 @@ public class OrderService {
 		switch(type) {
 		case Market:
 			logger.info("Order Type Market being added");
-			order = addMarketOrder(orderBook, user, buyOrSell, type , shareQuantity);
+			order = addMarketOrder(orderBook, user, buyOrSell, shareQuantity);
 			break;
 		case Limit:
 			logger.info("Order Type Limit being added");
-			order = addLimitOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
+			order = addLimitOrder(orderBook, user, buyOrSell, priceLimit, shareQuantity);
 			break;
 		case Hidden:
 			logger.info("Order Type Hidden being added");
-			order = addHiddenOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
+			order = addHiddenOrder(orderBook, user, buyOrSell, priceLimit, shareQuantity);
 			break;
 		case Timed:
 			logger.info("Order Type Timed being added");
-			order = addTimedOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, auctionTime);
+			order = addTimedOrder(orderBook, user, buyOrSell, priceLimit, shareQuantity, auctionTime);
 			break;
 		default:
 			logger.warn("No type found. Aborting addOrder");
@@ -138,7 +137,7 @@ public class OrderService {
 	}
 	
 	public List<Order> getAllOrdersByUserID(int userID){
-		return orderRep.findAllByUserID(userID);
+		return orderRep.findAllByUserId(userID);
 	}
 	
 	public List<Order> getAllOrders() {

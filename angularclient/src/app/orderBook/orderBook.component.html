@@ -36,6 +36,17 @@
       <div class="d-flex justify-content-end">
         <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshOrderBooks()"></ngb-pagination>
       </div>
+      <div class="form-group row text-center">
+        <label for="orderType" style="text-align:right" class="col-sm-2 col-form-label">Order Type</label>
+        <div class="col-sm-9">
+          <select class="form-control">
+            <option value="market">Market</option>
+            <option value="limit">Limit</option>
+            <option value="hidden">Hidden</option>
+            <option value="timed">Timed</option>
+          </select>
+        </div>
+      </div>
       <!-- Action -->
       <div class="form-group row text-center">
         <label for="inputQty" style="text-align:right" class="col-sm-2 col-form-label">Quantity</label>
