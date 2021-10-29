@@ -1,7 +1,5 @@
 package com.ab.services;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +9,6 @@ import com.ab.entities.OrderBook;
 import com.ab.models.Action;
 import com.ab.models.OrderType;
 import com.ab.repositories.OrderBookRepository;
-import com.ab.repositories.OrderRepository;
 import com.ab.repositories.UserRepository;
 @SpringBootTest
 class DataBasePopulator {

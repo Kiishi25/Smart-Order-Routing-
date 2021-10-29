@@ -20,7 +20,7 @@ import com.ab.models.Action;
 import com.ab.models.OrderType;
 
 import lombok.Data;
-import lombok.Getter;
+
 
 
 @Entity

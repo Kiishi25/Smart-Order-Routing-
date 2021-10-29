@@ -9,6 +9,16 @@
             "mainClass": "com.ab.SmartOrderRoutingApplication",
             "projectName": "SmartOrderRouting",
             "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-DatabasePopulator<SmartOrderRouting>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.ab.helpers.DatabasePopulator",
+            "projectName": "SmartOrderRouting",
+            "args": ""
         }
     ]
 }
