@@ -2,16 +2,16 @@ package com.ab.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.ab.entities.User;
-import com.ab.models.Action;
-import com.ab.models.OrderType;
-
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.ab.entities.User;
+import com.ab.models.Action;
+import com.ab.models.OrderType;
 
 @SpringBootTest
 @TestMethodOrder(value = OrderAnnotation.class)
@@ -65,6 +65,8 @@ class OrderServiceTest {
 		int orderID2 = 2;
 		assertEquals("",orderService.addTradeHistory(orderService.getOrder(orderID).getOrderID(), orderService.getOrder(orderID2).getOrderID(), 100, 100).toString());
 	}
+	
+	
 	@Test
 	@Order(6)
 	public void updateOrderLimit() {

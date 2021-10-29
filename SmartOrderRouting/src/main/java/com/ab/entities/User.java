@@ -1,6 +1,5 @@
 package com.ab.entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +13,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.Getter;
 
 
 @Entity
 @Table(name="Users")
 @Data
-public class User implements Serializable{
+public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer userid;
 	private String username;
 	private String fullName;
 	private String email;
@@ -34,11 +32,19 @@ public class User implements Serializable{
 			cascade = CascadeType.ALL)
 	private List<Order> orders = new ArrayList<Order>();
 	
-	public User(String name, String email, String username, String password) {
+	public User(String username, String name, String email, String password) {
 		this.username = username;
 		this.fullName = name;
 		this.email = email;
 		this.password = password;
 	}
+	
+	public User() {}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	
 	
 }

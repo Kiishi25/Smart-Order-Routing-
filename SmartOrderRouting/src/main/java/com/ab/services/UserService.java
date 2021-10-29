@@ -4,18 +4,13 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 import com.ab.entities.User;
 import com.ab.helpers.EmailValidator;
 import com.ab.helpers.PasswordEncryptor;
 import com.ab.repositories.UserRepository;
 
-@Service
-public class UserService implements IUserService{
+public class UserService {
 	private static final Logger logger = LogManager.getLogger(UserService.class);
 	
 	@Autowired
@@ -25,17 +20,13 @@ public class UserService implements IUserService{
 		BasicConfigurator.configure();
 	}
 	
-	public User registerUser(String name, String email, String username, String password) {
+	public void registerUser(String username, String name, String email, String password) {
 		password = PasswordEncryptor.encrypt(password);
 		if(EmailValidator.isValid(email)) {
-			User user = new User(name,email,username,password);
+			User user = new User(username,name,email,password);
 			userRep.save(user);
 			logger.info("Registered new user");
-
-            return user;
 		}
-
-        return null;
 	}
 	
 	public User loginUser(String username, String password) {
@@ -52,17 +43,5 @@ public class UserService implements IUserService{
 
 	public User getUser(String username) {
 		return userRep.getUserByUsername(username);
-	}
-	
-	@Override
-	public List<User> findUsers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<User> findUser(int userId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
