@@ -39,14 +39,25 @@ public class UserController {
         return resUser;
     }
 
+    @PostMapping(path = "/register", consumes = { MediaType.APPLICATION_JSON_VALUE })
+    User registerUser(@Validated(User.class) @RequestBody User user) {
+        System.out.println("Name: " + user.getFullName());
+        System.out.println("Email: " + user.getEmail());
+        System.out.println("Username: " + user.getUsername());
+        System.out.println("Password: " + user.getPassword());
+        User resUser = userService.registerUser(user.getFullName(),user.getEmail(),user.getUsername(), user.getPassword());
+
+        return resUser;
+    }
+
     @GetMapping("/findUsers")
     List<User> findUsers() {
         return userService.findUsers();
     }
 
-    @GetMapping("/findUser/{userId}")
-    Optional<User> findUser(@PathVariable int userId) {
-        return userService.findUser(userId);
+    @GetMapping("/findUser/{username}")
+    Optional<User> findUser(@PathVariable String username) {
+        return userService.findUser(username);
     }
 
 }

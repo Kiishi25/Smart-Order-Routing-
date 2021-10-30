@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
 
@@ -21,6 +23,7 @@ public class User {
 
 	@Id
 	private String username;
+	
 	private String fullName;
 	private String email;
 	private String password;
@@ -30,7 +33,7 @@ public class User {
 			cascade = CascadeType.ALL)
 	private List<Order> orders = new ArrayList<Order>();
 	
-	public User(String username, String name, String email, String password) {
+	public User(String name, String email, String username, String password) {
 		this.username = username;
 		this.fullName = name;
 		this.email = email;

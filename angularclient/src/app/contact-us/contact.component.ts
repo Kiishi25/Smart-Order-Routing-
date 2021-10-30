@@ -12,4 +12,5 @@ export class ContactComponent {
   constructor() {
     this.title = "Contact Page";
   }
+  
 }

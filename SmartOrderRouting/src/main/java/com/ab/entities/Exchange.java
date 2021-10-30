@@ -25,8 +25,8 @@ public class Exchange {
     private double feelLedder;
 	private double currentDaysTotalTradeValue;
 	
-	@OneToMany(fetch =FetchType.EAGER)
-	private List<OrderBook> orderBooks = new ArrayList<OrderBook>();
+	// @OneToMany(fetch = FetchType.EAGER)
+	// private List<OrderBook> orderBooks = new ArrayList<OrderBook>();
 	
 	public Exchange(){}
 

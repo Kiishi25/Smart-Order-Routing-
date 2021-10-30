@@ -11,7 +11,7 @@ import com.ab.entities.OrderBook;
 
 @Service
 public class SortService {
-	@Autowired
+
 	private List<OrderBook> orderBooks;
 	
 	private List<Exchange> exchanges;

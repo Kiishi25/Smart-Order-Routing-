@@ -1,5 +1,6 @@
 package com.ab.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
@@ -136,8 +137,8 @@ public class OrderService {
 		return orderRep.getByOrderID(ID);
 	}
 	
-	public List<Order> getAllOrdersByUserID(int userID){
-		return orderRep.findAllByUserId(userID);
+	public List<Order> getAllOrdersByUsername(String username){
+		return orderRep.findAllByUsername(username);
 	}
 	
 	public List<Order> getAllOrders() {

@@ -36,21 +36,25 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<User> findUser(int userId) {
-        return userRep.findById(userId);
+    public Optional<User> findUser(String username) {
+        return userRep.findById(username);
     }
 
-	public void registerUser(String username, String name, String email, String password) {
+	public User registerUser(String name, String email, String username, String password) {
 		password = PasswordEncryptor.encrypt(password);
 		if(EmailValidator.isValid(email)) {
-			User user = new User(username,name,email,password);
+			User user = new User(name,email,username,password);
 			userRep.save(user);
 			logger.info("Registered new user");
+
+			return user;
 		}
+
+		return null;
 	}
 	
 	public User loginUser(String username, String password) {
-		User user = userRep.getUserByUsername(username);
+		User user = userRep.getById(username);
 		String storedPassword = PasswordEncryptor.decrypt(user.getPassword());
 		if(password.equals(storedPassword)) {
 			logger.info("User: " + username + " successfully logged in");
@@ -62,6 +66,6 @@ public class UserService implements IUserService {
 	}
 
 	public User getUser(String username) {
-		return userRep.getUserByUsername(username);
+		return userRep.getById(username);
 	}
 }

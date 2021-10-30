@@ -13,6 +13,8 @@ public interface IUserService {
 
     User authenticateUser(String username, String password);
 
-    Optional<User> findUser(int userId);
+    Optional<User> findUser(String username);
+
+    User registerUser(String name, String email, String username, String password);
 
 }

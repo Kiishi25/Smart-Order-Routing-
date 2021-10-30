@@ -1,26 +1,18 @@
 
 export class User{
 
-    userID : number;
+   
     username : string;
     fullName : string;
     email : string;
     password : string;
 
-    public User(userID : number, username : string, fullName : string, email : string, password : string) {
-        this.userID = userID;
+    public User( username : string, fullName : string, email : string, password : string) {
+        
         this.username = username;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-    }
-
-    public getUserID() : number {
-        return this.userID;
-    }
-
-    public setUserID(userID : number){
-        this.userID = userID;
     }
 
     public getUsername() : string {

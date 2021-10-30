@@ -37,9 +37,9 @@ public class OrderBook {
 	cascade = CascadeType.ALL)
 	private List<Order> orders = new ArrayList<Order>();
 
-    @ManyToOne
-	@JoinColumn(name = "exchange_id")
-	private Exchange exchange;
+    // @ManyToOne
+	// @JoinColumn(name = "exchange_id")
+	// private Exchange exchange;
 	
 	public OrderBook(){}
 

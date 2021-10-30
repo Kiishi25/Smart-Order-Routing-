@@ -40,12 +40,12 @@ class DataBasePopulator {
 				if(Math.floor(Math.random() * (3+1) + 0) == 0) {
 					//Market
 					type = OrderType.Market;
-					randomOrder = new Order(orderBook, userRep.getUserByUsername(username),buyOrSell, type, shareQuantity);
+					randomOrder = new Order(orderBook, userRep.getById(username),buyOrSell, type, shareQuantity);
 				}else {
 					//Limit
 					type = OrderType.Limit;
 					double limit = (Math.random() * (300 -1 + 1) + 1);
-					randomOrder = new Order(orderBook, userRep.getUserByUsername(username),buyOrSell, type, limit, shareQuantity);
+					randomOrder = new Order(orderBook, userRep.getById(username),buyOrSell, type, limit, shareQuantity);
 				}
 				orderBook.getOrders().add(randomOrder);
 			}

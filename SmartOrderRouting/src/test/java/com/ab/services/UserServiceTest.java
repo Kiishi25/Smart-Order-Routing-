@@ -27,12 +27,12 @@ public class UserServiceTest {
 
     @Test
     void findUser() {
-        Optional<User> u = userService.findUser(12);
+        Optional<User> u = userService.findUser("drika");
 
         assertNotNull(u);
         assertTrue(u.isPresent());
         assertNotNull(u.get());
-       // assertEquals(12, u.get().getUserid());
+        assertEquals("drika", u.get().getUsername());
     }
 
 }
