@@ -1,5 +1,6 @@
 package com.ab.entities;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 import lombok.Getter;
 
@@ -18,8 +21,8 @@ import lombok.Getter;
 @Entity
 @Table(name="TradeHistory")
 @Data
-public class TradeHistory {
-	
+public class TradeHistory{
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Getter
@@ -28,6 +31,7 @@ public class TradeHistory {
 	
 	@ManyToOne
     @JoinColumn(name = "orderID1")
+	// @JsonBackReference
 	private Order order;
 	
 	private int orderTradingWithID;

@@ -48,10 +48,9 @@ public class OrderController {
      
 	}
 
-	@PostMapping(path = "/order", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	@PostMapping(path = "/order")
 	public Boolean addOrder(@Validated(Order.class) @RequestBody Order order) {
-		return true;
-		// return orderService.addOrder(order.getOrderBook(), order.getUser(), order.getType(), order.getBuyOrSell(), order.getPriceLimit(), order.getShareQuantity(), order.getAuctionTime());
+		return orderService.addOrder(order.getOrderBook(), order.getUser(), order.getType(), order.getBuyOrSell(), order.getPriceLimit(), order.getShareQuantity(), order.getAuctionTime());
 	}
 
 	@PostMapping("/tradeHistory")
