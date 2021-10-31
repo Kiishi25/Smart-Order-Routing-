@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 
@@ -31,6 +32,7 @@ public class User {
 	@OneToMany( fetch =FetchType.EAGER,
 			mappedBy = "user",
 			cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<Order> orders = new ArrayList<Order>();
 	
 	public User(String name, String email, String username, String password) {

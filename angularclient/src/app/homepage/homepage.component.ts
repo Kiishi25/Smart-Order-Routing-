@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { User } from '../models/User';
 
 @Component({
@@ -6,12 +7,12 @@ import { User } from '../models/User';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css']
 })
-export class HomepageComponent {
+export class HomepageComponent{
   title: String;
   name: String;
   isUserAuthenticated: boolean;
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.title = "Homepage";
     let userStr = localStorage.getItem('user');
     let user = userStr ? JSON.parse(userStr) as User : undefined;
@@ -23,4 +24,5 @@ export class HomepageComponent {
 
     console.log('Name: ' + this.name);
   }
+
 }

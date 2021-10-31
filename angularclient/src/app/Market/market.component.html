@@ -11,14 +11,15 @@
                 <table class="table table-hover table-bordered table-sm">
                     <thead>
                         <tr>
-                            <th scope="col" sortable="code" (sort)="onSort($event)">Code</th>
-                            <th scope="col" sortable="company" (sort)="onSort($event)">Company</th>
-                            <th scope="col" sortable="price" (sort)="onSort($event)">Price</th>
-                            <th scope="col" sortable="open" (sort)="onSort($event)">Open</th>
-                            <th scope="col" sortable="change" (sort)="onSort($event)">Change (24hs)</th>
-                            <th scope="col" sortable="high" (sort)="onSort($event)">High (24hs)</th>
-                            <th scope="col" sortable="low" (sort)="onSort($event)">Low (24hs)</th>
-                            <th scope="col" sortable="volume" (sort)="onSort($event)">Volume (24hs)</th>
+                            <th scope="col" sortable="code" >Code</th>
+                            <th scope="col" sortable="company" >Company</th>
+                            <th scope="col" sortable="price" >Price</th>
+                            <th scope="col" sortable="open" >Open</th>
+                            <th scope="col" sortable="priceChange" >Change (24hs)</th>
+                            <th scope="col" sortable="high" >High (24hs)</th>
+                            <th scope="col" sortable="low" >Low (24hs)</th>
+                            <th scope="col" sortable="volume" >Volume (24hs)</th>
+                            <th scope="col">Trade</th>
                         </tr>
                     </thead>
                     <tbody class="table-light">
@@ -27,10 +28,11 @@
                             <td>{{ market.company }}</td>
                             <td>{{ market.price}}</td>
                             <td>{{ market.open  }}</td>
-                            <td>{{ market.change }}</td>
+                            <td>{{ market.priceChange }}</td>
                             <td>{{ market.high}}</td>
                             <td>{{ market.low }}</td>
                             <td>{{ market.volume | number }}</td>
+                            <td><a href="/orders/" >Trade</a></td>
                         </tr>
                     </tbody>
                 </table>

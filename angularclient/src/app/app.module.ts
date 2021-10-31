@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -20,7 +20,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpClientModule } from '@angular/common/http';
 import { UserController } from '../app/controllers/user.controller';
+import { LogoutComponent } from './logout/logout.component';
 
+import { 
+	IgxFinancialChartModule,
+	IgxLegendModule
+ } from "igniteui-angular-charts";
+import { FinancialDataService } from "./services/financial-data.service";
+import { FinancialChartMultipleDataComponent } from './market/financial-chart-multiple-data/financial-chart-multiple-data.component';
 
 @NgModule({
   declarations: [
@@ -36,19 +43,25 @@ import { UserController } from '../app/controllers/user.controller';
     TradeSortComponent,
     TradeHistorySortComponent,
     MarketComponent,
-    MarketSortComponent
+    MarketSortComponent,
+    LogoutComponent,
+    FinancialChartMultipleDataComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    IgxFinancialChartModule,
+    IgxLegendModule
   ],
   providers: [
     OrderBookService,
     UserService,
-    UserController
+    UserController,
+    FinancialDataService
   ],
   bootstrap: [AppComponent]
 })

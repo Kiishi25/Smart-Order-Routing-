@@ -1,1 +1,54 @@
+<!-- Navbar -->
+<div id="undefined-sticky-wrapper" class="sticky-wrapper" style="height: 139px;">
+    <div class="navbar navbar-custom sticky navbar-dark" role="navigation">
+        <div class="container">
+            <!-- Navbar-header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <i class="ti-menu"></i>
+                </button>
+                <a class="navbar-brand logo" href="/">
+                    <i class="fab fa-java fa-2x color-blue"></i> JavaHards
+                </a>
+            </div>
+
+            <!-- menu -->
+            <div class="navbar-collapse collapse" id="data-scroll" style="display: contents!important;">
+                <ul class="nav navbar-nav navbar-right" style="display: inline;">
+                    <li *ngIf="user">
+                        <a href="market">Market</a>
+                    </li>
+                    <li class="dropdown" *ngIf="user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Trade/Order<span class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-left-0">
+                            <li><a href="orders">View Orders</a></li>
+                            <li><a href="trades">View Trade</a></li>
+                            <li><a href="trade/history">View Trade History</a></li>
+                        </ul>
+                    </li>
+                    <li *ngIf="!user">
+                        <a href="/login">
+                            <i class="fas fa-user-circle"> Login</i>
+                        </a>
+                    </li>
+                    <li *ngIf="user">
+                        <a href="/logout">
+                            <i class="fas fa-user-circle"> Logout</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/contact-us">
+                            <i class="fas fa-envelope"> Contact-Us</i>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!--/Menu -->
+        </div> <!-- end container -->
+        <br /><br /><br />
+    </div>
+</div>
+
 <router-outlet></router-outlet>

@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 
@@ -35,6 +35,7 @@ public class OrderBook {
 	@OneToMany( fetch =FetchType.EAGER,
 	mappedBy = "orderBook",
 	cascade = CascadeType.ALL)
+	@JsonManagedReference             // Avoid infinite recurrence when serializing entities  
 	private List<Order> orders = new ArrayList<Order>();
 
     // @ManyToOne

@@ -32,6 +32,7 @@ public class UserService implements IUserService {
 
     @Override
     public User authenticateUser(String username, String password) {
+		password = PasswordEncryptor.encrypt(password);
         return userRep.findUserByUsernameAndPassword(username, password);
     }
 

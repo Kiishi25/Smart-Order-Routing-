@@ -1,0 +1,13 @@
+<div class="container sample" style="height: 500px;">
+    <div class="options vertical" >
+        <label id="legendTitle">Stock Price Changes (Percentage): Google</label>
+    </div>
+
+    <igx-financial-chart height="100%" width="100%"
+    [dataSource]="data"
+    chartType="line"
+    thickness=2
+    yAxisMode="PercentChange"
+    yAxisTitle="Percent Changed">
+    </igx-financial-chart>
+</div>

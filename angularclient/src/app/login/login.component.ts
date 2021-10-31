@@ -22,7 +22,10 @@ export class LoginComponent {
     let isAuthenticated = await this.userController.authenticateUser(this.username, this.password);
 
     if(isAuthenticated){
-      this._router.navigateByUrl("/");
+      this._router.navigate(['/'])
+      .then(() => {
+        window.location.reload();
+      });
     }
   }
 }

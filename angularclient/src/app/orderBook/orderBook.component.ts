@@ -1,6 +1,7 @@
 import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren, Inject } from '@angular/core';
 import { OrderBookController } from '../controllers/orderBook.controller';
 import { OrderBook } from '../models/OrderBook';
+import { FormBuilder } from '@angular/forms';
 
 export type SortColumn = keyof OrderBook | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -45,18 +46,27 @@ export class OrderBookComponent {
   title: String;
   orderBooks: OrderBook[];
   collectionSize: Number;
+  orderForm;
 
   page = 1;
   pageSize = 10;
   // collectionSize = BUY_ORDERS.length;
 
-  constructor(@Inject(OrderBookController) private orderBookController: OrderBookController) {
+  constructor(@Inject(OrderBookController) private orderBookController: OrderBookController, private formBuilder: FormBuilder) {
     this.title = "Instruments";
     this.orderBookController = orderBookController;
     this.orderBooks = [];
     this.collectionSize = this.orderBooks.length;
 
     this.refreshOrderBooks();
+
+    this.orderForm = this.formBuilder.group({
+      orderType: '',
+      inputQty: '',
+      priceLimit: '',
+      buysellradio: '',
+      orderBook: ''
+    });
   }
 
   async onSort({column, direction}: SortEvent) {
@@ -86,5 +96,15 @@ export class OrderBookComponent {
       .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
     this.collectionSize = temp
       .length;
+  }
+
+  onSubmit(): void {
+    
+    console.warn('Your order has been submitted', this.orderForm.value);
+
+    
+
+
+    this.orderForm.reset();
   }
 }

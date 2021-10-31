@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import com.ab.models.Action;
 import com.ab.models.OrderType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
@@ -34,7 +35,9 @@ public class Order {
 	
 	@ManyToOne
     @JoinColumn(name = "orderBookID")
+	@JsonBackReference       // Avoid infinite recurrence when serializing entities
 	private OrderBook orderBook;
+
 	private Action buyOrSell;//buy/sell
 	private OrderType type;//market/priceLimit/
 	private String status = "partial";//partially filled or fully filled
@@ -52,6 +55,7 @@ public class Order {
 	
 	@ManyToOne
     @JoinColumn(name = "username")
+	@JsonBackReference
 	private User user;
 	
 	public Order() {}
