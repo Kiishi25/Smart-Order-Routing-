@@ -2,6 +2,7 @@ import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChild
 import { OrderBookController } from '../controllers/orderBook.controller';
 import { OrderBook } from '../models/OrderBook';
 import { FormBuilder } from '@angular/forms';
+import { User } from '../models/User';
 
 export type SortColumn = keyof OrderBook | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -47,6 +48,8 @@ export class OrderBookComponent {
   orderBooks: OrderBook[];
   collectionSize: Number;
   orderForm;
+  isOrderCreated = false;
+  error: String;
 
   page = 1;
   pageSize = 10;
@@ -98,11 +101,22 @@ export class OrderBookComponent {
       .length;
   }
 
-  onSubmit(): void {
+  onSubmit() {
     
+    let componentInstance = this;
     console.warn('Your order has been submitted', this.orderForm.value);
 
-    
+    let user = JSON.parse(localStorage['user']);
+   this.orderBookController.createOrder(this.orderForm.controls.buysellradio.value, this.orderForm.controls.orderType.value, this.orderForm.controls.priceLimit.value, this.orderForm.controls.inputQty.value, user['username'], this.orderForm.controls.orderBook.value)
+   .then(function(response){
+     if(response){
+      componentInstance.isOrderCreated = true;
+      componentInstance.error='';
+     }else{
+      componentInstance.error = 'Could not create order. Please try again';
+      componentInstance.isOrderCreated = false;
+     }
+   })
 
 
     this.orderForm.reset();

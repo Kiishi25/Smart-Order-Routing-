@@ -7,8 +7,6 @@ import com.ab.entities.TradeHistory;
 import com.ab.services.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +47,7 @@ public class OrderController {
 	}
 
 	@PostMapping(path = "/order")
-	public Boolean addOrder(@Validated(Order.class) @RequestBody Order order) {
+	public Boolean addOrder( @RequestBody Order order) {
 		return orderService.addOrder(order.getOrderBook(), order.getUser(), order.getType(), order.getBuyOrSell(), order.getPriceLimit(), order.getShareQuantity(), order.getAuctionTime());
 	}
 

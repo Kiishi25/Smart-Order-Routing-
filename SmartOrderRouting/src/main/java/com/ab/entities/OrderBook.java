@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -35,6 +36,7 @@ public class OrderBook implements Serializable{
 	@OneToMany( fetch =FetchType.EAGER,
 	mappedBy = "orderBook",
 	cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Order> orders = new ArrayList<Order>();
 
     // @ManyToOne

@@ -1,7 +1,5 @@
 package com.ab.entities;
 
-
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,6 @@ import javax.persistence.Table;
 import com.ab.models.Action;
 import com.ab.models.OrderType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -37,7 +34,7 @@ public class Order{
 	
 	@ManyToOne
     @JoinColumn(name = "orderBookID")
-	@JsonIgnore       // Avoid infinite recurrence when serializing entities
+	// @JsonIgnore       // Avoid infinite recurrence when serializing entities
 	private OrderBook orderBook;
 
 	private Action buyOrSell;//buy/sell
@@ -57,7 +54,8 @@ public class Order{
 	
 	@ManyToOne
     @JoinColumn(name = "username")
-	@JsonIgnore
+	// @JsonIgnore
+	@JsonBackReference
 	private User user;
 	
 	public Order() {}

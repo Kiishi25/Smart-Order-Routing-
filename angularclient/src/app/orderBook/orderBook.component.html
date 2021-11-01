@@ -12,9 +12,9 @@
       <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
         <div style="text-align: right">
           <div class="btn-group btn-group-sm">
-            <input type="radio" class="btn-check me-md-2" name="buysellradio" id="btnbuy" checked formControlName="buysellradio" value="buy">
+            <input type="radio" class="btn-check me-md-2" name="buysellradio" id="btnbuy" checked formControlName="buysellradio" value="BUY">
             <label class="btn btn-success" for="btnbuy">BUY</label>
-            <input type="radio" class="btn-check" name="buysellradio" id="btnsell" formControlName="buysellradio" value="sell">
+            <input type="radio" class="btn-check" name="buysellradio" id="btnsell" formControlName="buysellradio" value="SELL">
             <label class="btn btn-danger" for="btnsell">SELL</label>
           </div>
         </div>
@@ -32,7 +32,7 @@
             </thead>
             <tbody class="table-light">
               <tr *ngFor="let orderBook of orderBooks">
-                <th scope="row"><input type="radio" name="orderBook" id={{orderBook.id}} value={{orderBook.id}} formControlName="orderBook" ></th>
+                <th scope="row"><input type="radio" name="orderBook" id={{orderBook.orderBookID}} value={{orderBook.orderBookID}} formControlName="orderBook" ></th>
                 <td>{{ orderBook.instrumentName }}</td>
                 <td>{{ orderBook.marketValue | number }}</td>
               </tr>
@@ -49,10 +49,10 @@
           <label for="orderType" style="text-align:right" class="col-sm-2 col-form-label">Order Type</label>
           <div class="col-sm-9">
             <select class="form-control" name="orderType" formControlName="orderType">
-              <option value="market">Market</option>
-              <option value="limit">Limit</option>
-              <option value="hidden">Hidden</option>
-              <option value="timed">Timed</option>
+              <option value="Market">Market</option>
+              <option value="Limit">Limit</option>
+              <option value="Hidden">Hidden</option>
+              <option value="Timed">Timed</option>
             </select>
           </div>
         </div>
@@ -74,6 +74,12 @@
 
         <div class="d-grid py-5">
           <!-- <a class="btn btn-success btn-lg btn-spacing" href="trades">Place Order</a> -->
+          <div style="color: green;" *ngIf="isOrderCreated">
+            Order
+            created successfully.</div>
+        <div style="color: red;" *ngIf="error && !isOrderCreated">There was an error: {{errorMessage}}
+        </div>
+
           <button type="submit" class="btn btn-success btn-lg btn-spacing">Place Order</button>
           <a class="btn btn-dark btn-lg btn-spacing" href="trades">View Trade</a>
         </div>
