@@ -18,7 +18,11 @@ public class OrderBookService {
         return repo.findAll();
     }
     
-    public OrderBook findOrderBook(String instrumentName) {
-    	return repo.getByInstrumentName(instrumentName);
+    public OrderBook findOrderBook(String instrumentCode) {
+    	return repo.getByInstrumentCode(instrumentCode);
+    }
+    
+    public OrderBook create(OrderBook body) {
+    	return repo.save(body);
     }
 }

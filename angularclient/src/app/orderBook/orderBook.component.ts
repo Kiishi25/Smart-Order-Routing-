@@ -1,9 +1,9 @@
 import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
-import { History } from '../models/History';
+import { OrderBook } from '../models/OrderBook';
 
-const HISTORY: History[] = [];
+const ORDER_BOOK: OrderBook[] = [];
 
-export type SortColumn = keyof History | '';
+export type SortColumn = keyof OrderBook | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
@@ -22,7 +22,7 @@ export interface SortEvent {
     '(click)': 'rotate()'
   }
 })
-export class HistorySortComponent {
+export class OrderBookSortComponent {
 
   @Input() sortable: SortColumn = '';
   @Input() direction: SortDirection = '';
@@ -35,27 +35,27 @@ export class HistorySortComponent {
 }
 
 @Component({
-  selector: 'history-root',
-  templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css']
+  selector: 'orderBook-root',
+  templateUrl: './orderBook.component.html',
+  styleUrls: ['./orderBook.component.css']
 })
-export class HistoryComponent {
+export class OrderBookComponent {
 
   title: String;
-  history: History[];
+  orderBook: OrderBook[];
 
   page = 1;
   pageSize = 10;
-  collectionSize = HISTORY.length;
+  collectionSize = ORDER_BOOK.length;
 
   constructor() {
-    this.title = "History";
-    this.history = HISTORY;
+    this.title = "OrderBook";
+    this.orderBook = ORDER_BOOK;
 
-    this.refreshHistory();
+    this.refreshOrderBook();
   }
 
-  @ViewChildren(HistorySortComponent) headers: QueryList<HistorySortComponent>;
+  @ViewChildren(OrderBookSortComponent) headers: QueryList<OrderBookSortComponent>;
 
   onSort({column, direction}: SortEvent) {
     // resetting other headers
@@ -65,20 +65,20 @@ export class HistoryComponent {
       }
     });
 
-    // sorting history
+    // sorting orderBook
     if (direction === '' || column === '') {
-      this.history = HISTORY;
+      this.orderBook = ORDER_BOOK;
     } else {
-      this.history = [...HISTORY].sort((a, b) => {
+      this.orderBook = [...ORDER_BOOK].sort((a, b) => {
         const res = compare(a[column], b[column]);
         return direction === 'asc' ? res : -res;
       });
     }
   }
 
-  refreshHistory() {
-    this.history = HISTORY
-      .map((history, i) => ({id: i+1, ...history}))
+  refreshOrderBook() {
+    this.orderBook = ORDER_BOOK
+      .map((orderBook, i) => ({id: i+1, ...orderBook}))
       .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 }

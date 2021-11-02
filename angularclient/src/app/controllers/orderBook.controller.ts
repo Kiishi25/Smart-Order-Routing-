@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { OrderBookService } from "../services/orderBook.service";
 
 @Injectable({
-    providedIn: 'root',
-  })
+  providedIn: 'root',
+})
 export class OrderBookController{
 
     orderBookService : OrderBookService;

@@ -6,7 +6,7 @@
             <h1 class="text-center">
                 {{ title }}
             </h1>
-            
+
             <div class="table-responsive py-3">
                 <table class="table table-hover table-bordered table-sm">
                     <thead>
@@ -32,17 +32,17 @@
                             <td>{{ market.high}}</td>
                             <td>{{ market.low }}</td>
                             <td>{{ market.volume | number }}</td>
-                            <td><a href="/order/" >Trade</a></td>
+                            <td><a href="/orderBook" >Trade</a></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="d-flex justify-content-end">
                 <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
                     (pageChange)="refreshMarkets()"></ngb-pagination>
             </div>
-            
+
             <div class="d-grid py-5">
                 <a class="btn btn-dark btn-lg btn-spacing" href="/">Back to Home page</a>
             </div>

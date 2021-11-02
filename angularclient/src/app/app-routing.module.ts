@@ -9,11 +9,13 @@ import { ContactComponent } from './contact-us/contact.component';
 import { MarketComponent } from './market/market.component';
 import { LogoutComponent } from './logout/logout.component';
 import { OrderComponent } from './orders/orders.component';
+import { OrderBookComponent } from './orderBook/orderBook.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'history', component: HistoryComponent },
   { path: 'orders', component: OrderComponent },
+  { path: 'orderBook', component: OrderBookComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'register', component: RegisterComponent },
