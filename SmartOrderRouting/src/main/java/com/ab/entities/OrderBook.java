@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 
@@ -24,19 +26,17 @@ public class OrderBook {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderBookID;
 	
-	private String instrumentName;
-	
-	private double marketValue;
+	private String instrumentCode;
 	
 	@OneToMany( fetch =FetchType.EAGER,
 	mappedBy = "orderBook",
 	cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Order> orders = new ArrayList<Order>();
 	
-	public OrderBook(String instrumentName) {
-		this.instrumentName = instrumentName;
+	public OrderBook(){}
+
+	public OrderBook(String instrumentCode) {
+		this.instrumentCode = instrumentCode;
 	}
-	
-	public OrderBook() {}
-	
 }

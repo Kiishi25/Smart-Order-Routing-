@@ -41,17 +41,18 @@ public class UserService implements IUserService {
         return userRep.findById(username);
     }
 
-	public User registerUser(String username, String name, String email, String password) {
-		password = PasswordEncryptor.encrypt(password);
-		if(EmailValidator.isValid(email)) {
-			User user = new User(username,name,email,password);
-			userRep.save(user);
-			logger.info("Registered new user");
-
-			return user;
+	public User registerUser(String username, String fullname, String email, String password) {
+		if(!EmailValidator.isValid(email)) {
+			logger.info("Invalid email format");
 		}
 
-		return null;
+		password = PasswordEncryptor.encrypt(password);
+
+		User user = new User(username,fullname,email,password);
+		userRep.save(user);
+		logger.info("Registered new user");
+
+		return user;
 	}
 	
 	public User loginUser(String username, String password) {
@@ -64,5 +65,9 @@ public class UserService implements IUserService {
 			logger.info("Incorrect password entered");
 			return null;
 		}
+	}
+
+	public User getUser(String username) {
+		return userRep.getById(username);
 	}
 }

@@ -4,9 +4,6 @@
         <div class="container">
             <!-- Navbar-header -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <i class="ti-menu"></i>
-                </button>
                 <a class="navbar-brand logo" href="/">
                     <i class="fab fa-java fa-2x color-blue"></i> JavaHards
                 </a>
@@ -20,10 +17,10 @@
                     </li>
                     <li class="dropdown" *ngIf="user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">Trade/Order<span class="caret"></span></a>
+                            aria-expanded="false">Menu<span class="caret"></span></a>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-left-0">
-                            <li><a href="orders">View Orders</a></li>
-                            <li><a href="history">View Trade History</a></li>
+                            <li><a href="orders">Orders</a></li>
+                            <li><a href="history">History</a></li>
                         </ul>
                     </li>
                     <li *ngIf="!user">

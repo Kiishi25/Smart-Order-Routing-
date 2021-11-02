@@ -1,9 +1,9 @@
 import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
-import { History } from '../models/History';
+import { Order } from '../models/Order';
 
-const HISTORY: History[] = [];
+const HISTORY: Order[] = [];
 
-export type SortColumn = keyof History | '';
+export type SortColumn = keyof Order | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
@@ -42,7 +42,7 @@ export class HistorySortComponent {
 export class HistoryComponent {
 
   title: String;
-  history: History[];
+  history: Order[];
 
   page = 1;
   pageSize = 10;

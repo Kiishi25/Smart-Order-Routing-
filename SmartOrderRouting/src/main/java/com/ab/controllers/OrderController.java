@@ -7,6 +7,7 @@ import com.ab.entities.TradeHistory;
 import com.ab.services.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 public class OrderController {
    
@@ -45,11 +47,17 @@ public class OrderController {
 	 return orderService.getAllOrderStatus();
      
 	}
+
+	@PostMapping("/order")
+	public Boolean addOrder(@RequestBody Order order) {
+		return orderService.addOrder(order.getOrderBook(), order.getUser(), order.getType(), order.getBuyOrSell(), order.getPriceLimit(), order.getShareQuantity(), order.getAuctionTime());
+	}
+
 	@PostMapping("/tradeHistory")
 	public TradeHistory addtradeHistory(@RequestBody TradeHistory tradeHistory) {
 		return orderService.addTradeHistory(tradeHistory.getOrder().getOrderID(), tradeHistory.getOrderTradingWithID(), tradeHistory.getShareQuantity(), tradeHistory.getValue());
-
 	}
+
 	@PutMapping("/cancelOrder/{orderID}")
 	public Order cancelOrder(@PathVariable int orderID) {
 		return orderService.cancelOrder(orderID);
@@ -58,6 +66,10 @@ public class OrderController {
 	@PutMapping("/updateOrder")
 	public Order updateOrder(@RequestBody Order order) {
 		return orderService.updateOrder(order.getOrderID(), order.getPriceLimit(), order.getShareQuantity());
-
 	}
+
+	@GetMapping ("/orders/{username}")
+	 public List<Order> getOrdersByUsername(@PathVariable String username){
+		return orderService.getOrdersByUsername(username);
+	 }	
 }

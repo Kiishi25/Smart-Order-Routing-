@@ -3,17 +3,15 @@ package com.ab.services;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ab.entities.User;
-import com.ab.models.Action;
-import com.ab.models.OrderType;
+import com.ab.entities.enums.BuyOrSell;
+import com.ab.entities.enums.OrderType;
 
 
 @SpringBootTest
@@ -41,35 +39,35 @@ class OrderServiceTest {
 //	@Test
 //	@Order(1)
 //	public void addBuyMarketOrder() {
-//		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.Market, Action.BUY, 0, 100, null);
+//		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.MARKET, BuyOrSell.BUY, 0, 100, null);
 //		assertEquals("", orderService.getAllOrders().toString());
 //	}
 //	
 //	@Test
 //	@Order(2)
 //	public void addSellMarketOrder() {
-//		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.Market, Action.SELL, 0, 100, null);
+//		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.MARKET, BuyOrSell.SELL, 0, 100, null);
 //		assertEquals("", orderService.getAllOrders().toString());
 //	}
 //	
 //	@Test
 //	@Order(3)
 //	public void addBuyLimitOrder() {
-//		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.Market, Action.BUY, 30, 100, null);
+//		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.MARKET, BuyOrSell.BUY, 30, 100, null);
 //		assertEquals("", orderService.getAllOrders().toString());
 //	}
 //	
 //	@Test
 //	@Order(4)
 //	public void addSellLimitOrder() {
-//		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.Market, Action.SELL, 30, 100, null);
+//		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.MARKET, BuyOrSell.SELL, 30, 100, null);
 //		assertEquals("", orderService.getAllOrders().toString());
 //	}
 	
 	@Test
 	@Order(5)
 	public void addLargeMarketOrder() {
-		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.Market, Action.BUY, 0, 1001, null);
+		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.MARKET, BuyOrSell.BUY, 0, 1001, null);
 		assertEquals("", orderService.getAllOrders().toString());
 	}
 	
@@ -128,7 +126,7 @@ class OrderServiceTest {
 	@Test
 	@Order(13)
 	public void getAllOrdersByUserID() {
-		assertEquals(4, orderService.getAllOrdersByUserName(user.getUsername()).size());
+		assertEquals(4, orderService.getAllOrdersByUsername(user.getUsername()).size());
 	}
 	
 	@Test
@@ -147,7 +145,7 @@ class OrderServiceTest {
 	@Test
 	@Order(16)
 	public void endTest() {
-		orderService.cancelOrdersByUserName(user.getUsername());
+		orderService.cancelOrdersByUsername(user.getUsername());
 	}
 	
 }

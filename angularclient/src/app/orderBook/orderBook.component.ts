@@ -1,84 +1,40 @@
-import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
-import { OrderBook } from '../models/OrderBook';
-
-const ORDER_BOOK: OrderBook[] = [];
-
-export type SortColumn = keyof OrderBook | '';
-export type SortDirection = 'asc' | 'desc' | '';
-const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
-
-const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
-
-export interface SortEvent {
-  column: SortColumn;
-  direction: SortDirection;
-}
-
-@Directive({
-  selector: 'th[sortable]',
-  host: {
-    '[class.asc]': 'direction === "asc"',
-    '[class.desc]': 'direction === "desc"',
-    '(click)': 'rotate()'
-  }
-})
-export class OrderBookSortComponent {
-
-  @Input() sortable: SortColumn = '';
-  @Input() direction: SortDirection = '';
-  @Output() sort = new EventEmitter<SortEvent>();
-
-  rotate() {
-    this.direction = rotate[this.direction];
-    this.sort.emit({column: this.sortable, direction: this.direction});
-  }
-}
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrderController } from '../controllers/order.controller';
+import { Order } from '../models/Order';
+import { User } from '../models/User';
 
 @Component({
-  selector: 'orderBook-root',
+  selector: 'orderBook',
   templateUrl: './orderBook.component.html',
   styleUrls: ['./orderBook.component.css']
 })
 export class OrderBookComponent {
+  title: string;
+  orderBook: Order;
+  instrumentCode: string;
 
-  title: String;
-  orderBook: OrderBook[];
+  buyOrSell = ['BUY', 'SELL'];
+  orderTypes = ['MARKET', 'LIMIT', 'HIDDEN', 'TIMED'];
 
-  page = 1;
-  pageSize = 10;
-  collectionSize = ORDER_BOOK.length;
-
-  constructor() {
+  constructor(@Inject(OrderController) private orderController: OrderController, private _router: Router, public _route: ActivatedRoute) {
     this.title = "OrderBook";
-    this.orderBook = ORDER_BOOK;
+    this.orderController = orderController;
 
-    this.refreshOrderBook();
+    this.orderBook = {} as Order;
+    this.instrumentCode = this._route.snapshot.paramMap.get('code');
   }
 
-  @ViewChildren(OrderBookSortComponent) headers: QueryList<OrderBookSortComponent>;
+  async submitOrderBook() {
+    let userStr = localStorage.getItem('user');
+    let user = userStr ? JSON.parse(userStr) as User : undefined;
+    let username = user.username;
 
-  onSort({column, direction}: SortEvent) {
-    // resetting other headers
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
+    let res = await this.orderController.createOrder(this.orderBook.buyOrSell, this.orderBook.orderType, this.orderBook.priceLimit, this.orderBook.shareQuantity, username, this.instrumentCode);
 
-    // sorting orderBook
-    if (direction === '' || column === '') {
-      this.orderBook = ORDER_BOOK;
-    } else {
-      this.orderBook = [...ORDER_BOOK].sort((a, b) => {
-        const res = compare(a[column], b[column]);
-        return direction === 'asc' ? res : -res;
-      });
+    // Order created successfully
+    if(res) {
+      this._router.navigate(['/orders']);
     }
-  }
-
-  refreshOrderBook() {
-    this.orderBook = ORDER_BOOK
-      .map((orderBook, i) => ({id: i+1, ...orderBook}))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 }

@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.Getter;
 
 
 
@@ -18,9 +19,10 @@ import lombok.Data;
 @Table(name="TradeHistory")
 @Data
 public class TradeHistory {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Getter
 	private int historyID;
 	
 	

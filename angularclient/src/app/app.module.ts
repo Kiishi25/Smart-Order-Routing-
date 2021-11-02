@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { MarketComponent, MarketSortComponent } from './market/market.component';
+import { OrderBookComponent } from './orderBook/orderBook.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ContactComponent } from './contact-us/contact.component';
@@ -42,6 +43,7 @@ import { OrderComponent } from './orders/orders.component';
     HistorySortComponent,
     MarketComponent,
     MarketSortComponent,
+    OrderBookComponent,
     LogoutComponent,
     FinancialChartMultipleDataComponent,
     OrderComponent

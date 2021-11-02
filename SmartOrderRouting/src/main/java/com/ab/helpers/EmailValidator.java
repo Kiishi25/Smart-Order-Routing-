@@ -6,10 +6,9 @@ public class EmailValidator {
 
 	public static boolean isValid(String email)
 	{
-	String regex = "^(.+)@(.+)$";
-	Pattern pattern = Pattern.compile(regex);
-	if (email == null)
-	return false;
-	return pattern.matcher(email).matches();
+		String regex = "^(.+)@(.+)$";
+		Pattern pattern = Pattern.compile(regex);
+		if (email == null) return false;
+		else return pattern.matcher(email).matches();
 	}
 }

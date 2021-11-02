@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import com.ab.entities.Order;
 import com.ab.entities.OrderBook;
-import com.ab.models.Action;
 import com.ab.repositories.OrderBookRepository;
 
 @Service
@@ -20,9 +18,12 @@ public class OrderBookService {
         return repo.findAll();
     }
     
-    public OrderBook findOrderBook(String instrumentName) {
-    	return repo.getByInstrumentName(instrumentName);
+    public OrderBook findOrderBook(String instrumentCode) {
+    	return repo.getByInstrumentCode(instrumentCode);
     }
-
-	
+    
+    public OrderBook create(OrderBook body) {
+        if (findOrderBook(body.getInstrumentCode()) == null) return repo.save(body);
+        else return findOrderBook(body.getInstrumentCode());
+    }
 }

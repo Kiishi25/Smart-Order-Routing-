@@ -13,14 +13,19 @@ import com.ab.entities.Order;
 import com.ab.entities.OrderBook;
 import com.ab.entities.TradeHistory;
 import com.ab.entities.User;
-import com.ab.models.Action;
-import com.ab.models.OrderType;
+import com.ab.entities.enums.BuyOrSell;
+import com.ab.entities.enums.OrderStatus;
+import com.ab.entities.enums.OrderType;
 import com.ab.repositories.HistoryRepository;
 import com.ab.repositories.OrderRepository;
 
 @Service
 public class OrderService {
 	private static final Logger logger = LogManager.getLogger(OrderService.class);
+
+	@Autowired
+	private OrderBookService orderBookService;
+
 	@Autowired
 	private OrderRepository orderRep;
 	
@@ -31,65 +36,68 @@ public class OrderService {
 		BasicConfigurator.configure();
 	}
 	
-	
-	private Order addMarketOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, int shareQuantity) {
-		Order order = new Order(orderBook, user, buyOrSell, type, shareQuantity);
+	private Order addMarketOrder(OrderBook orderBook, User user, BuyOrSell buyOrSell, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, OrderType.MARKET, shareQuantity);
 		return order;
 	}
 	
-	private Order addLimitOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type,double priceLimit, int shareQuantity) {
-		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
+	private Order addLimitOrder(OrderBook orderBook, User user, BuyOrSell buyOrSell, double priceLimit, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, OrderType.LIMIT, priceLimit, shareQuantity);
 		return order;
 	}
 	
-	private Order addHiddenOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
-		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, true);
+	private Order addHiddenOrder(OrderBook orderBook, User user, BuyOrSell buyOrSell, double priceLimit, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, OrderType.HIDDEN, priceLimit, shareQuantity, true);
 		return order;
 	}
 	
-	private Order addTimedOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
-		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, auctionTime);
+	private Order addTimedOrder(OrderBook orderBook, User user, BuyOrSell buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+		Order order = new Order(orderBook, user, buyOrSell, OrderType.TIMED, priceLimit, shareQuantity, auctionTime);
 		return order;
 	}
 	
-	public boolean  addOrder(OrderBook orderBook, User user, OrderType type, Action buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+	public boolean  addOrder(OrderBook orderBook, User user, OrderType type, BuyOrSell buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+		orderBook = orderBookService.create(orderBook);
+
 		Order order;
 		if(shareQuantity >= 1000) {
 			addMultipleOrder(orderBook, user, type, buyOrSell, priceLimit, shareQuantity, auctionTime);
 			return true;
 		}
 		switch(type) {
-		case Market:
+		case MARKET:
 			logger.info("Order Type Market being added");
-			order = addMarketOrder(orderBook, user, buyOrSell, type , shareQuantity);
+			order = addMarketOrder(orderBook, user, buyOrSell, shareQuantity);
 			break;
-		case Limit:
+		case LIMIT:
 			logger.info("Order Type Limit being added");
-			order = addLimitOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
+			order = addLimitOrder(orderBook, user, buyOrSell, priceLimit, shareQuantity);
 			break;
-		case Hidden:
+		case HIDDEN:
 			logger.info("Order Type Hidden being added");
-			order = addHiddenOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
+			order = addHiddenOrder(orderBook, user, buyOrSell, priceLimit, shareQuantity);
 			break;
-		case Timed:
+		case TIMED:
 			logger.info("Order Type Timed being added");
-			order = addTimedOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, auctionTime);
+			order = addTimedOrder(orderBook, user, buyOrSell, priceLimit, shareQuantity, auctionTime);
 			break;
 		default:
 			logger.warn("No type found. Aborting addOrder");
 			return false;
 		}
 		try {
+			System.out.println(order);
 			orderRep.save(order);
 			return true;
 		}catch(Exception e) {
 			//add Log
+			logger.warn(e.toString());
 			logger.warn("Add Order Failed");
 			return false;
 		}
 	}
 	
-	private void addMultipleOrder(OrderBook orderBook, User user, OrderType type, Action buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+	private void addMultipleOrder(OrderBook orderBook, User user, OrderType type, BuyOrSell buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
 		logger.info("Order splitting into multiple child orders");
 		int remainder = shareQuantity % 2;
 		int shareQuantity1 = Math.floorDiv(shareQuantity, 2) + remainder;
@@ -103,7 +111,7 @@ public class OrderService {
 		TradeHistory history = new TradeHistory(order, tradedWithID, shareQuanitity, value);
 		order.getHistory().add(history);
 		if(checkFull(order)) {
-			order.setStatus("Fully Filled");
+			order.setStatus(OrderStatus.FULL);
 		}
 		historyRep.save(history);
 		logger.info(history.toString() + "added to order");
@@ -114,11 +122,6 @@ public class OrderService {
 		int sharesFilled = order.getHistory().stream().mapToInt(trade -> trade.getShareQuantity()).sum();
 		return order.getShareQuantity() == sharesFilled;
 	}
-	
-	public List<TradeHistory> getAllTradesForOrder(int orderID){
-		return historyRep.findAllByOrderId(orderID);
-	}
-
 
 	public Order cancelOrder(int orderID) {
 		Order cancelledOrder = orderRep.getByOrderID(orderID);
@@ -143,8 +146,8 @@ public class OrderService {
 		return orderRep.getByOrderID(ID);
 	}
 	
-	public List<Order> getAllOrdersByUserName(String userName){
-		return orderRep.findAllByUserName(userName);
+	public List<Order> getAllOrdersByUsername(String username){
+		return orderRep.findAllByUsername(username);
 	}
 	
 	public List<Order> getAllOrders() {
@@ -156,39 +159,45 @@ public class OrderService {
 	}
 	
 	public List<Order> getAllBuyOrders(){
-		return orderRep.findAllByBuyOrSell(Action.BUY);
+		return orderRep.findAllByBuyOrSell(BuyOrSell.BUY);
 	}
 	
 	public List<Order> getAllSellOrders(){
-		return orderRep.findAllByBuyOrSell(Action.SELL);
+		return orderRep.findAllByBuyOrSell(BuyOrSell.SELL);
 	}
-	
-//	public List<Order> getAllOrdersInLimit(Action buyOrSell, double limit){
-//		String operator;
-//		if(buyOrSell == Action.BUY) {
-//			//operator = "<="
-//		}else {
-//			
-//		}
-//		return orderRep.findAllBuyBuyOrSellWithinLimit(buyOrSell,operator,limit);
-//	}
 	
 	public List<String> getAllOrderStatus(){
 		return orderRep.getAllStatus();
 	}
 
+	public List<Order> getOrdersByUsername(String username) {
+		return orderRep.findAllByUsername(username);
+	}
+
+//	public List<Order> getAllOrdersInLimit(BuyOrSell buyOrSell, double limit){
+//		String operator;
+//		if(buyOrSell == BuyOrSell.BUY) {
+//			//operator = "<="
+//		}else {
+//			
+//		}
+//		return orderRep.findAllBuyBuyOrSellWithinLimit(buyOrSell,operator,limit);
+//	}	
+	
+	public List<TradeHistory> getAllTradesForOrder(int orderID){
+		return historyRep.findAllByOrderId(orderID);
+	}
 
 	public Order getMostRecentOrder() {
-		return orderRep.getByTimeStamp(Action.BUY,LocalDateTime.now());
+		return orderRep.getByTimeStamp(BuyOrSell.BUY,LocalDateTime.now());
 	}
 
-
-	public void cancelOrdersByUserName(String username) {
-		orderRep.deleteAllByUserName(username);		
+	public void cancelOrdersByUsername(String username) {
+		orderRep.deleteAllByUsername(username);		
 	}
 	
-	public List<Order> getListOfPossibleTrades(int orderBookID,Action buyOrSell, double priceLimit) {
-		if(buyOrSell == Action.BUY) {
+	public List<Order> getListOfPossibleTrades(int orderBookID,BuyOrSell buyOrSell, double priceLimit) {
+		if(buyOrSell == BuyOrSell.BUY) {
 			if(priceLimit!= 0) {
 				return orderRep.findPossibleSellOrdersForOrderBookID(orderBookID, buyOrSell, priceLimit);
 			}else {

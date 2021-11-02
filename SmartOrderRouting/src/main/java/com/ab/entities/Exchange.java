@@ -22,7 +22,7 @@ public class Exchange {
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private int exchangeId;
     
-    private double feeLedder;
+    private double feeLadder;
 	private double currentDaysTotalTradeValue;
 	
 	@OneToMany(fetch =FetchType.EAGER)
@@ -30,9 +30,9 @@ public class Exchange {
 	
 	public Exchange(){}
 
-	public Exchange(int exchangeId, double feeLedder, double currentDaysTotalTradeValue) {
+	public Exchange(int exchangeId, double feeLadder, double currentDaysTotalTradeValue) {
         this.exchangeId = exchangeId;
-		this.feeLedder = feeLedder;
+		this.feeLadder = feeLadder;
         this.currentDaysTotalTradeValue = currentDaysTotalTradeValue;
 	}
 	

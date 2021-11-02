@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ab.entities.Order;
 import com.ab.entities.OrderBook;
-import com.ab.models.Action;
+import com.ab.entities.enums.BuyOrSell;
 
 @Service
 public class SortService {
@@ -27,8 +27,8 @@ public class SortService {
 		return "";
 	}
 	
-	private List<Order> getBuyOrSellOrder(Action buyOrSell){
-		if(buyOrSell == Action.BUY) {
+	private List<Order> getBuyOrSellOrder(BuyOrSell buyOrSell){
+		if(buyOrSell == BuyOrSell.BUY) {
 			return orderService.getAllBuyOrders();
 		}else {
 			return orderService.getAllBuyOrders();
