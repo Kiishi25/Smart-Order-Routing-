@@ -64,6 +64,10 @@ public class OrderController {
 	@PutMapping("/updateOrder")
 	public Order updateOrder(@RequestBody Order order) {
 		return orderService.updateOrder(order.getOrderID(), order.getPriceLimit(), order.getShareQuantity());
-
 	}
+
+	@GetMapping ("/orders/{username}")
+	 public List<Order> getOrdersByUsername(@PathVariable String username){
+		return orderService.getOrdersByUsername(username);
+	 }	
 }

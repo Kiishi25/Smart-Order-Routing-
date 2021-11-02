@@ -13,13 +13,16 @@ import { ContactComponent } from './contact-us/contact.component';
 import { TradeHistorySortComponent, TradeHistoryComponent } from './tradeHistory/tradeHistory.component';
 import { AppRoutingModule } from './app-routing.module';
 
+
 import { OrderBookService } from './services/orderBook.service';
 import { UserService } from '../app/services/user.service';
+import { OrderService } from '../app/services/order.service';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpClientModule } from '@angular/common/http';
 import { UserController } from '../app/controllers/user.controller';
+import { OrderController } from '../app/controllers/order.controller';
 import { LogoutComponent } from './logout/logout.component';
 
 import { 
@@ -28,6 +31,7 @@ import {
  } from "igniteui-angular-charts";
 import { FinancialDataService } from "./services/financial-data.service";
 import { FinancialChartMultipleDataComponent } from './market/financial-chart-multiple-data/financial-chart-multiple-data.component';
+import { OrderComponent } from './orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,8 @@ import { FinancialChartMultipleDataComponent } from './market/financial-chart-mu
     MarketComponent,
     MarketSortComponent,
     LogoutComponent,
-    FinancialChartMultipleDataComponent
+    FinancialChartMultipleDataComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -59,8 +64,10 @@ import { FinancialChartMultipleDataComponent } from './market/financial-chart-mu
   ],
   providers: [
     OrderBookService,
+    OrderService,
     UserService,
     UserController,
+    OrderController,
     FinancialDataService
   ],
   bootstrap: [AppComponent]

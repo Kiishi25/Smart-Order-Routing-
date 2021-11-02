@@ -159,5 +159,9 @@ public class OrderService {
 	public List<String> getAllOrderStatus(){
 		return orderRep.getAllStatus();
 	}
+
+	public List<Order> getOrdersByUsername(String username) {
+		return orderRep.findAllByUsername(username);
+	}
 	
 }

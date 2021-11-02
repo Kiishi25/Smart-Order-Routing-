@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 py-3">
+        <h1 class="text-center">
+          {{ title }}
+        </h1>
+        <!-- Table -->
+        <div class="table-responsive py-3">
+          <table class="table table-hover table-bordered table-sm">
+            <thead>
+              <tr>
+                <th scope="col" sortable="order" (sort)="onSort($event)">Order ID</th>
+                <th scope="col" sortable="qty" (sort)="onSort($event)">Buy/Sell</th>
+                <th scope="col" sortable="qty" (sort)="onSort($event)">Quantity</th>
+                <th scope="col" sortable="price" (sort)="onSort($event)">Price</th>
+                <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+                <th scope="col" sortable="timeStamp" (sort)="onSort($event)">TimeStamp</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody class="table-light">
+              <tr *ngFor="let order of orders">
+                <td>{{ order.orderID }}</td>
+                <td>{{ order.buyOrSell }}</td>
+                <td>{{ order.shareQuantity | number }}</td>
+                <td>{{ order.priceLimit | number }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.timeStamp}}</td>
+                <td><button class="btn btn-danger btn-spacing" (click)="cancelOrder(order.orderID)">Cancel</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-end">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshOrders()"></ngb-pagination>
+        </div>
+        <!-- Action -->
+        <div class="d-grid py-5">
+          <!-- <a class="btn btn-danger btn-lg btn-spacing" href="orders">Delete Order</a> -->          
+          <a class="btn btn-success btn-lg btn-spacing" href="trade/history">Execute Trades</a>
+          <a class="btn btn-dark btn-lg btn-spacing" href="trade/history">View History</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+  
