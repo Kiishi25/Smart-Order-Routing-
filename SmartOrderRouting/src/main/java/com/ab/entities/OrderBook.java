@@ -29,9 +29,7 @@ public class OrderBook implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderBookID;
 	
-	private String instrumentName;
-	
-	private double marketValue;
+	private String instrumentCode;
 	
 	@OneToMany( fetch =FetchType.EAGER,
 	mappedBy = "orderBook",
@@ -45,8 +43,7 @@ public class OrderBook implements Serializable{
 	
 	public OrderBook(){}
 
-	public OrderBook(String instrumentName) {
-		this.instrumentName = instrumentName;
+	public OrderBook(String instrumentCode) {
+		this.instrumentCode = instrumentCode;
 	}
-	
 }

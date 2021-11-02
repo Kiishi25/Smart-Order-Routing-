@@ -18,7 +18,7 @@ import com.ab.repositories.OrderBookRepository;
 import com.ab.repositories.UserRepository;
 @SpringBootTest
 class DataBasePopulator {
-	private final String[] instrumentNames = {
+	private final String[] instrumentCode = {
 			"IAG", "SMT", "BOO", "THG", "ARB",
 			"ASC", "EZJ", "RIO", "TUI", "LLOY"};
 
@@ -49,7 +49,7 @@ class DataBasePopulator {
 	
 	@Test
 	void createOrderBooks() {
-		for(String name : instrumentNames) {
+		for(String name : instrumentCode) {
 			OrderBook orderBook = new OrderBook(name);
 			for(int i = 0; i < 10; i++) {
 				Order randomOrder;
