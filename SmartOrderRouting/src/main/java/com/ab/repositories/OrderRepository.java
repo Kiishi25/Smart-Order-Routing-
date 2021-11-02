@@ -1,5 +1,7 @@
 package com.ab.repositories;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ab.entities.Order;
 import com.ab.entities.TradeHistory;
+import com.ab.models.Action;
 import com.ab.models.OrderType;
 
 @Repository
@@ -32,7 +35,7 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 	public List<String> getAllStatus();
 
 	@Query("From Order o WHERE o.buyOrSell =:buyOrSell")
-	public List<Order> findAllByBuyOrSell(@Param("buyOrSell")String buyOrSell);
+	public List<Order> findAllByBuyOrSell(@Param("buyOrSell")Action buy);
 	
 	@Query("From Order o WHERE o.type =:type")
 	public List<Order> findAllByType(@Param("type")OrderType type);
@@ -45,7 +48,24 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 	@Query("From Order o WHERE o.orderID =:orderID")
 	public Order getByOrderID(@Param("orderID")int orderID);
 
+	@Query( value ="SELECT TOP 1 * FROM Order o WHERE o.buyOrSell =:buyOrSell o.timeStamp < :currentDate ORDER BY o.timeStamp DESC", nativeQuery = true)
+	public Order getByTimeStamp(@Param("buyOrSell") Action buyOrSell, @Param("currentDate")LocalDateTime now);
+
 	@Query("From Order o WHERE o.user.username =:username")
-	public List<Order> findAllByUsername(@Param("username")String username);
+	public List<Order> findAllByUserName(@Param("username") String userName);
+
+	@Query("DELETE From Order o WHERE o.user.username =:username")
+	public void deleteAllByUserName(@Param("username") String username);
+
+	@Query("From Order o WHERE o.orderBook.orderBookID =:orderBookID AND o.buyOrSell =:buyOrSell AND o.priceLimit < :priceLimit")
+	public List<Order> findPossibleBuyOrdersForOrderBookID(int orderBookID, Action buyOrSell, double priceLimit);
 	
+	@Query("From Order o WHERE o.orderBook.orderBookID =:orderBookID AND o.buyOrSell =:buyOrSell")
+	public List<Order> findPossibleBuyOrdersForOrderBookID(int orderBookID, Action buyOrSell);
+
+	@Query("From Order o WHERE o.orderBook.orderBookID =:orderBookID AND o.buyOrSell =:buyOrSell AND o.priceLimit > :priceLimit")
+	public List<Order> findPossibleSellOrdersForOrderBookID(int orderBookID, Action buyOrSell, double priceLimit);
+
+	@Query("From Order o WHERE o.orderBook.orderBookID =:orderBookID AND o.buyOrSell =:buyOrSell")
+	public List<Order> findPossibleSellOrdersForOrderBookID(int orderBookID, Action buyOrSell);
 }

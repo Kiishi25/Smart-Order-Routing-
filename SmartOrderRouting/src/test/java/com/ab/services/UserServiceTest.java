@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class UserServiceTest {
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @Test
     void findUsersTest() {
@@ -24,15 +24,26 @@ public class UserServiceTest {
 
         assertTrue(users.size() > 0);
     }
+    
+//    @Test
+//    void addUser() {
+//    	userService.registerUser("TestUser", "TestName", "Test@gmail.com", "test");
+//    	assertEquals("",userService.findUser("TestUser").get().toString());
+//    }
+    
+    @Test
+    void loginUser() {
+    	assertEquals("",userService.loginUser("TestUser", "test"));
+    }
 
     @Test
     void findUser() {
-        Optional<User> u = userService.findUser("drika");
+        Optional<User> u = userService.findUser("TestUser");
 
         assertNotNull(u);
         assertTrue(u.isPresent());
         assertNotNull(u.get());
-        assertEquals("drika", u.get().getUsername());
+       // assertEquals(12, u.get().getUserid());
     }
 
 }

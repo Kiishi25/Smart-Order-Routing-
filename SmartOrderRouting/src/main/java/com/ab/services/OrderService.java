@@ -1,5 +1,6 @@
 package com.ab.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
@@ -30,23 +31,24 @@ public class OrderService {
 		BasicConfigurator.configure();
 	}
 	
-	private Order addMarketOrder(OrderBook orderBook, User user, Action buyOrSell, int shareQuantity) {
-		Order order = new Order(orderBook, user, buyOrSell, OrderType.Market, shareQuantity);
+	
+	private Order addMarketOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, type, shareQuantity);
 		return order;
 	}
 	
-	private Order addLimitOrder(OrderBook orderBook, User user, Action buyOrSell, double priceLimit, int shareQuantity) {
-		Order order = new Order(orderBook, user, buyOrSell, OrderType.Limit, priceLimit, shareQuantity);
+	private Order addLimitOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type,double priceLimit, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
 		return order;
 	}
 	
-	private Order addHiddenOrder(OrderBook orderBook, User user, Action buyOrSell, double priceLimit, int shareQuantity) {
-		Order order = new Order(orderBook, user, buyOrSell, OrderType.Hidden, priceLimit, shareQuantity, true);
+	private Order addHiddenOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
+		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, true);
 		return order;
 	}
 	
-	private Order addTimedOrder(OrderBook orderBook, User user, Action buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
-		Order order = new Order(orderBook, user, buyOrSell, OrderType.Timed, priceLimit, shareQuantity, auctionTime);
+	private Order addTimedOrder(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
+		Order order = new Order(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, auctionTime);
 		return order;
 	}
 	
@@ -54,23 +56,24 @@ public class OrderService {
 		Order order;
 		if(shareQuantity >= 1000) {
 			addMultipleOrder(orderBook, user, type, buyOrSell, priceLimit, shareQuantity, auctionTime);
+			return true;
 		}
 		switch(type) {
 		case Market:
 			logger.info("Order Type Market being added");
-			order = addMarketOrder(orderBook, user, buyOrSell, shareQuantity);
+			order = addMarketOrder(orderBook, user, buyOrSell, type , shareQuantity);
 			break;
 		case Limit:
 			logger.info("Order Type Limit being added");
-			order = addLimitOrder(orderBook, user, buyOrSell, priceLimit, shareQuantity);
+			order = addLimitOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
 			break;
 		case Hidden:
 			logger.info("Order Type Hidden being added");
-			order = addHiddenOrder(orderBook, user, buyOrSell, priceLimit, shareQuantity);
+			order = addHiddenOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity);
 			break;
 		case Timed:
 			logger.info("Order Type Timed being added");
-			order = addTimedOrder(orderBook, user, buyOrSell, priceLimit, shareQuantity, auctionTime);
+			order = addTimedOrder(orderBook, user, buyOrSell, type, priceLimit, shareQuantity, auctionTime);
 			break;
 		default:
 			logger.warn("No type found. Aborting addOrder");
@@ -111,6 +114,10 @@ public class OrderService {
 		int sharesFilled = order.getHistory().stream().mapToInt(trade -> trade.getShareQuantity()).sum();
 		return order.getShareQuantity() == sharesFilled;
 	}
+	
+	public List<TradeHistory> getAllTradesForOrder(int orderID){
+		return historyRep.findAllByOrderId(orderID);
+	}
 
 
 	public Order cancelOrder(int orderID) {
@@ -136,8 +143,8 @@ public class OrderService {
 		return orderRep.getByOrderID(ID);
 	}
 	
-	public List<Order> getAllOrdersByUsername(String username){
-		return orderRep.findAllByUsername(username);
+	public List<Order> getAllOrdersByUserName(String userName){
+		return orderRep.findAllByUserName(userName);
 	}
 	
 	public List<Order> getAllOrders() {
@@ -149,19 +156,51 @@ public class OrderService {
 	}
 	
 	public List<Order> getAllBuyOrders(){
-		return orderRep.findAllByBuyOrSell("Buy");
+		return orderRep.findAllByBuyOrSell(Action.BUY);
 	}
 	
 	public List<Order> getAllSellOrders(){
-		return orderRep.findAllByBuyOrSell("Sell");
+		return orderRep.findAllByBuyOrSell(Action.SELL);
 	}
+	
+//	public List<Order> getAllOrdersInLimit(Action buyOrSell, double limit){
+//		String operator;
+//		if(buyOrSell == Action.BUY) {
+//			//operator = "<="
+//		}else {
+//			
+//		}
+//		return orderRep.findAllBuyBuyOrSellWithinLimit(buyOrSell,operator,limit);
+//	}
 	
 	public List<String> getAllOrderStatus(){
 		return orderRep.getAllStatus();
 	}
 
-	public List<Order> getOrdersByUsername(String username) {
-		return orderRep.findAllByUsername(username);
+
+	public Order getMostRecentOrder() {
+		return orderRep.getByTimeStamp(Action.BUY,LocalDateTime.now());
+	}
+
+
+	public void cancelOrdersByUserName(String username) {
+		orderRep.deleteAllByUserName(username);		
+	}
+	
+	public List<Order> getListOfPossibleTrades(int orderBookID,Action buyOrSell, double priceLimit) {
+		if(buyOrSell == Action.BUY) {
+			if(priceLimit!= 0) {
+				return orderRep.findPossibleSellOrdersForOrderBookID(orderBookID, buyOrSell, priceLimit);
+			}else {
+				return orderRep.findPossibleSellOrdersForOrderBookID(orderBookID, buyOrSell);
+			}
+		}else {
+			if(priceLimit!= 0) {
+				return orderRep.findPossibleBuyOrdersForOrderBookID(orderBookID, buyOrSell, priceLimit);
+			}else {
+				return orderRep.findPossibleBuyOrdersForOrderBookID(orderBookID, buyOrSell);
+			}
+		}
 	}
 	
 }

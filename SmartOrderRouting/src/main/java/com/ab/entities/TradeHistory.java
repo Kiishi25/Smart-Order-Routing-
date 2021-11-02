@@ -10,26 +10,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 import lombok.Data;
-import lombok.Getter;
 
 
 
 @Entity
 @Table(name="TradeHistory")
 @Data
-public class TradeHistory{
-
+public class TradeHistory {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Getter
 	private int historyID;
 	
 	
 	@ManyToOne
-    @JoinColumn(name = "orderID1")
-	// @JsonBackReference
+    @JoinColumn(name = "orderID")
 	private Order order;
 	
 	private int orderTradingWithID;

@@ -2,14 +2,15 @@ package com.ab.services;
 
 import java.util.List;
 import java.util.Optional;
-import com.ab.entities.User;
 
 import org.springframework.stereotype.Service;
+
+import com.ab.entities.User;
 
 @Service
 public interface IUserService {
 
-    List<User> findUsers();
+	List<User> findUsers();
 
     User authenticateUser(String username, String password);
 

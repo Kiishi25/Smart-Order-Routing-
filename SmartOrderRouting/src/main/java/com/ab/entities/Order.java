@@ -1,5 +1,6 @@
 package com.ab.entities;
 
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,26 +18,23 @@ import javax.persistence.Table;
 
 import com.ab.models.Action;
 import com.ab.models.OrderType;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
-
+import lombok.Getter;
 
 
 @Entity
 @Table(name="Orders")
 @Data
-public class Order{
-
+public class Order {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderID;
 	
 	@ManyToOne
     @JoinColumn(name = "orderBookID")
-	// @JsonIgnore       // Avoid infinite recurrence when serializing entities
 	private OrderBook orderBook;
-
 	private Action buyOrSell;//buy/sell
 	private OrderType type;//market/priceLimit/
 	private String status = "partial";//partially filled or fully filled
@@ -53,9 +51,7 @@ public class Order{
 	//list showing how many shares this order has taken/given to another order
 	
 	@ManyToOne
-    @JoinColumn(name = "username")
-	// @JsonIgnore
-	@JsonBackReference
+    @JoinColumn(name = "userName")
 	private User user;
 	
 	public Order() {}
