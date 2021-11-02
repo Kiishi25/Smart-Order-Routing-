@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ab.entities.User;
-import com.ab.models.Action;
-import com.ab.models.OrderType;
+import com.ab.entities.enums.BuyOrSell;
+import com.ab.entities.enums.OrderType;
 
 @SpringBootTest
 @TestMethodOrder(value = OrderAnnotation.class)
@@ -33,28 +33,28 @@ class OrderServiceTest {
 	@Test
 	@Order(1)
 	public void addBuyMarketOrder() {
-		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.Market, Action.BUY, 0, 100, null);
+		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.MARKET, BuyOrSell.BUY, 0, 100, null);
 		assertEquals("", orderService.getAllOrders().toString());
 	}
 	
 	@Test
 	@Order(2)
 	public void addSellMarketOrder() {
-		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.Market, Action.SELL, 0, 100, null);
+		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.MARKET, BuyOrSell.SELL, 0, 100, null);
 		assertEquals("", orderService.getAllOrders().toString());
 	}
 	
 	@Test
 	@Order(3)
 	public void addBuyLimitOrder() {
-		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.Market, Action.BUY, 30, 100, null);
+		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.MARKET, BuyOrSell.BUY, 30, 100, null);
 		assertEquals("", orderService.getAllOrders().toString());
 	}
 	
 	@Test
 	@Order(4)
 	public void addSellLimitOrder() {
-		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.Market, Action.SELL, 30, 100, null);
+		orderService.addOrder(orderBookService.findOrderBook(instrumentName), user, OrderType.MARKET, BuyOrSell.SELL, 30, 100, null);
 		assertEquals("", orderService.getAllOrders().toString());
 	}
 	

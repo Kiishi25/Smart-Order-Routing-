@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ab.entities.Order;
 import com.ab.entities.TradeHistory;
-import com.ab.models.OrderType;
+import com.ab.entities.enums.OrderType;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Integer>{

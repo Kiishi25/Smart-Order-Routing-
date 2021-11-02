@@ -24,6 +24,6 @@ public class OrderBookService {
     
     public OrderBook create(OrderBook body) {
         if (findOrderBook(body.getInstrumentCode()) == null) return repo.save(body);
-        else return null;
+        else return findOrderBook(body.getInstrumentCode());
     }
 }

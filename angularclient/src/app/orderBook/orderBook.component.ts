@@ -15,7 +15,7 @@ export class OrderBookComponent {
   instrumentCode: string;
 
   buyOrSell = ['BUY', 'SELL'];
-  orderTypes = ['Market', 'Limit', 'Hidden', 'Timed'];
+  orderTypes = ['MARKET', 'LIMIT', 'HIDDEN', 'TIMED'];
 
   constructor(@Inject(OrderController) private orderController: OrderController, private _router: Router, public _route: ActivatedRoute) {
     this.title = "OrderBook";
@@ -28,15 +28,13 @@ export class OrderBookComponent {
   async submitOrderBook() {
     let userStr = localStorage.getItem('user');
     let user = userStr ? JSON.parse(userStr) as User : undefined;
+    let username = user.username;
 
-    let res = await this.orderController.createOrder(this.orderBook.buyOrSell, this.orderBook.orderType, this.orderBook.priceLimit, this.orderBook.shareQuantity, user?.username, 'ARB');
+    let res = await this.orderController.createOrder(this.orderBook.buyOrSell, this.orderBook.orderType, this.orderBook.priceLimit, this.orderBook.shareQuantity, username, this.instrumentCode);
 
     // Order created successfully
     if(res) {
-      this._router.navigate(['/orders'])
-      .then(() => {
-        window.location.reload();
-      });
+      this._router.navigate(['/orders']);
     }
   }
 }

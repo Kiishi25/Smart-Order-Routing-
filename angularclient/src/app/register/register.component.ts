@@ -14,8 +14,6 @@ export class RegisterComponent {
   email: string;
   username: string;
   password: string;
-  isUserCreated: boolean;
-  errorMessage: string;
 
   constructor(@Inject(UserController) private userController: UserController,  private _router: Router) {
     this.title = "register page";
@@ -26,10 +24,10 @@ export class RegisterComponent {
     let user = await this.userController.registerUser(this.name, this.email, this.username, this.password);
 
     if(user && user.fullName){
-      this.isUserCreated = true;
-    }else{
-      this.isUserCreated = false;
+      this._router.navigate(['/'])
+      .then(() => {
+        window.location.reload();
+      });
     }
-
   }
 }

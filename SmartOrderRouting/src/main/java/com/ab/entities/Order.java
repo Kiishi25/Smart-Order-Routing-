@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,8 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.ab.models.Action;
-import com.ab.models.OrderType;
+import com.ab.entities.enums.BuyOrSell;
+import com.ab.entities.enums.OrderStatus;
+import com.ab.entities.enums.OrderType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
@@ -37,9 +41,18 @@ public class Order{
 	// @JsonIgnore       // Avoid infinite recurrence when serializing entities
 	private OrderBook orderBook;
 
-	private Action buyOrSell;//buy/sell
+    @Column(name = "buy_or_sell", columnDefinition = "ENUM('BUY', 'SELL') DEFAULT 'BUY'")
+    @Enumerated(EnumType.STRING)
+	private BuyOrSell buyOrSell;//buy/sell
+
+    @Column(name = "type", columnDefinition = "ENUM('MARKET', 'LIMIT', 'HIDDEN', 'TIMED') DEFAULT 'MARKET'")
+    @Enumerated(EnumType.STRING)
 	private OrderType type;//market/priceLimit/
-	private String status = "partial";//partially filled or fully filled
+
+    @Column(name = "status", columnDefinition = "ENUM('PARTIAL', 'FULL') DEFAULT 'PARTIAL'")
+    @Enumerated(EnumType.STRING)
+	private OrderStatus status = OrderStatus.PARTIAL;//partially filled or fully filled
+
 	private String auctionTime;//Opening/closing auction or null
 	private double priceLimit;//max/min value a share will be bought or sold for
 	private int shareQuantity;//the amount of shares to be bought or sold
@@ -61,7 +74,7 @@ public class Order{
 	public Order() {}
 	
 	//priceLimit Order
-	public Order(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
+	public Order(OrderBook orderBook, User user, BuyOrSell buyOrSell, OrderType type, double priceLimit, int shareQuantity) {
 		this.orderBook = orderBook;
 		this.user = user;
 		this.buyOrSell = buyOrSell;
@@ -70,7 +83,7 @@ public class Order{
 		this.shareQuantity = shareQuantity;
 	}
 	//Market Order
-	public Order(OrderBook orderBook, User user, Action buyOrSell, OrderType type, int shareQuantity) {
+	public Order(OrderBook orderBook, User user, BuyOrSell buyOrSell, OrderType type, int shareQuantity) {
 		this.orderBook = orderBook;
 		this.user = user;
 		this.buyOrSell = buyOrSell;
@@ -78,7 +91,7 @@ public class Order{
 		this.shareQuantity = shareQuantity;
 	}
 	//Hidden Order
-	public Order(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity, boolean isHidden) {
+	public Order(OrderBook orderBook, User user, BuyOrSell buyOrSell, OrderType type, double priceLimit, int shareQuantity, boolean isHidden) {
 		this.orderBook = orderBook;
 		this.user = user;
 		this.buyOrSell = buyOrSell;
@@ -88,7 +101,7 @@ public class Order{
 		this.isHidden = isHidden;
 	}
 	//Open/Close Order
-	public Order(OrderBook orderBook, User user, Action buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
+	public Order(OrderBook orderBook, User user, BuyOrSell buyOrSell, OrderType type, double priceLimit, int shareQuantity, String auctionTime) {
 		this.orderBook = orderBook;
 		this.user = user;
 		this.buyOrSell = buyOrSell;

@@ -11,8 +11,8 @@ import com.ab.entities.Instrument;
 import com.ab.entities.Order;
 import com.ab.entities.OrderBook;
 import com.ab.entities.User;
-import com.ab.models.Action;
-import com.ab.models.OrderType;
+import com.ab.entities.enums.BuyOrSell;
+import com.ab.entities.enums.OrderType;
 import com.ab.repositories.InstrumentRepository;
 import com.ab.repositories.OrderBookRepository;
 import com.ab.repositories.UserRepository;
@@ -53,23 +53,23 @@ class DataBasePopulator {
 			OrderBook orderBook = new OrderBook(name);
 			for(int i = 0; i < 10; i++) {
 				Order randomOrder;
-				Action buyOrSell;
+				BuyOrSell buyOrSell;
 				OrderType type;
 				int shareQuantity = (int) (Math.random() * (1000 -1 + 1) + 1);
 				User user = userRep.findById(username).get();
 
 				if(Math.floor(Math.random() * (2+1) + 0) == 0) {
-					buyOrSell = Action.BUY;
+					buyOrSell = BuyOrSell.BUY;
 				}else {
-					buyOrSell = Action.SELL;
+					buyOrSell = BuyOrSell.SELL;
 				}
 				if(Math.floor(Math.random() * (3+1) + 0) == 0) {
 					//Market
-					type = OrderType.Market;
+					type = OrderType.MARKET;
 					randomOrder = new Order(orderBook, user,buyOrSell, type, shareQuantity);
 				}else {
 					//Limit
-					type = OrderType.Limit;
+					type = OrderType.LIMIT;
 					double limit = (Math.random() * (300 -1 + 1) + 1);
 					randomOrder = new Order(orderBook, user,buyOrSell, type, limit, shareQuantity);
 				}
