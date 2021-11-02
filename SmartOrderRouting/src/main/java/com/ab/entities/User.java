@@ -10,20 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 import lombok.Data;
-
 
 
 @Entity
 @Table(name="Users")
 @Data
-public class User{
+public class User {
 
 	@Id
 	private String username;
-	
-	private String fullName;
+	private String fullname;
 	private String email;
 	private String password;
 	
@@ -32,9 +29,9 @@ public class User{
 			cascade = CascadeType.ALL)
 	private List<Order> orders = new ArrayList<Order>();
 	
-	public User(String name, String email, String username, String password) {
+	public User(String username, String fullname, String email, String password) {
 		this.username = username;
-		this.fullName = name;
+		this.fullname = fullname;
 		this.email = email;
 		this.password = password;
 	}

@@ -40,7 +40,6 @@ export class UserService {
   }
 
   public async registerUser(name: string, email: string, username: string, password: string){
-
     let user: User = null;
     const httpOptions = {
       headers: new HttpHeaders({
@@ -51,7 +50,7 @@ export class UserService {
 
     var url = 'http://localhost:8080/register';
     var body = {
-      'fullName': name,
+      'fullname': name,
       'email': email,
       'username': username,
       'password': password,

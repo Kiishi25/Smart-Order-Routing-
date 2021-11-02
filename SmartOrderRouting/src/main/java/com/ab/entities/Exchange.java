@@ -1,11 +1,14 @@
 package com.ab.entities;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -22,8 +25,8 @@ public class Exchange {
     private double feeLadder;
 	private double currentDaysTotalTradeValue;
 	
-	// @OneToMany(fetch = FetchType.EAGER)
-	// private List<OrderBook> orderBooks = new ArrayList<OrderBook>();
+	@OneToMany(fetch =FetchType.EAGER)
+	private List<OrderBook> orderBooks = new ArrayList<OrderBook>();
 	
 	public Exchange(){}
 

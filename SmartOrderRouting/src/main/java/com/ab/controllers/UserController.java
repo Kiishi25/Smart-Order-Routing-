@@ -41,11 +41,11 @@ public class UserController {
 
     @PostMapping(path = "/register", consumes = { MediaType.APPLICATION_JSON_VALUE })
     User registerUser(@Validated(User.class) @RequestBody User user) {
-        System.out.println("Name: " + user.getFullName());
+        System.out.println("Name: " + user.getFullname());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Username: " + user.getUsername());
         System.out.println("Password: " + user.getPassword());
-        User resUser = userService.registerUser(user.getFullName(),user.getEmail(),user.getUsername(), user.getPassword());
+        User resUser = userService.registerUser(user.getUsername(), user.getFullname(), user.getEmail(), user.getPassword());
 
         return resUser;
     }

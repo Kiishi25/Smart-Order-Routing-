@@ -10,6 +10,10 @@ import com.ab.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User,String>{
 
-    @Query("SELECT u from User u where u.username = :username and u.password = :password")
+	@Query("SELECT u from User u where u.username = :username and u.password = :password")
     public User findUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
+	@Query("SELECT u from User u where u.username = :username")
+	public User getUserByUsername(@Param("username") String username);
+
 }

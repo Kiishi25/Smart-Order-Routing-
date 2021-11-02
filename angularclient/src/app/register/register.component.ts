@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserController } from '../controllers/user.controller';
+import { User } from '../models/User';
 
 @Component({
   selector: 'register',
@@ -23,7 +24,7 @@ export class RegisterComponent {
   async registerUser(){
     let user = await this.userController.registerUser(this.name, this.email, this.username, this.password);
 
-    if(user && user.fullName){
+    if(user && user.fullname){
       this._router.navigate(['/'])
       .then(() => {
         window.location.reload();

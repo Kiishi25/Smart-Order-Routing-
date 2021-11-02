@@ -1,5 +1,6 @@
 package com.ab.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
@@ -61,6 +62,7 @@ public class OrderService {
 		Order order;
 		if(shareQuantity >= 1000) {
 			addMultipleOrder(orderBook, user, type, buyOrSell, priceLimit, shareQuantity, auctionTime);
+			return true;
 		}
 		switch(type) {
 		case MARKET:
@@ -121,7 +123,6 @@ public class OrderService {
 		return order.getShareQuantity() == sharesFilled;
 	}
 
-
 	public Order cancelOrder(int orderID) {
 		Order cancelledOrder = orderRep.getByOrderID(orderID);
 		orderRep.deleteById(orderID);
@@ -158,11 +159,11 @@ public class OrderService {
 	}
 	
 	public List<Order> getAllBuyOrders(){
-		return orderRep.findAllByBuyOrSell("Buy");
+		return orderRep.findAllByBuyOrSell(BuyOrSell.BUY);
 	}
 	
 	public List<Order> getAllSellOrders(){
-		return orderRep.findAllByBuyOrSell("Sell");
+		return orderRep.findAllByBuyOrSell(BuyOrSell.SELL);
 	}
 	
 	public List<String> getAllOrderStatus(){
@@ -171,6 +172,44 @@ public class OrderService {
 
 	public List<Order> getOrdersByUsername(String username) {
 		return orderRep.findAllByUsername(username);
+	}
+
+//	public List<Order> getAllOrdersInLimit(BuyOrSell buyOrSell, double limit){
+//		String operator;
+//		if(buyOrSell == BuyOrSell.BUY) {
+//			//operator = "<="
+//		}else {
+//			
+//		}
+//		return orderRep.findAllBuyBuyOrSellWithinLimit(buyOrSell,operator,limit);
+//	}	
+	
+	public List<TradeHistory> getAllTradesForOrder(int orderID){
+		return historyRep.findAllByOrderId(orderID);
+	}
+
+	public Order getMostRecentOrder() {
+		return orderRep.getByTimeStamp(BuyOrSell.BUY,LocalDateTime.now());
+	}
+
+	public void cancelOrdersByUsername(String username) {
+		orderRep.deleteAllByUsername(username);		
+	}
+	
+	public List<Order> getListOfPossibleTrades(int orderBookID,BuyOrSell buyOrSell, double priceLimit) {
+		if(buyOrSell == BuyOrSell.BUY) {
+			if(priceLimit!= 0) {
+				return orderRep.findPossibleSellOrdersForOrderBookID(orderBookID, buyOrSell, priceLimit);
+			}else {
+				return orderRep.findPossibleSellOrdersForOrderBookID(orderBookID, buyOrSell);
+			}
+		}else {
+			if(priceLimit!= 0) {
+				return orderRep.findPossibleBuyOrdersForOrderBookID(orderBookID, buyOrSell, priceLimit);
+			}else {
+				return orderRep.findPossibleBuyOrdersForOrderBookID(orderBookID, buyOrSell);
+			}
+		}
 	}
 	
 }

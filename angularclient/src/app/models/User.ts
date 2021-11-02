@@ -1,16 +1,16 @@
 
 export class User{
 
-   
+
     username : string;
-    fullName : string;
+    fullname : string;
     email : string;
     password : string;
 
-    public User( username : string, fullName : string, email : string, password : string) {
-        
+    public User( username : string, fullname : string, email : string, password : string) {
+
         this.username = username;
-        this.fullName = fullName;
+        this.fullname = fullname;
         this.email = email;
         this.password = password;
     }
@@ -23,12 +23,12 @@ export class User{
         this.username = username;
     }
 
-    public getFullName() : string {
-        return this.fullName;
+    public getFullname() : string {
+        return this.fullname;
     }
 
-    public setFullName(fullName : string) {
-        this.fullName = fullName;
+    public setFullname(fullname : string) {
+        this.fullname = fullname;
     }
 
     public getEmail() : string {

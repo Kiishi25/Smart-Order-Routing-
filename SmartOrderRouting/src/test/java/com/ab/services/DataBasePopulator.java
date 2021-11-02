@@ -1,28 +1,28 @@
 package com.ab.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ab.entities.Instrument;
 import com.ab.entities.Order;
 import com.ab.entities.OrderBook;
-import com.ab.entities.User;
 import com.ab.entities.enums.BuyOrSell;
 import com.ab.entities.enums.OrderType;
 import com.ab.repositories.InstrumentRepository;
 import com.ab.repositories.OrderBookRepository;
 import com.ab.repositories.UserRepository;
+
 @SpringBootTest
 class DataBasePopulator {
-	private final String[] instrumentCode = {
+	private final String[] instrumentCodes = {
 			"IAG", "SMT", "BOO", "THG", "ARB",
 			"ASC", "EZJ", "RIO", "TUI", "LLOY"};
 
-	private List<Instrument> instrumentsList = new ArrayList<Instrument>(){{
+	private List<Instrument> instrumentsList = new ArrayList<>(){{
 		add(new Instrument("IAG", "International Consolidated Airlns Grp", 163.80, 23509387, 162.06, 164.80, 160.64, +1.05));
 		add(new Instrument("SMT", "Trading Group Limited", 1501.50, 3532569, 1485.00, 1501.50, 1478.00, +0.87));
 		add(new Instrument("BOO", "Boohoo Group PLC", 181.75, 4269762, 183.95, 185.35 , 181.75, -1.76));
@@ -36,7 +36,6 @@ class DataBasePopulator {
 
 	}};
 
-	
 	private final String username = "ADMIN";
 	@Autowired
 	private OrderBookRepository orderBookRep;
@@ -48,16 +47,14 @@ class DataBasePopulator {
 	private UserRepository userRep;
 	
 	@Test
-	void createOrderBooks() {
-		for(String name : instrumentCode) {
+	void test() {
+		for(String name : instrumentCodes) {
 			OrderBook orderBook = new OrderBook(name);
 			for(int i = 0; i < 10; i++) {
 				Order randomOrder;
 				BuyOrSell buyOrSell;
 				OrderType type;
 				int shareQuantity = (int) (Math.random() * (1000 -1 + 1) + 1);
-				User user = userRep.findById(username).get();
-
 				if(Math.floor(Math.random() * (2+1) + 0) == 0) {
 					buyOrSell = BuyOrSell.BUY;
 				}else {
@@ -66,12 +63,12 @@ class DataBasePopulator {
 				if(Math.floor(Math.random() * (3+1) + 0) == 0) {
 					//Market
 					type = OrderType.MARKET;
-					randomOrder = new Order(orderBook, user,buyOrSell, type, shareQuantity);
+					randomOrder = new Order(orderBook, userRep.getUserByUsername(username),buyOrSell, type, shareQuantity);
 				}else {
 					//Limit
 					type = OrderType.LIMIT;
 					double limit = (Math.random() * (300 -1 + 1) + 1);
-					randomOrder = new Order(orderBook, user,buyOrSell, type, limit, shareQuantity);
+					randomOrder = new Order(orderBook, userRep.getUserByUsername(username),buyOrSell, type, limit, shareQuantity);
 				}
 				orderBook.getOrders().add(randomOrder);
 			}

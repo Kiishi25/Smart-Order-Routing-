@@ -14,7 +14,7 @@ import com.ab.helpers.EmailValidator;
 import com.ab.helpers.PasswordEncryptor;
 import com.ab.repositories.UserRepository;
 
-@Service
+@Service(value = "database")
 public class UserService implements IUserService {
 	private static final Logger logger = LogManager.getLogger(UserService.class);
 
@@ -41,21 +41,22 @@ public class UserService implements IUserService {
         return userRep.findById(username);
     }
 
-	public User registerUser(String name, String email, String username, String password) {
-		password = PasswordEncryptor.encrypt(password);
-		if(EmailValidator.isValid(email)) {
-			User user = new User(name,email,username,password);
-			userRep.save(user);
-			logger.info("Registered new user");
-
-			return user;
+	public User registerUser(String username, String fullname, String email, String password) {
+		if(!EmailValidator.isValid(email)) {
+			logger.info("Invalid email format");
 		}
 
-		return null;
+		password = PasswordEncryptor.encrypt(password);
+
+		User user = new User(username,fullname,email,password);
+		userRep.save(user);
+		logger.info("Registered new user");
+
+		return user;
 	}
 	
 	public User loginUser(String username, String password) {
-		User user = userRep.getById(username);
+		User user = userRep.getUserByUsername(username);
 		String storedPassword = PasswordEncryptor.decrypt(user.getPassword());
 		if(password.equals(storedPassword)) {
 			logger.info("User: " + username + " successfully logged in");

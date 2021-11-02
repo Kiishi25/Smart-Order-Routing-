@@ -16,7 +16,7 @@ export class HomepageComponent{
     this.title = "Homepage";
     let userStr = localStorage.getItem('user');
     let user = userStr ? JSON.parse(userStr) as User : undefined;
-    this.name = user?.fullName;
+    this.name = user?.fullname;
 
     if(localStorage['user']){
       this.isUserAuthenticated = true;

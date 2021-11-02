@@ -1,6 +1,5 @@
 package com.ab.entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +20,7 @@ import lombok.Data;
 @Entity
 @Table(name="OrderBooks")
 @Data
-public class OrderBook implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+public class OrderBook {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,10 +33,6 @@ public class OrderBook implements Serializable{
 	cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Order> orders = new ArrayList<Order>();
-
-    // @ManyToOne
-	// @JoinColumn(name = "exchange_id")
-	// private Exchange exchange;
 	
 	public OrderBook(){}
 

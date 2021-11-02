@@ -1,5 +1,6 @@
 package com.ab.entities;
 
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,19 +27,17 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 
-
 @Entity
 @Table(name="Orders")
 @Data
-public class Order{
-
+public class Order {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int orderID;
 	
 	@ManyToOne
     @JoinColumn(name = "orderBookID")
-	// @JsonIgnore       // Avoid infinite recurrence when serializing entities
 	private OrderBook orderBook;
 
     @Column(name = "buy_or_sell", columnDefinition = "ENUM('BUY', 'SELL') DEFAULT 'BUY'")
@@ -67,7 +66,6 @@ public class Order{
 	
 	@ManyToOne
     @JoinColumn(name = "username")
-	// @JsonIgnore
 	@JsonBackReference
 	private User user;
 	
