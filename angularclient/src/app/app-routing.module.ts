@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'history', component: HistoryComponent },
   { path: 'orders', component: OrderComponent },
-  { path: 'orderBook', component: OrderBookComponent },
+  { path: 'orderBook/:code', component: OrderBookComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'register', component: RegisterComponent },

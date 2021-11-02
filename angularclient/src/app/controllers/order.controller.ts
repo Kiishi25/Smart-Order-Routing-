@@ -5,6 +5,12 @@ import { OrderService } from "../services/order.service";
     providedIn: 'root',
   })
 export class OrderController{
+    orderService : OrderService;
+
+    constructor(orderService : OrderService){
+        this.orderService = orderService;
+    }
+
     async cancelOrder(orderId: any) {
       return await this.orderService.cancelOrder(orderId);
     }
@@ -13,11 +19,7 @@ export class OrderController{
       return await this.orderService.getOrdersByUsername(username);
     }
 
-    orderService : OrderService;
-
-    constructor(orderService : OrderService){
-        this.orderService = orderService;
+    public async createOrder(buyOrSell, type, priceLimit, shareQuantity, username, instrumentCode){
+      return await this.orderService.createOrder(buyOrSell, type, priceLimit, shareQuantity, username, instrumentCode);
     }
-
-    
 }

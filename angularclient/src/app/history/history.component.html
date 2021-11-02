@@ -18,18 +18,22 @@
         <table class="table table-hover table-bordered table-sm">
           <thead>
             <tr>
-              <th scope="col" sortable="order" (sort)="onSort($event)">Orders</th>
-              <th scope="col" sortable="qty" (sort)="onSort($event)">Quantity</th>
-              <th scope="col" sortable="price" (sort)="onSort($event)">Price</th>
-              <th scope="col" sortable="ts" (sort)="onSort($event)">Timestamp</th>
+              <th scope="col" sortable="orderID" (sort)="onSort($event)">Order ID</th>
+              <th scope="col" sortable="buyOrSell" (sort)="onSort($event)">Buy/Sell</th>
+              <th scope="col" sortable="shareQuantity" (sort)="onSort($event)">Quantity</th>
+              <th scope="col" sortable="priceLimit" (sort)="onSort($event)">Price</th>
+              <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+              <th scope="col" sortable="timeStamp" (sort)="onSort($event)">TimeStamp</th>
             </tr>
           </thead>
           <tbody class="table-light">
             <tr *ngFor="let trade of history">
-              <td>{{ trade.order }}</td>
-              <td>{{ trade.qty | number }}</td>
-              <td>{{ trade.price | number }}</td>
-              <td>{{ trade.ts }}</td>
+              <td>{{ trade.orderID }}</td>
+              <td>{{ trade.buyOrSell }}</td>
+              <td>{{ trade.shareQuantity | number }}</td>
+              <td>{{ trade.priceLimit | number }}</td>
+              <td>{{ trade.status }}</td>
+              <td>{{ trade.timeStamp}}</td>
             </tr>
           </tbody>
         </table>

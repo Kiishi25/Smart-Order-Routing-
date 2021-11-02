@@ -23,6 +23,7 @@ public class OrderBookService {
     }
     
     public OrderBook create(OrderBook body) {
-    	return repo.save(body);
+        if (findOrderBook(body.getInstrumentCode()) == null) return repo.save(body);
+        else return null;
     }
 }

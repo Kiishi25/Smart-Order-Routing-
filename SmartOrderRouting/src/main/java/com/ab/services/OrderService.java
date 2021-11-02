@@ -20,6 +20,10 @@ import com.ab.repositories.OrderRepository;
 @Service
 public class OrderService {
 	private static final Logger logger = LogManager.getLogger(OrderService.class);
+
+	@Autowired
+	private OrderBookService orderBookService;
+
 	@Autowired
 	private OrderRepository orderRep;
 	
@@ -51,6 +55,8 @@ public class OrderService {
 	}
 	
 	public boolean  addOrder(OrderBook orderBook, User user, OrderType type, Action buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+		orderBook = orderBookService.create(orderBook);
+
 		Order order;
 		if(shareQuantity >= 1000) {
 			addMultipleOrder(orderBook, user, type, buyOrSell, priceLimit, shareQuantity, auctionTime);
@@ -81,6 +87,7 @@ public class OrderService {
 			return true;
 		}catch(Exception e) {
 			//add Log
+			logger.warn(e.toString());
 			logger.warn("Add Order Failed");
 			return false;
 		}

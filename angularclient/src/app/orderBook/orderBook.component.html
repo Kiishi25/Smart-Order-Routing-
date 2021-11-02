@@ -5,71 +5,49 @@
         {{ title }}
       </h1>
       <!-- Table -->
-      <div class="table-responsive py-3">
-        <table class="table table-hover table-bordered table-sm">
-            <thead>
-                <tr>
-                    <th scope="col" sortable="code" >Code</th>
-                    <th scope="col" sortable="company" >Company</th>
-                    <th scope="col" sortable="price" >Price</th>
-                    <th scope="col" sortable="open" >Open</th>
-                    <th scope="col" sortable="priceChange" >Change (24hs)</th>
-                    <th scope="col" sortable="high" >High (24hs)</th>
-                    <th scope="col" sortable="low" >Low (24hs)</th>
-                    <th scope="col" sortable="volume" >Volume (24hs)</th>
-                </tr>
-            </thead>
-            <tbody class="table-light">
-                <tr *ngFor="let market of markets">
-                    <td>{{ market.code }}</td>
-                    <td>{{ market.company }}</td>
-                    <td>{{ market.price}}</td>
-                    <td>{{ market.open  }}</td>
-                    <td>{{ market.priceChange }}</td>
-                    <td>{{ market.high}}</td>
-                    <td>{{ market.low }}</td>
-                    <td>{{ market.volume | number }}</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
-    <!-- Action -->
-    <div class="form-group row text-center">
-      <label for="buyOrSell" style="text-align:right" class="col-sm-2 col-form-label">Buy/Sell</label>
-      <div class="col-sm-9 btn-group btn-group-sm">
-        <input type="radio" class="btn-check me-md-2" name="btnradio" id="btnbuy" checked>
-        <label class="btn btn-success" for="btnbuy">BUY</label>
-        <input type="radio" class="btn-check" name="btnradio" id="btnsell">
-        <label class="btn btn-danger" for="btnsell">SELL</label>
-      </div>
-    </div>
-    <div class="form-group row text-center">
-      <label for="orderType" style="text-align:right" class="col-sm-2 col-form-label">Order Type</label>
-      <div class="col-sm-9 btn-group btn-group-sm">
-        <select class="form-control" name="orderType" formControlName="orderType">
-          <option value="market">Market</option>
-          <option value="limit">Limit</option>
-          <option value="hidden">Hidden</option>
-          <option value="timed">Timed</option>
+    <!-- Form -->
+    <form (ngSubmit)="submitOrderBook">
+      <div class="form-group">
+        <label for="buyOrSell">Buy/Sell</label>
+        <select class="form-control" id="buyOrSell"
+          required
+          [(ngModel)]="orderBook.buyOrSell" name="buyOrSell"
+          #buyOrSell="ngModel">
+          <option [value]="undefined" selected>Select</option>
+          <option>BUY</option>
+          <option>SELL</option>
         </select>
       </div>
-    </div>
-    <div class="form-group row text-center">
-      <label for="inputQty" style="text-align:right" class="col-sm-2 col-form-label">Quantity</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="inputQty" placeholder="0" name="inputQty"
-          formControlName="inputQty">
+
+      <div class="form-group">
+        <label for="orderType">Order Type</label>
+        <select class="form-control" id="orderType"
+          required
+          [(ngModel)]="orderBook.orderType" name="orderType"
+          #orderType="ngModel">
+          <option [value]="undefined" selected>Select</option>
+          <option *ngFor="let orderType of orderTypes" [value]="orderType">{{orderType}}</option>
+        </select>
       </div>
-    </div>
-    <div class="form-group row text-center">
-      <label for="priceLimit" style="text-align:right" class="col-sm-2 col-form-label">Price Limit</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="priceLimit" placeholder="0" name="priceLimit"
-          formControlName="priceLimit">
+
+      <div class="form-group">
+        <label for="shareQuantity">Share Quantity</label>
+        <input type="text" class="form-control" id="shareQuantity"
+          required
+          [(ngModel)]="orderBook.shareQuantity" name="shareQuantity"
+          #shareQuantity="ngModel">
       </div>
-    </div>
-    <div class="d-grid py-5">
-      <a class="btn btn-success btn-lg btn-spacing" href="/orders">Submit</a>
-    </div>
+
+      <div class="form-group">
+        <label for="priceLimit">Price Limit</label>
+        <input type="text" class="form-control" id="priceLimit"
+          required
+          [(ngModel)]="orderBook.priceLimit" name="priceLimit"
+          #name="ngModel">
+      </div>
+
+      <button type="submit" class="btn btn-success" (click)="submitOrderBook()">Submit</button>
+    </form>
   </div>
 </div>

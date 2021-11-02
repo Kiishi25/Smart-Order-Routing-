@@ -48,8 +48,8 @@ public class OrderController {
      
 	}
 
-	@PostMapping(path = "/order")
-	public Boolean addOrder( @RequestBody Order order) {
+	@PostMapping("/order")
+	public Boolean addOrder(@RequestBody Order order) {
 		return orderService.addOrder(order.getOrderBook(), order.getUser(), order.getType(), order.getBuyOrSell(), order.getPriceLimit(), order.getShareQuantity(), order.getAuctionTime());
 	}
 

@@ -100,7 +100,7 @@ public class Order{
 
 	@Override
 	public String toString() {
-		return "Order [orderID=" + orderID + ", orderBook=" + orderBook + ", type=" + type + ", status=" + status
+		return "Order [orderID=" + orderID + ", orderBook=" + orderBook + ", user=" + user + ", type=" + type + ", status=" + status
 				+ ", priceLimit=" + priceLimit + ", shareQuantity=" + shareQuantity + ", history=" + history + "]";
 	}
 	

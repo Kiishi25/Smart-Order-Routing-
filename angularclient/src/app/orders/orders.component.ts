@@ -44,13 +44,12 @@ export class OrderComponent {
 
   title: String;
   orders: Order[];
+  orderController: OrderController;
 
   page = 1;
   pageSize = 10;
   collectionSize;
   isOrderDeleted;
-
-  orderController: OrderController;
 
   constructor(orderController: OrderController) {
     this.orderController = orderController;

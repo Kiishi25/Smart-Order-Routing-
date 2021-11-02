@@ -4,7 +4,12 @@ import { Order } from '../models/Order';
 
 @Injectable()
 export class OrderService {
-  
+  httpClient: HttpClient;
+
+  constructor(httpClient: HttpClient) {
+    this.httpClient = httpClient;
+  }
+
   async cancelOrder(orderId: any) {
     let res: Boolean = false;
 
@@ -20,16 +25,10 @@ export class OrderService {
 
     let response = await this.httpClient.put(url, {}, httpOptions).toPromise();
     if (response) {
-      res = true;      
+      res = true;
     }
 
     return res;
-  }
-
-  httpClient: HttpClient;
-
-  constructor(httpClient: HttpClient) {
-    this.httpClient = httpClient;
   }
 
   public async getOrdersByUsername(username: String) {
@@ -48,6 +47,39 @@ export class OrderService {
     let response = await this.httpClient.get(url, httpOptions).toPromise();
     if (response) {
       res = response as Order[];
+    }
+
+    return res;
+  }
+
+  public async createOrder(buyOrSell, type, priceLimit, shareQuantity, username, instrumentCode) {
+
+    let res: Boolean = false;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+    };
+
+    var url = 'http://localhost:8080/order';
+
+    var body = {
+      orderBook: {
+          instrumentCode
+      },
+      buyOrSell,
+      type,
+      shareQuantity,
+      priceLimit,
+      user: {
+          username
+      }
+    };
+
+    let response = await this.httpClient.post(url, body, httpOptions).toPromise();
+    if (response) {
+      res = response as Boolean;
     }
 
     return res;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { OrderBook } from '../models/OrderBook';
+import { Order } from '../models/Order';
 
 
 @Injectable()
@@ -12,9 +12,9 @@ export class OrderBookService {
     this.httpClient = httpClient;
   }
 
-  public async getAll(): Promise<OrderBook[]> {
+  public async getAll(): Promise<Order[]> {
 
-    let res: OrderBook[] = null;
+    let res: Order[] = null;
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -26,40 +26,7 @@ export class OrderBookService {
 
     let response = await this.httpClient.get(url, httpOptions).toPromise();
     if (response) {
-      res = response as OrderBook[];
-    }
-
-    return res;
-  }
-
-  public async createOrder(buyOrSell, orderType, priceLimit, quantity, username, orderBookId) {
-
-    let res: Boolean = false;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      })
-    };
-
-    var url = 'http://localhost:8080/order';
-
-    var body = {
-      "buyOrSell": buyOrSell,
-      "type": orderType,
-      "priceLimit": priceLimit,
-      "shareQuantity": quantity,
-      "user": {
-        "username": username
-      },
-      "orderBook": {
-        "orderBookID": orderBookId
-      }
-    };
-
-    let response = await this.httpClient.post(url, body, httpOptions).toPromise();
-    if (response) {
-      res = response as Boolean;
+      res = response as Order[];
     }
 
     return res;

@@ -15,8 +15,4 @@ export class OrderBookController{
     public async getAll(){
       return await this.orderBookService.getAll();
     }
-    public async createOrder(buyOrSell, orderType, priceLimit, quantity, username, orderBookId){
-      return await this.orderBookService.createOrder(buyOrSell, orderType, priceLimit, quantity, username, orderBookId);
-
-    }
 }
