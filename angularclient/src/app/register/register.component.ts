@@ -18,13 +18,13 @@ export class RegisterComponent {
   errorMessage: string;
 
   constructor(@Inject(UserController) private userController: UserController,  private _router: Router) {
-    this.title = "register Page";
+    this.title = "register page";
     this.userController = userController;
   }
 
   async registerUser(){
     let user = await this.userController.registerUser(this.name, this.email, this.username, this.password);
-    
+
     if(user && user.fullName){
       this.isUserCreated = true;
     }else{

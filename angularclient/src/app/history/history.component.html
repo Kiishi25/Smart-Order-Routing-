@@ -18,33 +18,29 @@
         <table class="table table-hover table-bordered table-sm">
           <thead>
             <tr>
-              <th scope="col"></th>
               <th scope="col" sortable="order" (sort)="onSort($event)">Orders</th>
               <th scope="col" sortable="qty" (sort)="onSort($event)">Quantity</th>
               <th scope="col" sortable="price" (sort)="onSort($event)">Price</th>
-              <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+              <th scope="col" sortable="ts" (sort)="onSort($event)">Timestamp</th>
             </tr>
           </thead>
           <tbody class="table-light">
-            <tr *ngFor="let trade of trades">
-              <th scope="row"><input type="checkbox"></th>
+            <tr *ngFor="let trade of history">
               <td>{{ trade.order }}</td>
               <td>{{ trade.qty | number }}</td>
               <td>{{ trade.price | number }}</td>
-              <td>{{ trade.status }}</td>
+              <td>{{ trade.ts }}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <!-- Pagination -->
       <div class="d-flex justify-content-end">
-        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshTrades()"></ngb-pagination>
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshHistory()"></ngb-pagination>
       </div>
       <!-- Action -->
       <div class="d-grid py-5">
-        <a class="btn btn-success btn-lg btn-spacing" href="trade/history">Execute Trades</a>
-        <a class="btn btn-dark btn-lg btn-spacing" href="trade/history">View History</a>
-        <a class="btn btn-dark btn-lg btn-spacing" href="orders">View Order</a>
+        <a class="btn btn-dark btn-lg btn-spacing" href="orders">View Trade</a>
       </div>
     </div>
   </div>
