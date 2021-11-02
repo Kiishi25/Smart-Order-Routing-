@@ -4,13 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { TradeSortComponent, TradeComponent } from './trade/trade.component';
 import { MarketComponent, MarketSortComponent } from './market/market.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { OrderBookSortComponent, OrderBookComponent } from './orderBook/orderBook.component';
 import { ContactComponent } from './contact-us/contact.component';
-import { TradeHistorySortComponent, TradeHistoryComponent } from './tradeHistory/tradeHistory.component';
+import { HistorySortComponent, HistoryComponent } from './history/history.component';
 import { AppRoutingModule } from './app-routing.module';
 
 
@@ -25,7 +23,7 @@ import { UserController } from '../app/controllers/user.controller';
 import { OrderController } from '../app/controllers/order.controller';
 import { LogoutComponent } from './logout/logout.component';
 
-import { 
+import {
 	IgxFinancialChartModule,
 	IgxLegendModule
  } from "igniteui-angular-charts";
@@ -37,15 +35,11 @@ import { OrderComponent } from './orders/orders.component';
   declarations: [
     AppComponent,
     HomepageComponent,
-    TradeComponent,
-    OrderBookComponent,
-    TradeHistoryComponent,
+    HistoryComponent,
     LoginComponent,
     RegisterComponent,
     ContactComponent,
-    OrderBookSortComponent,
-    TradeSortComponent,
-    TradeHistorySortComponent,
+    HistorySortComponent,
     MarketComponent,
     MarketSortComponent,
     LogoutComponent,

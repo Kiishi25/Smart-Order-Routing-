@@ -32,7 +32,6 @@ export class UserService {
 
     let response = await this.httpClient.post(url, body, httpOptions).toPromise();
     if (response && response['username'] === username) {
-      console.log("performed login request");
       user = response as User;
       isAuthenticated = true;
     }
@@ -56,12 +55,11 @@ export class UserService {
       'email': email,
       'username': username,
       'password': password,
-   
+
     };
 
     let response = await this.httpClient.post(url, body, httpOptions).toPromise();
     if (response && response['username'] === username) {
-      console.log("performed registration request");
       user = response as User;
     }
 
