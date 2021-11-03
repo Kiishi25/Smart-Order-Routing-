@@ -1,36 +1,36 @@
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderController } from '../controllers/order.controller';
-import { Order } from '../models/Order';
-import { User } from '../models/User';
+import { OrderController } from '../../controllers/order.controller';
+import { Order } from '../../models/Order';
+import { User } from '../../models/User';
 
 @Component({
-  selector: 'orderBook',
-  templateUrl: './orderBook.component.html',
-  styleUrls: ['./orderBook.component.css']
+  selector: 'order',
+  templateUrl: './order.component.html',
+  styleUrls: ['./order.component.css']
 })
-export class OrderBookComponent {
+export class OrderFormComponent {
   title: string;
-  orderBook: Order;
+  order: Order;
   instrumentCode: string;
 
   buyOrSell = ['BUY', 'SELL'];
   orderTypes = ['MARKET', 'LIMIT', 'HIDDEN', 'TIMED'];
 
   constructor(@Inject(OrderController) private orderController: OrderController, private _router: Router, public _route: ActivatedRoute) {
-    this.title = "OrderBook";
+    this.title = "Create Order";
     this.orderController = orderController;
 
-    this.orderBook = {} as Order;
+    this.order = {} as Order;
     this.instrumentCode = this._route.snapshot.paramMap.get('code');
   }
 
-  async submitOrderBook() {
+  async submitOrderForm() {
     let userStr = localStorage.getItem('user');
     let user = userStr ? JSON.parse(userStr) as User : undefined;
     let username = user.username;
 
-    let res = await this.orderController.createOrder(this.orderBook.buyOrSell, this.orderBook.orderType, this.orderBook.priceLimit, this.orderBook.shareQuantity, username, this.instrumentCode);
+    let res = await this.orderController.createOrder(this.order.buyOrSell, this.order.orderType, this.order.priceLimit, this.order.shareQuantity, username, this.instrumentCode);
 
     // Order created successfully
     if(res) {

@@ -16,7 +16,7 @@ import com.ab.entities.User;
 import com.ab.entities.enums.BuyOrSell;
 import com.ab.entities.enums.OrderStatus;
 import com.ab.entities.enums.OrderType;
-import com.ab.repositories.HistoryRepository;
+import com.ab.repositories.TradeHistoryRepository;
 import com.ab.repositories.OrderRepository;
 
 @Service
@@ -30,7 +30,7 @@ public class OrderService {
 	private OrderRepository orderRep;
 	
 	@Autowired
-	private HistoryRepository historyRep;
+	private TradeHistoryRepository historyRep;
 	
 	public OrderService() {
 		BasicConfigurator.configure();
@@ -108,7 +108,8 @@ public class OrderService {
 	
 	public TradeHistory addTradeHistory(int thisOrderID, int tradedWithID, int shareQuanitity, double value) {
 		Order order = orderRep.getByOrderID(thisOrderID);
-		TradeHistory history = new TradeHistory(order, tradedWithID, shareQuanitity, value);
+		Order tradedWithOrder = orderRep.getByOrderID(tradedWithID);
+		TradeHistory history = new TradeHistory(order, tradedWithOrder, shareQuanitity, value);
 		order.getHistory().add(history);
 		if(checkFull(order)) {
 			order.setStatus(OrderStatus.FULL);

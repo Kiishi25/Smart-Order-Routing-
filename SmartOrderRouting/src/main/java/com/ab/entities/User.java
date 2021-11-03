@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 
@@ -27,6 +29,7 @@ public class User {
 	@OneToMany( fetch =FetchType.EAGER,
 			mappedBy = "user",
 			cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Order> orders = new ArrayList<Order>();
 	
 	public User(String username, String fullname, String email, String password) {

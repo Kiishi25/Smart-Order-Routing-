@@ -1,13 +1,14 @@
-import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Component, Directive, EventEmitter, Inject, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { HistoryController } from '../controllers/history.controller';
+import { History } from '../models/History';
 import { Order } from '../models/Order';
 
-const HISTORY: Order[] = [];
-
-export type SortColumn = keyof Order | '';
+export type SortColumn = keyof History | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
-const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+const compare = (v1: string | number | Order, v2: string | number | Order) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+let historyList: History[] = [];
 
 export interface SortEvent {
   column: SortColumn;
@@ -40,17 +41,24 @@ export class HistorySortComponent {
   styleUrls: ['./history.component.css']
 })
 export class HistoryComponent {
-
   title: String;
-  history: Order[];
+  history: History[];
 
   page = 1;
   pageSize = 10;
-  collectionSize = HISTORY.length;
+  collectionSize;
 
-  constructor() {
+  constructor(@Inject(HistoryController) private historyController: HistoryController) {
+    // Preserve MarketComponent's instance so it can be accessed inside the then function of the loadInstruments' promise
+    var historyComponent = this;
     this.title = "History";
-    this.history = HISTORY;
+
+    this.historyController.getAll().then(function (list) {
+      console.log(`Result: ${JSON.stringify(list)}`);
+      historyComponent.history = list;
+      historyComponent.collectionSize = list.length;
+      historyList = list;
+    });
 
     this.refreshHistory();
   }
@@ -67,9 +75,9 @@ export class HistoryComponent {
 
     // sorting history
     if (direction === '' || column === '') {
-      this.history = HISTORY;
+      this.history = historyList;
     } else {
-      this.history = [...HISTORY].sort((a, b) => {
+      this.history = [...historyList].sort((a, b) => {
         const res = compare(a[column], b[column]);
         return direction === 'asc' ? res : -res;
       });
@@ -77,7 +85,7 @@ export class HistoryComponent {
   }
 
   refreshHistory() {
-    this.history = HISTORY
+    this.history = historyList
       .map((history, i) => ({id: i+1, ...history}))
       .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }

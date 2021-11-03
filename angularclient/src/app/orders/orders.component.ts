@@ -2,13 +2,12 @@ import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChild
 import { OrderController } from '../controllers/order.controller';
 import { Order } from '../models/Order';
 
-let ORDERS: Order[];
-
 export type SortColumn = keyof Order | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
 const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+let ORDERS: Order[];
 
 export interface SortEvent {
   column: SortColumn;
@@ -41,7 +40,6 @@ export class OrderSortComponent {
   styleUrls: ['./orders.component.css']
 })
 export class OrderComponent {
-
   title: String;
   orders: Order[];
   orderController: OrderController;

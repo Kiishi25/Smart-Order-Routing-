@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { MarketComponent, MarketSortComponent } from './market/market.component';
-import { OrderBookComponent } from './orderBook/orderBook.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ContactComponent } from './contact-us/contact.component';
@@ -31,6 +30,10 @@ import {
 import { FinancialDataService } from "./services/financial-data.service";
 import { FinancialChartMultipleDataComponent } from './market/financial-chart-multiple-data/financial-chart-multiple-data.component';
 import { OrderComponent } from './orders/orders.component';
+import { OrderFormComponent } from './orders/form/order.component';
+import { OrderBookController } from './controllers/orderBook.controller';
+import { HistoryService } from './services/history.service';
+import { HistoryController } from './controllers/history.controller';
 
 @NgModule({
   declarations: [
@@ -43,10 +46,10 @@ import { OrderComponent } from './orders/orders.component';
     HistorySortComponent,
     MarketComponent,
     MarketSortComponent,
-    OrderBookComponent,
     LogoutComponent,
     FinancialChartMultipleDataComponent,
-    OrderComponent
+    OrderComponent,
+    OrderFormComponent
   ],
   imports: [
     BrowserModule,
@@ -60,10 +63,13 @@ import { OrderComponent } from './orders/orders.component';
   ],
   providers: [
     OrderBookService,
+    OrderBookController,
+    HistoryService,
+    HistoryController,
     OrderService,
+    OrderController,
     UserService,
     UserController,
-    OrderController,
     FinancialDataService
   ],
   bootstrap: [AppComponent]

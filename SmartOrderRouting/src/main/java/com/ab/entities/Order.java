@@ -23,6 +23,7 @@ import com.ab.entities.enums.BuyOrSell;
 import com.ab.entities.enums.OrderStatus;
 import com.ab.entities.enums.OrderType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -61,6 +62,7 @@ public class Order {
 	@OneToMany( fetch =FetchType.EAGER,
 	mappedBy = "order",
 	cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<TradeHistory> history = new ArrayList<TradeHistory>();
 	//list showing how many shares this order has taken/given to another order
 	
@@ -111,8 +113,8 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [orderID=" + orderID + ", orderBook=" + orderBook + ", user=" + user + ", type=" + type + ", status=" + status
-				+ ", priceLimit=" + priceLimit + ", shareQuantity=" + shareQuantity + ", history=" + history + "]";
+		return "Order [orderID=" + orderID + ", type=" + type + ", status=" + status
+				+ ", priceLimit=" + priceLimit + ", shareQuantity=" + shareQuantity + "]";
 	}
 	
 }
