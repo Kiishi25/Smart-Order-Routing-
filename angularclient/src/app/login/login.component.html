@@ -7,24 +7,31 @@
 
                     <div class="col-md-6 col-sm-8">
                         <div class="tabbable-panel">
-                        <div class="tabbable-line">
-                            <div class="tab-content tab-content-BuySell m-t-9">
+                            <div class="tabbable-line">
+                                <div class="tab-content tab-content-BuySell m-t-9">
 
-                              <div class="tab-pane active" id="tab_default_2">
-                                <div class="panel panel-body">
-                                    <form style=" background-color: rgb(217, 217, 243);" class="intro-form" action="#" id="invite-2" method="POST">
-                                        <h5><i class="fas fa-user-lock"></i>  Account Login <span>Welcome back, Please enter with username and password</span></h5>
-                                        <input name="username" id="username" class="username" placeholder="Username" type="text" required="required" [(ngModel)]="username">
-                                        <input type="password" placeholder="Password" name="password" required="required" [(ngModel)]="password">
-                                        <button style="background-color: #5196e6;" (click)="authenticateUser()" class="btn btn-secondary btn-block">login </button>
+                                    <div class="tab-pane active" id="tab_default_2">
+                                        <div class="panel panel-body">
+                                            <form style=" background-color: rgb(217, 217, 243);" class="intro-form"
+                                                action="#" id="invite-2" method="POST">
+                                                <h5><i class="fas fa-user-lock"></i> Account Login <span>Welcome back,
+                                                        Please enter with username and password</span></h5>
+                                                <input name="username" id="username" class="username"
+                                                    placeholder="Username" type="text" required="required"
+                                                    [(ngModel)]="username">
+                                                <input type="password" placeholder="Password" name="password"
+                                                    required="required" [(ngModel)]="password">
+                                                <button style="background-color: #5196e6;" (click)="authenticateUser()"
+                                                    class="btn btn-secondary btn-block">login </button>
+                                            </form>
 
-                                        </form>
-                                    <span id="result"></span>
+                                            <p style="color: red;" *ngIf="error">{{error}}</p>
+                                            <span id="result"></span>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
                             </div>
                         </div>
-                      </div>
                     </div>
                 </div>
             </div>

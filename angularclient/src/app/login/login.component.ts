@@ -12,6 +12,7 @@ export class LoginComponent {
   title: String;
   username: string;
   password: string;
+  error: string;
 
   constructor(@Inject(UserController) private userController: UserController,  private _router: Router) {
     this.title = "Login Page";
@@ -26,6 +27,8 @@ export class LoginComponent {
       .then(() => {
         window.location.reload();
       });
+    }else{
+      this.error = "Failed to login. Please try again and ensure the password is correct.";
     }
   }
 }

@@ -3,7 +3,6 @@ package com.ab.controllers;
 import java.util.List;
 
 import com.ab.entities.Order;
-import com.ab.entities.TradeHistory;
 import com.ab.services.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;

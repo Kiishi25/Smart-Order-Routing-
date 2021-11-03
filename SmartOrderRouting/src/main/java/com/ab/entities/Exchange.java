@@ -25,7 +25,7 @@ public class Exchange {
     private double feeLadder;
 	private double currentDaysTotalTradeValue;
 	
-	@OneToMany(fetch =FetchType.EAGER)
+	@OneToMany(fetch =FetchType.LAZY)
 	private List<OrderBook> orderBooks = new ArrayList<OrderBook>();
 	
 	public Exchange(){}

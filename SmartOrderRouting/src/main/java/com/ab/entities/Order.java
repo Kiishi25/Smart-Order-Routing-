@@ -59,7 +59,7 @@ public class Order {
 	private boolean isHidden;//if true wont display priceLimit or quantity
 	private LocalDateTime timeStamp = LocalDateTime.now();
 	
-	@OneToMany( fetch =FetchType.EAGER,
+	@OneToMany( fetch =FetchType.LAZY,
 	mappedBy = "order",
 	cascade = CascadeType.ALL)
 	@JsonIgnore

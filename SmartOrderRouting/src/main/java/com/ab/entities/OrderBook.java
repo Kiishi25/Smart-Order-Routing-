@@ -28,7 +28,7 @@ public class OrderBook {
 	
 	private String instrumentCode;
 	
-	@OneToMany( fetch =FetchType.EAGER,
+	@OneToMany( fetch =FetchType.LAZY,
 	mappedBy = "orderBook",
 	cascade = CascadeType.ALL)
 	@JsonIgnore

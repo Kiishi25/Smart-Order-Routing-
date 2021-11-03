@@ -26,7 +26,7 @@ public class User {
 	private String email;
 	private String password;
 	
-	@OneToMany( fetch =FetchType.EAGER,
+	@OneToMany( fetch =FetchType.LAZY,
 			mappedBy = "user",
 			cascade = CascadeType.ALL)
 	@JsonIgnore

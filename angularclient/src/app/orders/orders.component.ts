@@ -1,4 +1,5 @@
 import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrderController } from '../controllers/order.controller';
 import { Order } from '../models/Order';
 
@@ -49,7 +50,7 @@ export class OrderComponent {
   collectionSize;
   isOrderDeleted;
 
-  constructor(orderController: OrderController) {
+  constructor(orderController: OrderController, private _router: Router) {
     this.orderController = orderController;
     var componentInstance = this;
     let user = JSON.parse(localStorage['user']);
@@ -89,6 +90,10 @@ export class OrderComponent {
     if(res){
       await this.refreshOrders();
       this.isOrderDeleted = true;
+      this._router.navigate(['/orders'])
+      .then(() => {
+        window.location.reload();
+      });
     }else{
       this.isOrderDeleted = false;
     }
