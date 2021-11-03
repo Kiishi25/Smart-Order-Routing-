@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FinancialDataService } from "../../services/financial-data.service";
 
 @Component({
@@ -10,7 +11,9 @@ import { FinancialDataService } from "../../services/financial-data.service";
 })
 export class FinancialChartMultipleDataComponent {
     public data: any;
-    constructor(private dataService: FinancialDataService) {
-        this.data = [ this.dataService.getGoog() ];
+    instrumentCode: string;
+    constructor(private dataService: FinancialDataService, private _route: ActivatedRoute) {
+        this.instrumentCode = this._route.snapshot.paramMap.get('code');
+        this.data = [ this.dataService.getDataByInstrument(this.instrumentCode) ];
     }
 }

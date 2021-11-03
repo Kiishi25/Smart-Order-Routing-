@@ -4,15 +4,16 @@
       <h1 class="text-center">
         {{ title }}
       </h1>
-      <!-- Table -->
+      <!-- Graph -->
+      <app-financial-chart-multiple-data></app-financial-chart-multiple-data>
     </div>
     <!-- Form -->
-    <form (ngSubmit)="submitOrderBook">
+    <form (ngSubmit)="submitOrderForm">
       <div class="form-group">
         <label for="buyOrSell">Buy/Sell</label>
         <select class="form-control" id="buyOrSell"
           required
-          [(ngModel)]="orderBook.buyOrSell" name="buyOrSell"
+          [(ngModel)]="order.buyOrSell" name="buyOrSell"
           #buyOrSell="ngModel">
           <option [value]="undefined" selected>Select</option>
           <option>BUY</option>
@@ -24,7 +25,7 @@
         <label for="orderType">Order Type</label>
         <select class="form-control" id="orderType"
           required
-          [(ngModel)]="orderBook.orderType" name="orderType"
+          [(ngModel)]="order.orderType" name="orderType"
           #orderType="ngModel">
           <option [value]="undefined" selected>Select</option>
           <option *ngFor="let orderType of orderTypes" [value]="orderType">{{orderType}}</option>
@@ -35,7 +36,7 @@
         <label for="shareQuantity">Share Quantity</label>
         <input type="text" class="form-control" id="shareQuantity"
           required
-          [(ngModel)]="orderBook.shareQuantity" name="shareQuantity"
+          [(ngModel)]="order.shareQuantity" name="shareQuantity"
           #shareQuantity="ngModel">
       </div>
 
@@ -43,11 +44,11 @@
         <label for="priceLimit">Price Limit</label>
         <input type="text" class="form-control" id="priceLimit"
           required
-          [(ngModel)]="orderBook.priceLimit" name="priceLimit"
+          [(ngModel)]="order.priceLimit" name="priceLimit"
           #name="ngModel">
       </div>
 
-      <button type="submit" class="btn btn-success" (click)="submitOrderBook()">Submit</button>
+      <button type="submit" class="btn btn-success" (click)="submitOrderForm()">Submit</button>
     </form>
   </div>
 </div>

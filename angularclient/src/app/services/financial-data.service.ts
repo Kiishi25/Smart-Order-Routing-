@@ -2,7 +2,45 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class FinancialDataService {
-
+    public getDataByInstrument(instrument:String): any[] {
+      let res = [];
+      switch(instrument) {
+        case 'ARB':
+          res = this.getARB();
+          break;
+        case 'ASC':
+          res = this.getASC();
+          break;
+        case 'BOO':
+          res = this.getBOO();
+          break;
+        case 'EZJ':
+          res = this.getEZJ();
+          break;
+        case 'IAG':
+          res = this.getIAG();
+          break;
+        case 'LLOY':
+          res = this.getLLOY();
+          break;
+        case 'RIO':
+          res = this.getRIO();
+          break;
+        case 'SMT':
+          res = this.getSMT();
+          break;
+        case 'THG':
+          res = this.getTHG();
+          break;
+        case 'TUI':
+          res = this.getTUI();
+          break;
+        case 'GBX':
+          res = this.getGBX();
+          break;
+      }
+      return res;
+    }
     public getData(): any[] {
         return [
             { time: new Date(2013, 1, 1), open: 268.93, high: 268.93, low: 262.80, close: 265.00, volume: 6118146 },
@@ -19,12 +57,26 @@ export class FinancialDataService {
         ];
     }
     public getMulti(): any[] {
-        return [ this.getAmzn(), this.getGoog(), this.getMsft(), this.getTsla() ];
+        return [ this.getARB(), this.getBOO(), this.getEZJ(), this.getIAG() ];
     }
-    public getThree(): any[] {
-        return [ this.getAmzn(), this.getMsft(), this.getTsla() ];
+    public getARB(): any[] {
+        const result: any = [
+          { time: new Date(2013, 1, 1), open: 268.93, high: 268.93, low: 262.80, close: 265.00, volume: 6118146 },
+          { time: new Date(2013, 1, 4), open: 262.78, high: 264.68, low: 259.07, close: 259.98, volume: 3723793 },
+          { time: new Date(2013, 1, 5), open: 262.00, high: 268.03, low: 261.46, close: 266.89, volume: 4013780 },
+          { time: new Date(2013, 1, 6), open: 265.16, high: 266.89, low: 261.11, close: 262.22, volume: 2772204 },
+          { time: new Date(2013, 1, 7), open: 264.10, high: 264.10, low: 255.11, close: 260.23, volume: 3977065 },
+          { time: new Date(2013, 1, 8), open: 261.40, high: 265.25, low: 260.56, close: 261.95, volume: 3879628 },
+          { time: new Date(2013, 1, 11), open: 263.20, high: 263.25, low: 256.60, close: 257.21, volume: 3407457 },
+          { time: new Date(2013, 1, 12), open: 259.19, high: 260.16, low: 257.00, close: 258.70, volume: 2944730 },
+          { time: new Date(2013, 1, 13), open: 261.53, high: 269.96, low: 260.30, close: 269.47, volume: 5295786 },
+          { time: new Date(2013, 1, 14), open: 267.37, high: 270.65, low: 265.40, close: 269.24, volume: 3464080 },
+          { time: new Date(2013, 1, 15), open: 267.63, high: 268.92, low: 263.11, close: 265.09, volume: 3981233 }
+        ];
+        result.title = "Arb (Arb)";
+        return result;
     }
-    public getAmzn(): any[] {
+    public getASC(): any[] {
         const result: any = [
     { time: new Date(2013, 1, 1), open: 268.93, high: 268.93, low: 262.80, close: 265.00, volume: 6118146 },
     { time: new Date(2013, 1, 4), open: 262.78, high: 264.68, low: 259.07, close: 259.98, volume: 3723793 },
@@ -1286,10 +1338,10 @@ export class FinancialDataService {
     { time: new Date(2018, 0, 30), open: 1403.17, high: 1439.25, low: 1392.00, close: 1437.82, volume: 5871942 },
     { time: new Date(2018, 0, 31), open: 1451.30, high: 1472.58, low: 1450.04, close: 1450.89, volume: 6424693 }
         ];
-        result.title = "Amazon (AMZN)";
+        result.title = "Asos (ASC)";
         return result;
     }
-    public getGoog(): any {
+    public getBOO(): any {
         const result: any = [
     { time: new Date(2013, 1, 1), open: 378.70, high: 387.90, low: 378.70, close: 387.40, volume: 0 },
     { time: new Date(2013, 1, 4), open: 383.46, high: 384.85, low: 378.76, close: 379.13, volume: 0 },
@@ -2551,10 +2603,10 @@ export class FinancialDataService {
     { time: new Date(2018, 0, 30), open: 1167.83, high: 1176.52, low: 1163.52, close: 1163.69, volume: 1556346 },
     { time: new Date(2018, 0, 31), open: 1170.57, high: 1173.00, low: 1159.13, close: 1169.94, volume: 1538688 }
         ];
-        result.title = "Google (GOOG)";
+        result.title = "Boohoo (BOO)";
         return result;
     }
-    public getMsft(): any {
+    public getEZJ(): any {
         const result: any = [
     { time: new Date(2013, 1, 1), open: 27.67, high: 28.05, low: 27.55, close: 27.93, volume: 55566440 },
     { time: new Date(2013, 1, 4), open: 27.87, high: 28.02, low: 27.42, close: 27.44, volume: 50539942 },
@@ -3816,10 +3868,10 @@ export class FinancialDataService {
     { time: new Date(2018, 0, 30), open: 93.30, high: 93.66, low: 92.10, close: 92.74, volume: 38635053 },
     { time: new Date(2018, 0, 31), open: 93.75, high: 95.40, low: 93.51, close: 95.01, volume: 48756338 }
         ];
-        result.title = "Microsoft (MSFT)";
+        result.title = "EasyJet (EZJ)";
         return result;
     }
-    public getTsla(): any {
+    public getIAG(): any {
         const result: any = [
     { time: new Date(2013, 1, 1), open: 38.17, high: 38.50, low: 37.62, close: 38.30, volume: 1100590 },
     { time: new Date(2013, 1, 4), open: 38.40, high: 38.42, low: 37.59, close: 37.74, volume: 1127989 },
@@ -5081,11 +5133,113 @@ export class FinancialDataService {
     { time: new Date(2018, 0, 30), open: 345.14, high: 348.27, low: 342.17, close: 345.82, volume: 4717700 },
     { time: new Date(2018, 0, 31), open: 347.51, high: 356.19, low: 345.19, close: 354.31, volume: 6214069 }
             ];
-        result.title = "TESLA";
+        result.title = "IAG";
         // setting data intent for Series Title
         result.__dataIntents = {
-            open: ["SeriesTitle/TESLA"]
+            open: ["SeriesTitle/IAG"]
         };
         return result;
+    }
+    public getLLOY(): any {
+      const result: any = [
+        { time: new Date(2013, 1, 1), open: 268.93, high: 268.93, low: 262.80, close: 265.00, volume: 6118146 },
+        { time: new Date(2013, 1, 4), open: 262.78, high: 264.68, low: 259.07, close: 259.98, volume: 3723793 },
+        { time: new Date(2013, 1, 5), open: 262.00, high: 268.03, low: 261.46, close: 266.89, volume: 4013780 },
+        { time: new Date(2013, 1, 6), open: 265.16, high: 266.89, low: 261.11, close: 262.22, volume: 2772204 },
+        { time: new Date(2013, 1, 7), open: 264.10, high: 264.10, low: 255.11, close: 260.23, volume: 3977065 },
+        { time: new Date(2013, 1, 8), open: 261.40, high: 265.25, low: 260.56, close: 261.95, volume: 3879628 },
+        { time: new Date(2013, 1, 11), open: 263.20, high: 263.25, low: 256.60, close: 257.21, volume: 3407457 },
+        { time: new Date(2013, 1, 12), open: 259.19, high: 260.16, low: 257.00, close: 258.70, volume: 2944730 },
+        { time: new Date(2013, 1, 13), open: 261.53, high: 269.96, low: 260.30, close: 269.47, volume: 5295786 },
+        { time: new Date(2013, 1, 14), open: 267.37, high: 270.65, low: 265.40, close: 269.24, volume: 3464080 },
+        { time: new Date(2013, 1, 15), open: 267.63, high: 268.92, low: 263.11, close: 265.09, volume: 3981233 }
+      ];
+      result.title = "Lloyd (LLOY)";
+      return result;
+    }
+    public getRIO(): any {
+      const result: any = [
+        { time: new Date(2013, 1, 1), open: 268.93, high: 268.93, low: 262.80, close: 265.00, volume: 6118146 },
+        { time: new Date(2013, 1, 4), open: 262.78, high: 264.68, low: 259.07, close: 259.98, volume: 3723793 },
+        { time: new Date(2013, 1, 5), open: 262.00, high: 268.03, low: 261.46, close: 266.89, volume: 4013780 },
+        { time: new Date(2013, 1, 6), open: 265.16, high: 266.89, low: 261.11, close: 262.22, volume: 2772204 },
+        { time: new Date(2013, 1, 7), open: 264.10, high: 264.10, low: 255.11, close: 260.23, volume: 3977065 },
+        { time: new Date(2013, 1, 8), open: 261.40, high: 265.25, low: 260.56, close: 261.95, volume: 3879628 },
+        { time: new Date(2013, 1, 11), open: 263.20, high: 263.25, low: 256.60, close: 257.21, volume: 3407457 },
+        { time: new Date(2013, 1, 12), open: 259.19, high: 260.16, low: 257.00, close: 258.70, volume: 2944730 },
+        { time: new Date(2013, 1, 13), open: 261.53, high: 269.96, low: 260.30, close: 269.47, volume: 5295786 },
+        { time: new Date(2013, 1, 14), open: 267.37, high: 270.65, low: 265.40, close: 269.24, volume: 3464080 },
+        { time: new Date(2013, 1, 15), open: 267.63, high: 268.92, low: 263.11, close: 265.09, volume: 3981233 }
+      ];
+      result.title = "Rio (RIO)";
+      return result;
+    }
+    public getSMT(): any {
+      const result: any = [
+        { time: new Date(2013, 1, 1), open: 268.93, high: 268.93, low: 262.80, close: 265.00, volume: 6118146 },
+        { time: new Date(2013, 1, 4), open: 262.78, high: 264.68, low: 259.07, close: 259.98, volume: 3723793 },
+        { time: new Date(2013, 1, 5), open: 262.00, high: 268.03, low: 261.46, close: 266.89, volume: 4013780 },
+        { time: new Date(2013, 1, 6), open: 265.16, high: 266.89, low: 261.11, close: 262.22, volume: 2772204 },
+        { time: new Date(2013, 1, 7), open: 264.10, high: 264.10, low: 255.11, close: 260.23, volume: 3977065 },
+        { time: new Date(2013, 1, 8), open: 261.40, high: 265.25, low: 260.56, close: 261.95, volume: 3879628 },
+        { time: new Date(2013, 1, 11), open: 263.20, high: 263.25, low: 256.60, close: 257.21, volume: 3407457 },
+        { time: new Date(2013, 1, 12), open: 259.19, high: 260.16, low: 257.00, close: 258.70, volume: 2944730 },
+        { time: new Date(2013, 1, 13), open: 261.53, high: 269.96, low: 260.30, close: 269.47, volume: 5295786 },
+        { time: new Date(2013, 1, 14), open: 267.37, high: 270.65, low: 265.40, close: 269.24, volume: 3464080 },
+        { time: new Date(2013, 1, 15), open: 267.63, high: 268.92, low: 263.11, close: 265.09, volume: 3981233 }
+      ];
+      result.title = "Smt (SMT)";
+      return result;
+    }
+    public getTHG(): any {
+      const result: any = [
+        { time: new Date(2013, 1, 1), open: 268.93, high: 268.93, low: 262.80, close: 265.00, volume: 6118146 },
+        { time: new Date(2013, 1, 4), open: 262.78, high: 264.68, low: 259.07, close: 259.98, volume: 3723793 },
+        { time: new Date(2013, 1, 5), open: 262.00, high: 268.03, low: 261.46, close: 266.89, volume: 4013780 },
+        { time: new Date(2013, 1, 6), open: 265.16, high: 266.89, low: 261.11, close: 262.22, volume: 2772204 },
+        { time: new Date(2013, 1, 7), open: 264.10, high: 264.10, low: 255.11, close: 260.23, volume: 3977065 },
+        { time: new Date(2013, 1, 8), open: 261.40, high: 265.25, low: 260.56, close: 261.95, volume: 3879628 },
+        { time: new Date(2013, 1, 11), open: 263.20, high: 263.25, low: 256.60, close: 257.21, volume: 3407457 },
+        { time: new Date(2013, 1, 12), open: 259.19, high: 260.16, low: 257.00, close: 258.70, volume: 2944730 },
+        { time: new Date(2013, 1, 13), open: 261.53, high: 269.96, low: 260.30, close: 269.47, volume: 5295786 },
+        { time: new Date(2013, 1, 14), open: 267.37, high: 270.65, low: 265.40, close: 269.24, volume: 3464080 },
+        { time: new Date(2013, 1, 15), open: 267.63, high: 268.92, low: 263.11, close: 265.09, volume: 3981233 }
+      ];
+      result.title = "Thg (THG)";
+      return result;
+    }
+    public getTUI(): any {
+      const result: any = [
+        { time: new Date(2013, 1, 1), open: 268.93, high: 268.93, low: 262.80, close: 265.00, volume: 6118146 },
+        { time: new Date(2013, 1, 4), open: 262.78, high: 264.68, low: 259.07, close: 259.98, volume: 3723793 },
+        { time: new Date(2013, 1, 5), open: 262.00, high: 268.03, low: 261.46, close: 266.89, volume: 4013780 },
+        { time: new Date(2013, 1, 6), open: 265.16, high: 266.89, low: 261.11, close: 262.22, volume: 2772204 },
+        { time: new Date(2013, 1, 7), open: 264.10, high: 264.10, low: 255.11, close: 260.23, volume: 3977065 },
+        { time: new Date(2013, 1, 8), open: 261.40, high: 265.25, low: 260.56, close: 261.95, volume: 3879628 },
+        { time: new Date(2013, 1, 11), open: 263.20, high: 263.25, low: 256.60, close: 257.21, volume: 3407457 },
+        { time: new Date(2013, 1, 12), open: 259.19, high: 260.16, low: 257.00, close: 258.70, volume: 2944730 },
+        { time: new Date(2013, 1, 13), open: 261.53, high: 269.96, low: 260.30, close: 269.47, volume: 5295786 },
+        { time: new Date(2013, 1, 14), open: 267.37, high: 270.65, low: 265.40, close: 269.24, volume: 3464080 },
+        { time: new Date(2013, 1, 15), open: 267.63, high: 268.92, low: 263.11, close: 265.09, volume: 3981233 }
+      ];
+      result.title = "Tui (TUI)";
+      return result;
+    }
+    public getGBX(): any {
+      const result: any = [
+        { time: new Date(2013, 1, 1), open: 268.93, high: 268.93, low: 262.80, close: 265.00, volume: 6118146 },
+        { time: new Date(2013, 1, 4), open: 262.78, high: 264.68, low: 259.07, close: 259.98, volume: 3723793 },
+        { time: new Date(2013, 1, 5), open: 262.00, high: 268.03, low: 261.46, close: 266.89, volume: 4013780 },
+        { time: new Date(2013, 1, 6), open: 265.16, high: 266.89, low: 261.11, close: 262.22, volume: 2772204 },
+        { time: new Date(2013, 1, 7), open: 264.10, high: 264.10, low: 255.11, close: 260.23, volume: 3977065 },
+        { time: new Date(2013, 1, 8), open: 261.40, high: 265.25, low: 260.56, close: 261.95, volume: 3879628 },
+        { time: new Date(2013, 1, 11), open: 263.20, high: 263.25, low: 256.60, close: 257.21, volume: 3407457 },
+        { time: new Date(2013, 1, 12), open: 259.19, high: 260.16, low: 257.00, close: 258.70, volume: 2944730 },
+        { time: new Date(2013, 1, 13), open: 261.53, high: 269.96, low: 260.30, close: 269.47, volume: 5295786 },
+        { time: new Date(2013, 1, 14), open: 267.37, high: 270.65, low: 265.40, close: 269.24, volume: 3464080 },
+        { time: new Date(2013, 1, 15), open: 267.63, high: 268.92, low: 263.11, close: 265.09, volume: 3981233 }
+      ];
+      result.title = "Barclays (GBX)";
+      return result;
     }
 }

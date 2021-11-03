@@ -4,36 +4,31 @@
       <h1 class="text-center">
         {{ title }}
       </h1>
-      <!-- Buy/Sell -->
-      <div style="text-align: right">
-        <div class="btn-group btn-group-sm">
-          <input type="radio" class="btn-check me-md-2" name="btnradio" id="btnbuy" checked>
-          <label class="btn btn-success" for="btnbuy">BUY</label>
-          <input type="radio" class="btn-check" name="btnradio" id="btnsell">
-          <label class="btn btn-danger" for="btnsell">SELL</label>
-        </div>
-      </div>
       <!-- Table -->
       <div class="table-responsive py-3">
         <table class="table table-hover table-bordered table-sm">
           <thead>
             <tr>
-              <th scope="col" sortable="orderID" (sort)="onSort($event)">Order ID</th>
-              <th scope="col" sortable="buyOrSell" (sort)="onSort($event)">Buy/Sell</th>
+              <th scope="col" sortable="historyID" (sort)="onSort($event)">History ID</th>
+              <th scope="col" sortable="order.orderID" (sort)="onSort($event)">Order ID</th>
+              <th scope="col" sortable="orderTradingWith.orderID" (sort)="onSort($event)">Trades with Order ID</th>
+              <th scope="col" sortable="order.buyOrSell" (sort)="onSort($event)">Buy/Sell</th>
+              <th scope="col" sortable="order.orderBook.instrumentCode" (sort)="onSort($event)">Instrument</th>
               <th scope="col" sortable="shareQuantity" (sort)="onSort($event)">Quantity</th>
-              <th scope="col" sortable="priceLimit" (sort)="onSort($event)">Price</th>
-              <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+              <th scope="col" sortable="value" (sort)="onSort($event)">Price</th>
               <th scope="col" sortable="timeStamp" (sort)="onSort($event)">TimeStamp</th>
             </tr>
           </thead>
           <tbody class="table-light">
             <tr *ngFor="let trade of history">
-              <td>{{ trade.orderID }}</td>
-              <td>{{ trade.buyOrSell }}</td>
+              <td>{{ trade.historyID }}</td>
+              <td>{{ trade.order.orderID }}</td>
+              <td>{{ trade.orderTradingWith.orderID }}</td>
+              <td>{{ trade.order.buyOrSell }}</td>
+              <td>{{ trade.order.orderBook.instrumentCode }}</td>
               <td>{{ trade.shareQuantity | number }}</td>
-              <td>{{ trade.priceLimit | number }}</td>
-              <td>{{ trade.status }}</td>
-              <td>{{ trade.timeStamp}}</td>
+              <td>{{ trade.value | number }}</td>
+              <td>{{ trade.timeStamp }}</td>
             </tr>
           </tbody>
         </table>

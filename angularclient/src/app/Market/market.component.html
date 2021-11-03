@@ -1,5 +1,3 @@
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-12 py-3">
@@ -11,14 +9,14 @@
                 <table class="table table-hover table-bordered table-sm">
                     <thead>
                         <tr>
-                            <th scope="col" sortable="code" >Code</th>
-                            <th scope="col" sortable="company" >Company</th>
-                            <th scope="col" sortable="price" >Price</th>
-                            <th scope="col" sortable="open" >Open</th>
-                            <th scope="col" sortable="priceChange" >Change (24hs)</th>
-                            <th scope="col" sortable="high" >High (24hs)</th>
-                            <th scope="col" sortable="low" >Low (24hs)</th>
-                            <th scope="col" sortable="volume" >Volume (24hs)</th>
+                            <th scope="col" sortable="code" (sort)="onSort($event)">Code</th>
+                            <th scope="col" sortable="company" (sort)="onSort($event)">Company</th>
+                            <th scope="col" sortable="price" (sort)="onSort($event)">Price</th>
+                            <th scope="col" sortable="open" (sort)="onSort($event)">Open</th>
+                            <th scope="col" sortable="priceChange" (sort)="onSort($event)">Change (24hs)</th>
+                            <th scope="col" sortable="high" (sort)="onSort($event)">High (24hs)</th>
+                            <th scope="col" sortable="low" (sort)="onSort($event)">Low (24hs)</th>
+                            <th scope="col" sortable="volume" (sort)="onSort($event)">Volume (24hs)</th>
                             <th scope="col">Trade</th>
                         </tr>
                     </thead>
@@ -32,7 +30,7 @@
                             <td>{{ market.high}}</td>
                             <td>{{ market.low }}</td>
                             <td>{{ market.volume | number }}</td>
-                            <td><a href="/orderBook/{{market.code}}" >Trade</a></td>
+                            <td><a href="/order/{{market.code}}" >Trade</a></td>
                         </tr>
                     </tbody>
                 </table>

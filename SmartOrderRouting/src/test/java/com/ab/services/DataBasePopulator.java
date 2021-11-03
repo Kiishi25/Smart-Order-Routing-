@@ -33,6 +33,7 @@ class DataBasePopulator {
 		add(new Instrument("RIO", "RIO TINTO PLC", 4560.50, 5912, 4535.00, 4618.00, 4509.00, -0.77));
 		add(new Instrument("TUI", "TUI Group", 245.30, 6796808, 244.70, 249.70, 241.00, -0.69));
 		add(new Instrument("LLOY", "Lloyds Banking Group Plc", 50.22, 261909017, 49.83, 50.47, 49.64, +0.64));
+		add(new Instrument("GBX", "Barclays Plc", 199.12, 2825794, 199.36, 200.17, 197.48, +0.66));
 
 	}};
 

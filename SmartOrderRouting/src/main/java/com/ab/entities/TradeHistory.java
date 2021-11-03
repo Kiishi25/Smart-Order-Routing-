@@ -30,14 +30,17 @@ public class TradeHistory {
     @JoinColumn(name = "orderID")
 	private Order order;
 	
-	private int orderTradingWithID;
+	@ManyToOne
+    @JoinColumn(name = "orderTradingWithID")
+	private Order orderTradingWith;
+
 	private int shareQuantity;
 	private double value;
 	private LocalDateTime timeStamp = LocalDateTime.now();
 	
-	public TradeHistory(Order order,int orderTradingWithID,int shareQuantity, double value) {
+	public TradeHistory(Order order,Order orderTradingWith,int shareQuantity, double value) {
 		this.order = order;
-		this.orderTradingWithID = orderTradingWithID;
+		this.orderTradingWith = orderTradingWith;
 		this.shareQuantity = shareQuantity;
 		this.value = value;
 	}
@@ -46,7 +49,7 @@ public class TradeHistory {
 
 	@Override
 	public String toString() {
-		return "TradeHistory [historyID=" + historyID + ", order=" + order + ", orderTradingWithID=" + orderTradingWithID
+		return "History [historyID=" + historyID + ", order=" + order + ", orderTradingWith=" + orderTradingWith
 				+ ", shareQuantity=" + shareQuantity + ", value=" + value + "]";
 	}
 	

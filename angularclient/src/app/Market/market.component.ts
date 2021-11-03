@@ -2,33 +2,14 @@ import { Component, Directive, EventEmitter, Inject, Input, Output, QueryList, V
 import { Router } from '@angular/router';
 import { MarketController } from '../controllers/market.controller';
 import { UserController } from '../controllers/user.controller';
-
-
-interface Instrument {
-
-  code: String;
-
-  company: String;
-
-  price: number;
-
-  volume: number;
-
-  open: number;
-
-  high: number;
-
-  low: number;
-
-  priceChange: number;
-}
+import { Instrument } from '../models/Instrument';
 
 export type SortColumn = keyof Instrument | '';
 export type SortDirection = 'asc' | 'desc' | '';
 
 const rotate: { [key: string]: SortDirection } = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
-const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+const compare = (v1: string | number | String, v2: string | number | String) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 let marketsList: Instrument[];
 
 export interface SortEvent {
@@ -79,6 +60,7 @@ export class MarketComponent {
     this.marketController.loadInstruments().then(function (list) {
       console.log(`Result: ${JSON.stringify(list)}`);
       marketComponent.markets = list;
+      marketComponent.collectionSize = list.length;
       marketsList = list;
     });
 
@@ -94,6 +76,15 @@ export class MarketComponent {
       }
     });
 
+    // sorting market
+    if (direction === '' || column === '') {
+      this.markets = marketsList;
+    } else {
+      this.markets = [...marketsList].sort((a, b) => {
+        const res = compare(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
+    }
   }
 
   refreshMarkets() {
