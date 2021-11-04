@@ -66,7 +66,9 @@ export class OrderService {
 
     var body = {
       orderBook: {
-          instrumentCode
+          instrument: {
+            code: instrumentCode
+          }
       },
       buyOrSell,
       type,

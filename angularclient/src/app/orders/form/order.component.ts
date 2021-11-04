@@ -30,7 +30,7 @@ export class OrderFormComponent {
     let user = userStr ? JSON.parse(userStr) as User : undefined;
     let username = user.username;
 
-    let res = await this.orderController.createOrder(this.order.buyOrSell, this.order.orderType, this.order.priceLimit, this.order.shareQuantity, username, this.instrumentCode);
+    let res = await this.orderController.createOrder(this.order.buyOrSell, 'MARKET', this.order.priceLimit, this.order.shareQuantity, username, this.instrumentCode);
 
     // Order created successfully
     if(res) {

@@ -25,6 +25,10 @@ public class InstrumentService {
     public List<Instrument> findInstruments() {
         return instrumentRep.findAll();
     }
+	
+    public Instrument findInstrumentByCode(String code) {
+        return instrumentRep.findById(code).get();
+    }
 
     
 }

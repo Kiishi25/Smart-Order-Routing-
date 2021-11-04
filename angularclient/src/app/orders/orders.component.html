@@ -9,11 +9,12 @@
           <table class="table table-hover table-bordered table-sm">
             <thead>
               <tr>
-                <th scope="col" sortable="order" (sort)="onSort($event)">Order ID</th>
-                <th scope="col" sortable="qty" (sort)="onSort($event)">Buy/Sell</th>
+                <th scope="col" sortable="order" (sort)="onSort($event)">ID</th>
+                <th scope="col" sortable="buyOrSell" (sort)="onSort($event)">Buy/Sell</th>
+                <th scope="col" sortable="instrument" (sort)="onSort($event)">Instrument</th>
                 <th scope="col" sortable="qty" (sort)="onSort($event)">Quantity</th>
                 <th scope="col" sortable="price" (sort)="onSort($event)">Price</th>
-                <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+                <th scope="col" sortable="type" (sort)="onSort($event)">Order type</th>
                 <th scope="col" sortable="timeStamp" (sort)="onSort($event)">TimeStamp</th>
                 <th scope="col"></th>
               </tr>
@@ -22,9 +23,10 @@
               <tr *ngFor="let order of orders">
                 <td>{{ order.orderID }}</td>
                 <td>{{ order.buyOrSell }}</td>
-                <td>{{ order.shareQuantity | number }}</td>
-                <td>{{ order.priceLimit | number }}</td>
-                <td>{{ order.status }}</td>
+                <td>{{ order.orderBook.instrument.code }}</td>
+                <td>{{ order.shareQuantity }}</td>
+                <td>{{ order.orderBook.instrument.price }}</td>
+                <td>{{ order.type }}</td>
                 <td>{{ order.timeStamp}}</td>
                 <td><button class="btn btn-danger btn-spacing" (click)="cancelOrder(order.orderID)">Cancel</button></td>
               </tr>
