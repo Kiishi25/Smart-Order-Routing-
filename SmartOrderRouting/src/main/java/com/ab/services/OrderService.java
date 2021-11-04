@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.ab.entities.Order;
 import com.ab.entities.OrderBook;
 import com.ab.entities.TradeHistory;
@@ -31,6 +32,7 @@ public class OrderService {
 	
 	@Autowired
 	private TradeHistoryRepository historyRep;
+
 	
 	public OrderService() {
 		BasicConfigurator.configure();
@@ -56,7 +58,7 @@ public class OrderService {
 		return order;
 	}
 	
-	public boolean  addOrder(OrderBook orderBook, User user, OrderType type, BuyOrSell buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
+	public boolean addOrder(OrderBook orderBook, User user, OrderType type, BuyOrSell buyOrSell, double priceLimit, int shareQuantity, String auctionTime) {
 		orderBook = orderBookService.create(orderBook);
 
 		Order order;
@@ -88,6 +90,7 @@ public class OrderService {
 		try {
 			System.out.println(order);
 			orderRep.save(order);
+
 			return true;
 		}catch(Exception e) {
 			//add Log
@@ -127,7 +130,9 @@ public class OrderService {
 	public Order cancelOrder(int orderID) {
 		Order cancelledOrder = orderRep.getByOrderID(orderID);
 		orderRep.deleteById(orderID);
+	
 		logger.info(cancelledOrder.toString() + " removed");
+
 		return cancelledOrder;
 	}
 	

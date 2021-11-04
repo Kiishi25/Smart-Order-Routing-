@@ -17,7 +17,9 @@
                     </li>
                     <li class="dropdown" *ngIf="user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">Menu<span class="caret"></span></a>
+                            aria-expanded="false">Menu
+                            <!-- <span class="caret"></span> -->
+                        </a>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-left-0">
                             <li><a href="orders">Orders</a></li>
                             <li><a href="history">History</a></li>
@@ -47,4 +49,56 @@
     </div>
 </div>
 
+
+
 <router-outlet></router-outlet>
+
+<!-- FOOTER -->
+<footer class="bg-dark footer">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-12">
+                <h4 class="logo"><i class="fab fa-java fa-2x color-blue"></i> JavaHards</h4>
+
+                <p>JavaHards is regulated by the Central Trade market. Details about the extent of our authorisation and
+                    regulation by the Prudential Regulation Authority is available from us on request. By proceeding any
+                    further
+                    you will be deemed to have read our Terms and
+                    Conditions and Privacy.</p>
+
+                <ul class="list-inline social">
+                    <li><i class="fab fa-youtube fa-2x"></i></li>
+                    <li><i class="fab fa-linkedin-in fa-2x"></i></li>
+                    <li><i class="fab fa-instagram fa-2x "></i></li>
+                    <li><i class="fab fa-facebook fa-2x"></i></li>
+                </ul>
+            </div>
+
+            <div class="col-md-3 col-sm-6 col-md-offset-2">
+                <h5>Solutions</h5>
+                <ul class="list-unstyled footer-list">
+                    <li><a>Fee Info</a></li>
+                    <li><a> Start Trading</a></li>
+                    <li><a>We are Hiring</a></li>
+                    <li><a>Blog Posts</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <h5>Useful Links</h5>
+                <ul class="list-unstyled footer-list">
+                    <li><a>About Us</a></li>
+                    <li><a>Help &amp; Support</a></li>
+                    <li><a>Privacy Policy</a></li>
+                    <li><a>Terms &amp; Conditions</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <div>
+        </div>
+
+    </div> <!-- end container -->
+</footer>
+<!-- end FOOTER -->
