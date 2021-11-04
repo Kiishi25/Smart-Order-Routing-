@@ -68,7 +68,6 @@ public class Order {
 	
 	@ManyToOne
     @JoinColumn(name = "username")
-	@JsonBackReference
 	private User user;
 	
 	public Order() {}

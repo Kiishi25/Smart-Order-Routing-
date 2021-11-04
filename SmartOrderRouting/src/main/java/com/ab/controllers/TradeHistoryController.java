@@ -7,6 +7,7 @@ import com.ab.services.TradeHistoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,10 +18,8 @@ public class TradeHistoryController {
 	@Autowired
 	private TradeHistoryService historyService;
 
-	@GetMapping
-	public List<TradeHistory> getAllHistory(){
-		System.out.println(historyService.findTradeHistory().get(0).getOrder());
-		return historyService.findTradeHistory();
-
+	@GetMapping("/{username}")
+	public List<TradeHistory> getAllHistory(@PathVariable String username){
+		return historyService.findTradeHistoryByUsername(username);
 	}
 }

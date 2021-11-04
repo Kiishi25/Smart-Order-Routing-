@@ -50,8 +50,14 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 	@Query( value ="SELECT TOP 1 * FROM Order o WHERE o.buyOrSell =:buyOrSell o.timeStamp < :currentDate ORDER BY o.timeStamp DESC", nativeQuery = true)
 	public Order getByTimeStamp(@Param("buyOrSell") BuyOrSell buyOrSell, @Param("currentDate")LocalDateTime now);
 
-	@Query("From Order o WHERE o.user.username =:username")
+	@Query("From Order o WHERE o.user.username =:username AND o.shareQuantity != 0")
 	public List<Order> findAllByUsername(@Param("username") String userName);
+	
+	@Query("From Order o WHERE o.buyOrSell = 'BUY' AND o.orderBook.instrument.code =:code AND o.user.username !=:username ORDER BY o.timeStamp ASC, o.orderBook.instrument.price ASC")
+	public List<Order> findAllBuyByInstrumentCode(@Param("code") String code, @Param("username") String username);
+	
+	@Query("From Order o WHERE o.buyOrSell = 'SELL' AND o.orderBook.instrument.code =:code AND o.user.username !=:username ORDER BY o.timeStamp ASC, o.orderBook.instrument.price DESC")
+	public List<Order> findAllSellByInstrumentCode(@Param("code") String code, @Param("username") String username);
 
 	@Query("DELETE From Order o WHERE o.user.username =:username")
 	public void deleteAllByUsername(@Param("username") String username);

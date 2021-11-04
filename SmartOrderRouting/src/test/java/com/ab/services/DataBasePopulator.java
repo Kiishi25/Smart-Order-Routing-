@@ -50,7 +50,7 @@ class DataBasePopulator {
 	@Test
 	void test() {
 		for(String name : instrumentCodes) {
-			OrderBook orderBook = new OrderBook(name);
+			OrderBook orderBook = new OrderBook(instrumentRepository.findById(name).get());
 			for(int i = 0; i < 10; i++) {
 				Order randomOrder;
 				BuyOrSell buyOrSell;

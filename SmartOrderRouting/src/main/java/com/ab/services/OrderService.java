@@ -1,6 +1,7 @@
 package com.ab.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
@@ -109,10 +110,10 @@ public class OrderService {
 		addOrder(orderBook, user, type, buyOrSell, priceLimit, shareQuantity2, auctionTime);
 	}
 	
-	public TradeHistory addTradeHistory(int thisOrderID, int tradedWithID, int shareQuanitity, double value) {
+	public TradeHistory addTradeHistory(int thisOrderID, int tradedWithID, int shareQuantity, double value) {
 		Order order = orderRep.getByOrderID(thisOrderID);
 		Order tradedWithOrder = orderRep.getByOrderID(tradedWithID);
-		TradeHistory history = new TradeHistory(order, tradedWithOrder, shareQuanitity, value);
+		TradeHistory history = new TradeHistory(order, tradedWithOrder, shareQuantity, value);
 		order.getHistory().add(history);
 		if(checkFull(order)) {
 			order.setStatus(OrderStatus.FULL);
@@ -125,6 +126,92 @@ public class OrderService {
 	private boolean checkFull(Order order) {
 		int sharesFilled = order.getHistory().stream().mapToInt(trade -> trade.getShareQuantity()).sum();
 		return order.getShareQuantity() == sharesFilled;
+	}
+
+	public boolean executeOrder(String username) {
+		try {
+		// get available buy/sell order by this user
+		List<Order> submittedOrders = orderRep.findAllByUsername(username);
+		submittedOrders.stream()
+			.forEach((submittedOrder) -> {
+				List<Order> matchedOrders = new ArrayList<>();
+				
+			    // select all available buy/sell order with matching instrument code as above and not by this user (order by earliest)
+				if (submittedOrder.getBuyOrSell() == BuyOrSell.BUY) {
+					// order price by lowest
+					matchedOrders = orderRep.findAllBuyByInstrumentCode(submittedOrder.getOrderBook().getInstrument().getCode(), username);
+				} else if (submittedOrder.getBuyOrSell() == BuyOrSell.SELL) {
+					// order price by highest
+					matchedOrders = orderRep.findAllSellByInstrumentCode(submittedOrder.getOrderBook().getInstrument().getCode(), username);
+				}
+
+				matchedOrders.stream()
+					.forEach((matchedOrder) -> {
+						if (submittedOrder.getShareQuantity() > matchedOrder.getShareQuantity()) {
+							// update submittedOrder
+							// reduce qty
+							submittedOrder.setShareQuantity(submittedOrder.getShareQuantity() - matchedOrder.getShareQuantity());
+							orderRep.save(submittedOrder);
+
+							// save to history
+							historyRep.save(new TradeHistory(submittedOrder, matchedOrder, submittedOrder.getShareQuantity(), matchedOrder.getOrderBook().getInstrument().getPrice()));
+
+							// update matchedOrder
+							// change status
+							// remove qty
+							matchedOrder.setShareQuantity(0);
+							matchedOrder.setStatus(OrderStatus.FULL);
+							orderRep.save(matchedOrder);
+
+							// save to history
+							historyRep.save(new TradeHistory(matchedOrder, submittedOrder, submittedOrder.getShareQuantity(), matchedOrder.getOrderBook().getInstrument().getPrice()));
+						} else if (submittedOrder.getShareQuantity() < matchedOrder.getShareQuantity()) {
+							// update submittedOrder
+							// change status
+							// remove qty
+							submittedOrder.setShareQuantity(0);
+							submittedOrder.setStatus(OrderStatus.FULL);
+							orderRep.save(submittedOrder);
+
+							// save to history
+							historyRep.save(new TradeHistory(submittedOrder, matchedOrder, submittedOrder.getShareQuantity(), matchedOrder.getOrderBook().getInstrument().getPrice()));
+
+							// update matchedOrder
+							// reduce qty
+							matchedOrder.setShareQuantity(matchedOrder.getShareQuantity() - submittedOrder.getShareQuantity());
+							orderRep.save(matchedOrder);
+
+							// save to history
+							historyRep.save(new TradeHistory(matchedOrder, submittedOrder, submittedOrder.getShareQuantity(), matchedOrder.getOrderBook().getInstrument().getPrice()));
+						} else {
+							// update submittedOrder
+							// change status
+							// remove qty
+							submittedOrder.setShareQuantity(0);
+							submittedOrder.setStatus(OrderStatus.FULL);
+							orderRep.save(submittedOrder);
+
+							// save to history
+							historyRep.save(new TradeHistory(submittedOrder, matchedOrder, submittedOrder.getShareQuantity(), matchedOrder.getOrderBook().getInstrument().getPrice()));
+
+							// update matchedOrder
+							// change status
+							// remove qty
+							matchedOrder.setShareQuantity(0);
+							matchedOrder.setStatus(OrderStatus.FULL);
+							orderRep.save(matchedOrder);
+
+							// save to history
+							historyRep.save(new TradeHistory(matchedOrder, submittedOrder, submittedOrder.getShareQuantity(), matchedOrder.getOrderBook().getInstrument().getPrice()));
+						}
+					});
+			});
+
+			return true;
+		} catch (Exception e) {
+			logger.warn(e);
+			return false;
+		}
 	}
 
 	public Order cancelOrder(int orderID) {

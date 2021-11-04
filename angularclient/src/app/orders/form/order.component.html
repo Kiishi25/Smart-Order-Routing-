@@ -20,7 +20,7 @@
           <option>SELL</option>
         </select>
       </div>
-
+<!--
       <div class="form-group">
         <label for="orderType">Order Type</label>
         <select class="form-control" id="orderType"
@@ -30,7 +30,7 @@
           <option [value]="undefined" selected>Select</option>
           <option *ngFor="let orderType of orderTypes" [value]="orderType">{{orderType}}</option>
         </select>
-      </div>
+      </div> -->
 
       <div class="form-group">
         <label for="shareQuantity">Share Quantity</label>
@@ -38,14 +38,6 @@
           required
           [(ngModel)]="order.shareQuantity" name="shareQuantity"
           #shareQuantity="ngModel">
-      </div>
-
-      <div class="form-group">
-        <label for="priceLimit">Price Limit</label>
-        <input type="text" class="form-control" id="priceLimit"
-          required
-          [(ngModel)]="order.priceLimit" name="priceLimit"
-          #name="ngModel">
       </div>
 
       <button type="submit" class="btn btn-success" (click)="submitOrderForm()">Submit</button>

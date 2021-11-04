@@ -10,7 +10,7 @@ import com.ab.entities.OrderBook;
 @Repository
 public interface OrderBookRepository extends JpaRepository<OrderBook,Integer>{
 
-	@Query("FROM OrderBook ob WHERE ob.instrumentCode =:instrumentCode")
+	@Query("FROM OrderBook ob WHERE ob.instrument.code =:instrumentCode")
 	public OrderBook getByInstrumentCode(@Param("instrumentCode") String instrumentCode);
 
 }
