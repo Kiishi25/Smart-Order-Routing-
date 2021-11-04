@@ -109,10 +109,10 @@ public class OrderService {
 		addOrder(orderBook, user, type, buyOrSell, priceLimit, shareQuantity2, auctionTime);
 	}
 	
-	public TradeHistory addTradeHistory(int thisOrderID, int tradedWithID, int shareQuanitity, double value) {
+	public TradeHistory addTradeHistory(int thisOrderID, int tradedWithID, int shareQuantity, double value) {
 		Order order = orderRep.getByOrderID(thisOrderID);
 		Order tradedWithOrder = orderRep.getByOrderID(tradedWithID);
-		TradeHistory history = new TradeHistory(order, tradedWithOrder, shareQuanitity, value);
+		TradeHistory history = new TradeHistory(order, tradedWithOrder, shareQuantity, value);
 		order.getHistory().add(history);
 		if(checkFull(order)) {
 			order.setStatus(OrderStatus.FULL);
@@ -125,6 +125,16 @@ public class OrderService {
 	private boolean checkFull(Order order) {
 		int sharesFilled = order.getHistory().stream().mapToInt(trade -> trade.getShareQuantity()).sum();
 		return order.getShareQuantity() == sharesFilled;
+	}
+
+	public boolean executeOrder(String username) {
+		// for each orders
+		// // select all available buy/sell order with matching instrument code as above and not by this user (order by earliest, lowest price)
+		// // update sell order quantity
+		// // update buy order quantity
+		// // store in trade history
+
+		return false;
 	}
 
 	public Order cancelOrder(int orderID) {

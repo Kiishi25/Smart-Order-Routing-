@@ -49,9 +49,12 @@ public class OrderController {
 
 	@PostMapping("/order")
 	public Boolean addOrder(@RequestBody Order order) {
-		
-        System.out.println(order.getOrderBook());
 		return orderService.addOrder(order.getOrderBook(), order.getUser(), order.getType(), order.getBuyOrSell(), order.getPriceLimit(), order.getShareQuantity(), order.getAuctionTime());
+	}
+
+	@PostMapping("/executeOrder/{username}")
+	public Boolean executeOrder(@PathVariable String username) {
+		return orderService.executeOrder(username);
 	}
 
 	@PutMapping("/cancelOrder/{orderID}")
