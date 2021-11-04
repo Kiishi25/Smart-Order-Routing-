@@ -31,6 +31,27 @@ export class OrderService {
     return res;
   }
 
+  async executeOrder(username: String) {
+    let res: Boolean = false;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      })
+
+    };
+
+    var url = `http://localhost:8080/executeOrder/${username}`;
+
+    let response = await this.httpClient.post(url, {}, httpOptions).toPromise();
+    if (response) {
+      res = true;
+    }
+
+    return res;
+  }
+
   public async getOrdersByUsername(username: String) {
 
     let res: Order[] = null;

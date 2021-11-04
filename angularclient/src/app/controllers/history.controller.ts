@@ -12,7 +12,7 @@ export class HistoryController {
         this.historyService = historyService;
     }
 
-    public async getAll(){
-      return await this.historyService.getAll();
+    public async getAll(username: String){
+      return await this.historyService.getAll(username);
     }
 }

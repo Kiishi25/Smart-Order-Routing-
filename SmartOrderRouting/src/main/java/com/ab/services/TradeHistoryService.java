@@ -17,4 +17,8 @@ public class TradeHistoryService {
     public List<TradeHistory> findTradeHistory() {
         return repo.findAll();
     }
+
+    public List<TradeHistory> findTradeHistoryByUsername(String username) {
+        return repo.findAllByUsername(username);
+    }
 }

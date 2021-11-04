@@ -2,6 +2,7 @@ import { Component, Directive, EventEmitter, Inject, Input, Output, QueryList, V
 import { HistoryController } from '../controllers/history.controller';
 import { History } from '../models/History';
 import { Order } from '../models/Order';
+import { User } from '../models/User';
 
 export type SortColumn = keyof History | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -52,8 +53,11 @@ export class HistoryComponent {
     // Preserve MarketComponent's instance so it can be accessed inside the then function of the loadInstruments' promise
     var historyComponent = this;
     this.title = "History";
+    let userStr = localStorage.getItem('user');
+    let user = userStr ? JSON.parse(userStr) as User : undefined;
+    let username = user.username;
 
-    this.historyController.getAll().then(function (list) {
+    this.historyController.getAll(username).then(function (list) {
       console.log(`Result: ${JSON.stringify(list)}`);
       historyComponent.history = list;
       historyComponent.collectionSize = list.length;

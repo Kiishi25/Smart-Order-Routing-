@@ -14,6 +14,8 @@ public interface TradeHistoryRepository extends JpaRepository<TradeHistory,Integ
 	
 	@Query("From TradeHistory t WHERE t.order.orderID =:orderID")
 	List<TradeHistory> findAllByOrderId(@Param("orderID") int orderID);
-
+	
+	@Query("From TradeHistory t WHERE t.order.user.username =:username")
+	List<TradeHistory> findAllByUsername(@Param("username") String username);
 
 }

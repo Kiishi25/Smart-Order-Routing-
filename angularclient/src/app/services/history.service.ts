@@ -12,7 +12,7 @@ export class HistoryService {
     this.httpClient = httpClient;
   }
 
-  public async getAll(): Promise<History[]> {
+  public async getAll(username: String): Promise<History[]> {
 
     let res: History[] = null;
     const httpOptions = {
@@ -22,7 +22,7 @@ export class HistoryService {
       })
     };
 
-    var url = 'http://localhost:8080/history';
+    var url = `http://localhost:8080/history/${username}`;
 
     let response = await this.httpClient.get(url, httpOptions).toPromise();
     if (response) {

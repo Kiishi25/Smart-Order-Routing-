@@ -2,6 +2,7 @@ import { Component, Directive, EventEmitter, Input, Output, QueryList, ViewChild
 import { Router } from '@angular/router';
 import { OrderController } from '../controllers/order.controller';
 import { Order } from '../models/Order';
+import { User } from '../models/User';
 
 export type SortColumn = keyof Order | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -96,6 +97,21 @@ export class OrderComponent {
       });
     }else{
       this.isOrderDeleted = false;
+    }
+  }
+
+
+  async executeOrder(){
+    let userStr = localStorage.getItem('user');
+    let user = userStr ? JSON.parse(userStr) as User : undefined;
+    let username = user.username;
+
+    let res = await this.orderController.executeOrder(username);
+
+    // Order deleted successfully
+    if(res){
+      await this.refreshOrders();
+      this._router.navigate(['/history']);
     }
   }
 }

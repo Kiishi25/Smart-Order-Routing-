@@ -15,6 +15,10 @@ export class OrderController{
       return await this.orderService.cancelOrder(orderId);
     }
 
+    async executeOrder(username: any) {
+      return await this.orderService.executeOrder(username);
+    }
+
     async getOrdersByUsername(username: String) {
       return await this.orderService.getOrdersByUsername(username);
     }
