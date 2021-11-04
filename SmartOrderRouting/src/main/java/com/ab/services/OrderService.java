@@ -1,6 +1,7 @@
 package com.ab.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
@@ -128,11 +129,51 @@ public class OrderService {
 	}
 
 	public boolean executeOrder(String username) {
+		// get available buy/sell order by this user
 		// for each orders
 		// // select all available buy/sell order with matching instrument code as above and not by this user (order by earliest, lowest price)
 		// // update sell order quantity
 		// // update buy order quantity
 		// // store in trade history
+
+		List<Order> submittedOrders = orderRep.findAllByUsername(username);
+		submittedOrders.stream()
+			.forEach((submittedOrder) -> {
+				List<Order> matchedOrders = new ArrayList<>();
+				
+				if (submittedOrder.getBuyOrSell() == BuyOrSell.BUY) {
+					matchedOrders = orderRep.findAllBuyByInstrumentCode(submittedOrder.getOrderBook().getInstrument().getCode(), username);
+				} else if (submittedOrder.getBuyOrSell() == BuyOrSell.SELL) {
+					matchedOrders = orderRep.findAllSellByInstrumentCode(submittedOrder.getOrderBook().getInstrument().getCode(), username);
+				}
+
+				matchedOrders.stream()
+					.forEach((matchedOrder) -> {
+						if (submittedOrder.getShareQuantity() > matchedOrder.getShareQuantity()) {
+							// update submittedOrder
+							// reduce qty
+
+							// update matchedOrder
+							// change status
+							// remove qty
+						} else if (submittedOrder.getShareQuantity() < matchedOrder.getShareQuantity()) {
+							// update submittedOrder
+							// change status
+							// remove qty
+
+							// update matchedOrder
+							// reduce qty
+						} else {
+							// update submittedOrder
+							// change status
+							// remove qty
+
+							// update matchedOrder
+							// change status
+							// remove qty
+						}
+					});
+			});
 
 		return false;
 	}
