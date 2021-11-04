@@ -53,10 +53,10 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 	@Query("From Order o WHERE o.user.username =:username")
 	public List<Order> findAllByUsername(@Param("username") String userName);
 	
-	@Query("From Order o WHERE o.buy_or_sell = 'BUY' AND o.orderBook.code =:code AND o.user.username !=:username ORDER BY o.time_stamp ASC, o.orderBook.instrument.price ASC")
+	@Query("From Order o WHERE o.buyOrSell = 'BUY' AND o.orderBook.instrument.code =:code AND o.user.username !=:username ORDER BY o.timeStamp ASC, o.orderBook.instrument.price ASC")
 	public List<Order> findAllBuyByInstrumentCode(@Param("code") String code, @Param("username") String username);
 	
-	@Query("From Order o WHERE o.buy_or_sell =: 'SELL' AND o.orderBook.code =:code AND o.user.username !=:username ORDER BY o.time_stamp ASC, o.orderBook.instrument.price DESC")
+	@Query("From Order o WHERE o.buyOrSell = 'SELL' AND o.orderBook.instrument.code =:code AND o.user.username !=:username ORDER BY o.timeStamp ASC, o.orderBook.instrument.price DESC")
 	public List<Order> findAllSellByInstrumentCode(@Param("code") String code, @Param("username") String username);
 
 	@Query("DELETE From Order o WHERE o.user.username =:username")
